@@ -59,7 +59,15 @@ const CARD_LAYOUTS: Record<string, CardLayout> = {
   },
 };
 
+const SIGNATURE_VAR_BY_SLUG: Record<string, string> = {
+  ai: "--case-ai",
+  sorting: "--case-sorting",
+  wechatpay: "--case-wechatpay",
+  chowtaifook: "--case-chowtaifook",
+};
+
 export default function ProjectCard({ project, index }: ProjectCardProps) {
+  const signatureVar = SIGNATURE_VAR_BY_SLUG[project.detailSlug] ?? "--case-ai";
   const layout = CARD_LAYOUTS[project.id] ?? {
     cardHeight: "min-h-[520px] md:min-h-[494px]",
     contentWidth: "max-w-[300px]",
@@ -84,7 +92,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         delay: index * 0.08,
       }}
       className="group relative overflow-hidden bg-white transition-[background-color,box-shadow] duration-700 ease-editorial hover:z-[1] hover:bg-[#fcfcfd] hover:shadow-[0_28px_68px_rgba(16,17,20,0.06)]"
+      style={{ ["--case-accent" as string]: `var(${signatureVar})` }}
     >
+      {/* Signature color strip — slides in from the top on hover to preview the case's accent. */}
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 transition-transform duration-[var(--dur-slow)] ease-[var(--ease-editorial)] group-hover:scale-x-100"
+        style={{ background: "var(--case-accent)" }}
+      />
       <div className={`${layout.cardHeight} px-8 pb-8 pt-8 md:px-[48px] md:pb-[54px] md:pt-[48px]`}>
         <div className="flex items-center gap-[16px] text-[#9fa3ae]">
           <span className="mono-detail text-[10px] leading-[12px]">
@@ -128,7 +143,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
               <a
                 href={project.detailHref}
-                className="mono-detail mt-[22px] inline-flex items-center gap-[13px] text-[#101114] transition-transform duration-300 ease-editorial group-hover:translate-x-[3px]"
+                className="mono-detail mt-[22px] inline-flex items-center gap-[13px] text-[#101114] transition-[color,transform] duration-[var(--dur-base)] ease-[var(--ease-editorial)] group-hover:translate-x-[3px] group-hover:text-[var(--case-accent)]"
               >
                 View Case Study <span>↗</span>
               </a>

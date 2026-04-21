@@ -57,6 +57,12 @@
   --viewer-gutter: clamp(16px, 3vw, 48px);
 }
 
+@keyframes hotspot-pulse {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  70%  { transform: scale(2.2); opacity: 0;    }
+  100% { transform: scale(2.2); opacity: 0;    }
+}
+
 @layer utilities {
   /* Unified case page container — responsive, centered, with mobile padding.
      Replaces the bare `w-[1600px]` pattern that used to force horizontal scroll. */

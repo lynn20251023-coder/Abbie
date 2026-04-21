@@ -1,19 +1,31 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { motion, useScroll, useSpring } from "motion/react";
+import AnnotatedImage, { type Hotspot } from "./AnnotatedImage";
 
 interface CaseMeta {
   label: string;
   value: string;
 }
 
+export interface CasePage {
+  src: string;
+  /** Optional coded annotations rendered over the image. */
+  hotspots?: Hotspot[];
+}
+
 interface CaseViewerProps {
   title: string;
   subtitle?: string;
   meta?: CaseMeta[];
-  pages: string[];
+  /** Each page: either just a URL string, or { src, hotspots } with annotations. */
+  pages: Array<string | CasePage>;
   accentVar?: string;
   backHref?: string;
   footerExtra?: ReactNode;
+}
+
+function normalizePage(page: string | CasePage): CasePage {
+  return typeof page === "string" ? { src: page } : page;
 }
 
 /**
@@ -41,6 +53,8 @@ export default function CaseViewer({
   const [activeIndex, setActiveIndex] = useState(0);
   const [readingMode, setReadingMode] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const normalizedPages = useMemo(() => pages.map(normalizePage), [pages]);
 
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
   const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 28, restDelta: 0.001 });
@@ -167,33 +181,26 @@ export default function CaseViewer({
 
       {/* Pages */}
       <div className={readingMode ? "py-0" : "pb-24"}>
-        {pages.map((src, index) => (
-          <figure
-            key={src}
+        {normalizedPages.map((page, index) => (
+          <motion.figure
+            key={page.src}
             ref={(el) => {
               pageRefs.current[index] = el;
             }}
             className={readingMode ? "case-canvas py-2" : "case-canvas py-3 md:py-4"}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
-            <button
-              type="button"
-              onClick={() => setLightboxIndex(index)}
-              className="group block w-full overflow-hidden rounded-[2px] bg-[var(--surface)] shadow-[0_1px_0_0_var(--line)] transition-all duration-[var(--dur-base)] ease-[var(--ease-editorial)] hover:shadow-[0_24px_60px_-24px_rgba(16,17,20,0.18)]"
-              aria-label={`Zoom page ${index + 1}`}
-            >
-              <motion.img
-                src={src}
-                alt={`${title} — page ${index + 1}`}
-                loading={index < 2 ? "eager" : "lazy"}
-                decoding="async"
-                className="block h-auto w-full transition-transform duration-[var(--dur-slow)] ease-[var(--ease-editorial)] group-hover:scale-[1.004]"
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              />
-            </button>
-          </figure>
+            <AnnotatedImage
+              src={page.src}
+              alt={`${title} — page ${index + 1}`}
+              hotspots={readingMode ? [] : page.hotspots}
+              loading={index < 2 ? "eager" : "lazy"}
+              onImageClick={() => setLightboxIndex(index)}
+            />
+          </motion.figure>
         ))}
       </div>
 
@@ -234,7 +241,7 @@ export default function CaseViewer({
             {String(lightboxIndex + 1).padStart(2, "0")} / {String(pages.length).padStart(2, "0")}
           </span>
           <img
-            src={pages[lightboxIndex]}
+            src={normalizedPages[lightboxIndex].src}
             alt={`${title} — page ${lightboxIndex + 1}`}
             className="max-h-[92vh] max-w-[92vw] object-contain"
             onClick={(e) => e.stopPropagation()}
