@@ -37,13 +37,13 @@ export default function Works() {
           </motion.div>
         </div>
 
-        <div className="mt-[72px] grid border border-[#e7e7ea] lg:grid-cols-2">
+        <div className="mt-[72px] grid border border-[#e7e7ea] md:grid-cols-2">
           {PROJECTS.map((project, index) => (
             <div
               key={project.id}
               className={[
                 index < 2 ? "border-b border-[#e7e7ea]" : "",
-                index % 2 === 0 ? "lg:border-r lg:border-[#e7e7ea]" : "",
+                index % 2 === 0 ? "md:border-r md:border-[#e7e7ea]" : "",
               ].join(" ")}
             >
               <ProjectCard project={project} index={index} />

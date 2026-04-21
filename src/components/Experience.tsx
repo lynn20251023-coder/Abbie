@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { EXPERIENCE } from "@/src/constants";
-import type { CSSProperties } from "react";
 
 const rowHeights = [330, 299, 299];
 
@@ -27,8 +26,8 @@ export default function Experience() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.28 }}
               transition={{ duration: 0.66, delay: index * 0.07, ease: [0.19, 1, 0.22, 1] }}
-              className="border-t border-[#e5e7eb] max-lg:grid max-lg:gap-y-6 max-lg:py-12 lg:grid lg:h-[var(--row-height)] lg:grid-cols-[202px_226px_261px] lg:gap-x-10 lg:px-8"
-              style={{ "--row-height": `${rowHeights[index]}px` } as CSSProperties}
+              className="border-t border-[#e5e7eb] max-lg:grid max-lg:gap-y-6 max-lg:py-12 lg:grid lg:grid-cols-[202px_226px_261px] lg:gap-x-10 lg:px-8"
+              style={{ height: rowHeights[index] }}
             >
               <div className="lg:pt-[64px]">
                 <p className="font-[var(--font-mono)] text-[10px] leading-[12px] uppercase tracking-[4.2px] text-[#9ea3ae]">

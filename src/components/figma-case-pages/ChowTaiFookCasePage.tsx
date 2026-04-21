@@ -187,7 +187,7 @@ function FooterProjectCard({
 
 export default function ChowTaiFookCasePage() {
   return (
-    <CasePageShell background="#FFFFFF" canvasHeight={13141}>
+    <CasePageShell background="#FFFFFF">
       <div className="relative h-[13141px] w-[1600px] overflow-hidden bg-white text-[#111111]">
         <header className="absolute left-[128px] top-8 z-20 flex h-[19px] w-[1344px] items-center justify-between">
           <a
