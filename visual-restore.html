@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abbie Portfolio Visual Restore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&family=Noto+Serif+SC:wght@700;900&family=Space+Grotesk:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --surface: #ffffff;
+        --surface-soft: #fcfcfc;
+        --ink: #101114;
+        --muted: #767983;
+        --muted-strong: #5f636e;
+        --line: #e7e7ea;
+        --black: #050505;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", sans-serif;
+      }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; width: 100%; }
+      button { font: inherit; }
+      .container { width: min(1280px, calc(100vw - 64px)); margin: 0 auto; }
+      .progress {
+        position: fixed;
+        inset: 0 0 auto;
+        height: 4px;
+        background: #27282d;
+        transform-origin: left center;
+        transform: scaleX(0);
+        z-index: 100;
+      }
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 50;
+        padding: 0;
+        border-bottom: 1px solid transparent;
+        transition: all 500ms ease;
+      }
+      .nav.is-scrolled {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        border-bottom-color: #f4f4f5;
+      }
+      .nav-inner {
+        min-height: 88px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+      .brand {
+        position: relative;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.07em;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 48px;
+        color: #71717a;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+      }
+      .nav .brand {
+        color: #ffffff;
+      }
+      .nav .nav-links a {
+        color: #a1a1aa;
+      }
+      .nav .menu-button {
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.14);
+      }
+      .nav.is-scrolled .brand {
+        color: #000000;
+      }
+      .nav.is-scrolled .nav-links a {
+        color: #71717a;
+      }
+      .nav.is-scrolled .menu-button {
+        color: #000000;
+        border-color: rgba(16, 17, 20, 0.1);
+      }
+      .nav-links a { transition: opacity 180ms ease, color 180ms ease; }
+      .nav-links a:hover { opacity: 0.5; }
+      .menu-button {
+        display: none;
+        width: 44px;
+        height: 44px;
+        border: 1px solid rgba(16, 17, 20, 0.1);
+        background: transparent;
+        color: var(--ink);
+        border-radius: 999px;
+      }
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        background: rgba(5, 5, 5, 0.96);
+        color: #fff;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        z-index: 89;
+      }
+      .mobile-menu a {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 34px;
+        letter-spacing: -0.05em;
+      }
+      .mobile-menu.is-open { display: flex; }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 88px;
+        padding-bottom: 32px;
+        background: #050505;
+        color: #fff;
+      }
+      .hero-inner {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1.7fr 0.9fr;
+        gap: 48px;
+        align-items: end;
+        padding: 0;
+        position: relative;
+        z-index: 2;
+      }
+      .mono {
+        font-family: "JetBrains Mono", monospace;
+        text-transform: uppercase;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 52px;
+        color: #646771;
+        font-size: 10px;
+        letter-spacing: 0.48em;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 2px;
+        height: 18px;
+        background: #232429;
+      }
+      .hero-title {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(104px, 10vw, 176px);
+        line-height: 0.8;
+        letter-spacing: -0.07em;
+        text-transform: uppercase;
+      }
+      .hero-title .outline {
+        display: block;
+        color: transparent;
+        -webkit-text-stroke: 1px #27272a;
+      }
+      .hero-copy {
+        padding-bottom: 18px;
+        max-width: 480px;
+        justify-self: end;
+      }
+      .hero-copy p {
+        margin: 0 0 42px;
+        color: #a1a1aa;
+        font-family: "Noto Serif SC", serif;
+        font-size: clamp(18px, 1.4vw, 20px);
+        line-height: 1.72;
+        font-style: italic;
+      }
+      .scroll-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        color: #71717a;
+        font-size: 10px;
+        letter-spacing: 0.3em;
+      }
+      .scroll-tag::before {
+        content: "";
+        width: 48px;
+        height: 1px;
+        background: #232429;
+      }
+      .hero-ghost {
+        position: absolute;
+        right: -5vw;
+        bottom: -6vw;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 34vw;
+        line-height: 0.76;
+        letter-spacing: -0.08em;
+        color: rgba(255, 255, 255, 0.024);
+        pointer-events: none;
+        user-select: none;
+      }
+      section { padding: 128px 0; }
+      .section-head {
+        display: grid;
+        grid-template-columns: 1fr 0.8fr;
+        gap: 56px;
+        align-items: end;
+        margin-bottom: 96px;
+      }
+      .section-display {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(72px, 8vw, 132px);
+        line-height: 0.82;
+        letter-spacing: -0.08em;
+        text-transform: uppercase;
+      }
+      .section-display .sub {
+        display: block;
+        font-family: "Noto Serif SC", serif;
+        font-size: clamp(34px, 3vw, 72px);
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        text-transform: none;
+        color: #dedfe5;
+      }
+      .section-copy {
+        max-width: 560px;
+        justify-self: end;
+      }
+      .section-copy p {
+        margin: 0;
+        color: var(--muted-strong);
+        font-family: "Noto Serif SC", serif;
+        font-size: 18px;
+        line-height: 1.7;
+        font-style: italic;
+      }
+      .section-copy .rule {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 28px;
+        color: #a0a4af;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+      }
+      .section-copy .rule::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+      .works {
+        background: var(--surface);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .works-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+      .project-card {
+        background: var(--surface);
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        padding: 48px;
+        transition: background 260ms ease;
+      }
+      .project-card:hover { background: #fbfbfa; }
+      .project-card.featured { grid-column: 1 / -1; }
+      .project-card.featured .project-media { min-height: 360px; }
+      .project-meta {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: #9fa3ae;
+        font-size: 10px;
+        letter-spacing: 0.35em;
+      }
+      .project-meta .line {
+        width: 28px;
+        height: 1px;
+        background: #dfe1e6;
+      }
+      .project-title {
+        margin: 0;
+        font-size: clamp(40px, 3.5vw, 56px);
+        line-height: 1.05;
+        letter-spacing: -0.06em;
+      }
+      .project-content {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 32px;
+        align-items: stretch;
+      }
+      .project-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 24px;
+      }
+      .project-body p {
+        margin: 0;
+        color: #757984;
+        font-family: "Noto Serif SC", serif;
+        font-size: 17px;
+        line-height: 1.8;
+        font-style: italic;
+      }
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .tag {
+        padding: 8px 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: #8f949e;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+      }
+      .case-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-size: 10px;
+        letter-spacing: 0.3em;
+      }
+      .project-media {
+        min-height: 260px;
+        overflow: hidden;
+        background: #f3f3f3;
+        position: relative;
+      }
+      .project-media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.05);
+        transition: background 260ms ease;
+      }
+      .project-media img {
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(100%);
+        transition: transform 700ms ease, filter 700ms ease;
+      }
+      .project-card:hover .project-media::after { background: rgba(0, 0, 0, 0); }
+      .project-card:hover .project-media img {
+        filter: grayscale(0%);
+        transform: scale(1.05);
+      }
+      .history {
+        background: var(--surface-soft);
+        border-bottom: 1px solid var(--line);
+      }
+      .history-grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.55fr;
+        gap: 64px;
+      }
+      .history-panel {
+        position: sticky;
+        top: 128px;
+        align-self: start;
+      }
+      .timeline { border-top: 1px solid var(--line); }
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 0.85fr 0.95fr 1.1fr;
+        gap: 40px;
+        padding: 64px 32px;
+        margin: 0 -32px;
+        border-bottom: 1px solid var(--line);
+        transition: background 700ms ease;
+      }
+      .timeline-item:hover { background: #ffffff; }
+      .timeline-item .period {
+        color: #9ea3ae;
+        font-size: 10px;
+        letter-spacing: 0.42em;
+      }
+      .timeline-item h3,
+      .timeline-item h4 {
+        margin: 10px 0 0;
+        font-size: 25px;
+        line-height: 1.26;
+        letter-spacing: -0.05em;
+      }
+      .timeline-item h4 {
+        margin: 0 0 16px;
+        font-size: 24px;
+      }
+      .timeline-item p {
+        margin: 0;
+        color: #7b7f8a;
+        font-size: 17px;
+        line-height: 1.82;
+      }
+      .skills {
+        position: relative;
+        overflow: hidden;
+        background: var(--black);
+        color: #fff;
+      }
+      .skills .section-display .sub {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+      }
+      .skills .section-copy p { color: #9195a0; }
+      .skill-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        background: #18181a;
+        border: 1px solid #18181a;
+      }
+      .skill-card {
+        min-height: 340px;
+        padding: 48px;
+        background: #050505;
+        transition: background 700ms ease;
+      }
+      .skill-card:hover { background: #090909; }
+      .skill-card .number {
+        color: #626671;
+        font-size: 10px;
+        letter-spacing: 0.42em;
+        margin-bottom: 52px;
+      }
+      .skill-card h3 {
+        margin: 0 0 30px;
+        font-size: 24px;
+        letter-spacing: -0.05em;
+      }
+      .skill-card ul {
+        margin: 0;
+        padding-left: 18px;
+        color: #8f939d;
+        font-size: 16px;
+        line-height: 1.9;
+      }
+      .contact { background: var(--surface); }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+        align-items: start;
+      }
+      .contact-copy {
+        padding-top: 128px;
+        display: grid;
+        gap: 22px;
+      }
+      .contact-copy p {
+        margin: 0;
+        color: #6f737e;
+        font-family: "Noto Serif SC", serif;
+        font-size: 18px;
+        line-height: 1.75;
+        font-style: italic;
+      }
+      .contact-cta {
+        margin-top: 22px;
+        width: 68px;
+        height: 68px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        font-size: 32px;
+      }
+      .contact-list {
+        display: grid;
+        gap: 34px;
+        margin-top: 58px;
+      }
+      .contact-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .contact-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        display: grid;
+        place-items: center;
+        color: #555963;
+        flex: none;
+      }
+      .contact-label {
+        margin: 0 0 4px;
+        color: #9ca0ab;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+      }
+      .contact-value {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+      }
+      .footer {
+        margin-top: 192px;
+        padding-top: 64px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+      .footer-brand {
+        display: grid;
+        gap: 12px;
+      }
+      .footer-brand strong {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 20px;
+        letter-spacing: -0.07em;
+      }
+      .footer-small,
+      .socials {
+        color: #9ca0ab;
+        font-size: 10px;
+        letter-spacing: 0.4em;
+      }
+      .socials {
+        display: flex;
+        gap: 28px;
+      }
+      @media (max-width: 1180px) {
+        .hero-inner,
+        .section-head,
+        .history-grid,
+        .contact-grid,
+        .timeline-item { grid-template-columns: 1fr; }
+        .works-grid,
+        .skill-grid { grid-template-columns: 1fr; }
+        .project-card.featured { grid-column: auto; }
+        .project-content { grid-template-columns: 1fr; }
+        .section-copy { justify-self: start; }
+        .contact-copy { padding-top: 0; }
+      }
+      @media (max-width: 860px) {
+        .container { width: min(100vw - 32px, 1280px); }
+        .nav-inner { min-height: 78px; }
+        .nav-links { display: none; }
+        .menu-button { display: inline-grid; place-items: center; }
+        .hero { padding-top: 92px; padding-bottom: 24px; }
+        .hero-inner { gap: 36px; }
+        section { padding: 92px 0; }
+        .project-card,
+        .skill-card { padding: 28px; }
+        .history-panel { position: static; }
+        .footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .socials {
+          gap: 18px;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress" id="progress"></div>
+    <header class="nav" id="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="#top">ABBIE.</a>
+        <nav class="nav-links">
+          <a href="#works">作品展示</a>
+          <a href="#experience">工作经历</a>
+          <a href="#skills">专业技能</a>
+          <a href="#contact">联系我</a>
+        </nav>
+        <button class="menu-button" id="menuButton" aria-label="Open menu">+</button>
+      </div>
+    </header>
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="#works">作品展示</a>
+      <a href="#experience">工作经历</a>
+      <a href="#skills">专业技能</a>
+      <a href="#contact">联系我</a>
+    </nav>
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-inner">
+          <div>
+            <div class="eyebrow mono">UI/UX 设计师 / 5年经验</div>
+            <h1 class="hero-title">ABBIE<span class="outline">PORTFOLIO</span></h1>
+          </div>
+          <div class="hero-copy">
+            <p>“具备5年 B端 SaaS、支付系统及小程序增长场景经验。熟练运用 Figma + AI 工作流，擅长 AIGC 视觉资产生产与复杂场景设计。致力于通过清晰的界面表达和规范化设计，推动高质量方案落地。”</p>
+            <div class="scroll-tag mono">Scroll to explore</div>
+          </div>
+        </div>
+        <div class="hero-ghost">UIUX</div>
+      </section>
+      <section class="works" id="works">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="section-display">WORKS<span class="sub">作品展示</span></h2>
+            <div class="section-copy">
+              <p>“涵盖金融科技、SaaS 系统及电商零售领域的项目集合，专注于以用户为中心的解决方案与卓越的视觉表现。”</p>
+              <div class="rule mono">Portfolio / 2020-2026</div>
+            </div>
+          </div>
+          <div class="works-grid">
+            <article class="project-card featured">
+              <div class="project-meta mono"><span>01</span><span class="line"></span><span>金融科技 / UX 优化</span></div>
+              <h3 class="project-title">WeChat Pay HK 电讯缴费体验优化</h3>
+              <div class="project-content">
+                <div class="project-body">
+                  <p>聚焦香港本地用户的支付体验优化，围绕核心链路、本地化习惯与增长路径进行设计调整，在提升操作流畅度的同时增强产品的安全感与信任感。</p>
+                  <div>
+                    <div class="tag-list mono">
+                      <span class="tag">UI/UX</span>
+                      <span class="tag">金融科技</span>
+                      <span class="tag">流程优化</span>
+                    </div>
+                    <div class="case-link mono" style="margin-top: 26px;"><span>View Case Study</span><span>↗</span></div>
+                  </div>
+                </div>
+                <div class="project-media"><img src="https://picsum.photos/seed/wechat/1400/900" alt="WeChat Pay HK 电讯缴费体验优化" /></div>
+              </div>
+            </article>
+            <article class="project-card">
+              <div class="project-meta mono"><span>02</span><span class="line"></span><span>B端 SaaS / 体验设计</span></div>
+              <h3 class="project-title">蔬东坡<br />智能分拣系统</h3>
+              <div class="project-content">
+                <div class="project-body">
+                  <p>围绕生鲜智能分拣 SaaS 核心作业场景，优化触屏交互、信息层级与状态反馈，提升一线操作效率。并将 AI 应用于视觉资产生产与设计交付协作。</p>
+                  <div>
+                    <div class="tag-list mono">
+                      <span class="tag">SaaS</span>
+                      <span class="tag">B端</span>
+                      <span class="tag">交互设计</span>
+                    </div>
+                    <div class="case-link mono" style="margin-top: 26px;"><span>View Case Study</span><span>↗</span></div>
+                  </div>
+                </div>
+                <div class="project-media"><img src="https://picsum.photos/seed/sorting/1400/900" alt="蔬东坡智能分拣系统" /></div>
+              </div>
+            </article>
+            <article class="project-card">
+              <div class="project-meta mono"><span>03</span><span class="line"></span><span>电商 / 体验升级</span></div>
+              <h3 class="project-title">周大福<br />官方小程序改版</h3>
+              <div class="project-content">
+                <div class="project-body">
+                  <p>针对高客单价珠宝类商品决策成本高的特点，优化品牌入口与详情页信息重构，在保持品牌调性的同时降低用户决策疑虑，提升下单转化率。</p>
+                  <div>
+                    <div class="tag-list mono">
+                      <span class="tag">电商</span>
+                      <span class="tag">改版设计</span>
+                      <span class="tag">品牌视觉</span>
+                    </div>
+                    <div class="case-link mono" style="margin-top: 26px;"><span>View Case Study</span><span>↗</span></div>
+                  </div>
+                </div>
+                <div class="project-media"><img src="https://picsum.photos/seed/jewelry/1400/900" alt="周大福官方小程序改版" /></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="history" id="experience">
+        <div class="container history-grid">
+          <div class="history-panel">
+            <h2 class="section-display">HISTORY<span class="sub">工作经历</span></h2>
+          </div>
+          <div class="timeline">
+            <article class="timeline-item">
+              <div class="period mono">2023.06 — 至今</div>
+              <div><h3>汇付信息科技（深圳）有限公司</h3></div>
+              <div><h4>UI/UX 设计师</h4><p>负责生鲜智能分拣 SaaS 系统核心场景体验设计。搭建设计侧 AI 工作流，输出标准化 3D 视觉资产，提升设计协作效率与业务识别准确率。</p></div>
+            </article>
+            <article class="timeline-item">
+              <div class="period mono">2022.04 — 2023.05</div>
+              <div><h3>腾讯科技（WeChat Pay HK 项目组）</h3></div>
+              <div><h4>UI/UX 设计师</h4><p>主导电讯缴费与绑卡链路优化。参与香港钱包全站设计规范维护，适配多语种逻辑，沉淀 30+ 金融核心组件，确保跨团队视觉一致性。</p></div>
+            </article>
+            <article class="timeline-item">
+              <div class="period mono">2020.11 — 2022.04</div>
+              <div><h3>周大福在线传媒有限公司</h3></div>
+              <div><h4>UI 设计师</h4><p>负责官方小程序体验升级。平衡品牌与转化，通过优化详情页信息层级与品牌集合页设计，降低用户决策疑虑，提升下单转化率。</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="skills" id="skills">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="section-display">EXPERTISE<span class="sub">专业技能</span></h2>
+            <div class="section-copy">
+              <p>“设计 / 技术 / 策略的完美融合。深耕 UI/UX 领域，并积极探索 AI 与设计的无限可能。通过 AIGC 工作流赋能创意，致力于构建更智能、更具温度的数字产品体验。”</p>
+            </div>
+          </div>
+          <div class="skill-grid">
+            <article class="skill-card"><div class="number mono">01</div><h3>AI 设计协作</h3><ul><li>Figma + Codex</li><li>AIGC 工作流</li></ul></article>
+            <article class="skill-card"><div class="number mono">02</div><h3>产品与界面设计</h3><ul><li>Figma</li><li>Photoshop</li><li>Illustrator</li></ul></article>
+            <article class="skill-card"><div class="number mono">03</div><h3>动效与视觉表达</h3><ul><li>After Effects</li><li>Lottie</li></ul></article>
+            <article class="skill-card"><div class="number mono">04</div><h3>AI 应用实践</h3><ul><li>Midjourney</li><li>Gemini</li><li>Claude</li></ul></article>
+          </div>
+        </div>
+      </section>
+      <section class="contact" id="contact">
+        <div class="container">
+          <div class="contact-grid">
+            <div>
+              <h2 class="section-display">TALK<span class="sub">期待合作</span></h2>
+              <div class="contact-list">
+                <div class="contact-row"><div class="contact-icon">✉</div><div><p class="contact-label mono">邮箱</p><p class="contact-value">linabbie@163.com</p></div></div>
+                <div class="contact-row"><div class="contact-icon">☎</div><div><p class="contact-label mono">电话</p><p class="contact-value">18576406631</p></div></div>
+                <div class="contact-row"><div class="contact-icon">◫</div><div><p class="contact-label mono">微信</p><p class="contact-value">Abbie0-5</p></div></div>
+              </div>
+            </div>
+            <div class="contact-copy">
+              <p>“我热衷于探索 AI 技术如何重塑 UI/UX 设计，致力于将前沿技术转化为直观、高效的用户体验。”</p>
+              <p>目前正在寻求新的机会和有趣的合作。如果您对 AI 赋能设计或复杂系统体验升级感兴趣，随时欢迎与我联系！</p>
+              <div class="contact-cta" aria-hidden="true">↗</div>
+            </div>
+          </div>
+          <footer class="footer">
+            <div class="footer-brand"><strong>ABBIE.</strong><div class="footer-small mono">© 2024 Portfolio. All Rights Reserved.</div></div>
+            <div class="socials mono"><span>LinkedIn</span><span>Dribbble</span><span>Behance</span></div>
+          </footer>
+        </div>
+      </section>
+    </main>
+    <script>
+      const progress = document.getElementById("progress");
+      const nav = document.getElementById("nav");
+      const menuButton = document.getElementById("menuButton");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const menuLinks = mobileMenu.querySelectorAll("a");
+      function updateScrollState() {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+        progress.style.transform = `scaleX(${ratio})`;
+        nav.classList.toggle("is-scrolled", window.scrollY > 30);
+      }
+      function toggleMenu() {
+        const open = mobileMenu.classList.toggle("is-open");
+        menuButton.textContent = open ? "×" : "+";
+      }
+      window.addEventListener("scroll", updateScrollState, { passive: true });
+      updateScrollState();
+      menuButton.addEventListener("click", toggleMenu);
+      menuLinks.forEach((link) => link.addEventListener("click", () => {
+        mobileMenu.classList.remove("is-open");
+        menuButton.textContent = "+";
+      }));
+    </script>
+  </body>
+</html>

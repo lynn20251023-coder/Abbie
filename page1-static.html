@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abbie Portfolio Page1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;1,700;1,800&family=Inter:wght@400;700&family=JetBrains+Mono:wght@400&family=Noto+Serif+SC:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+    <style>
+      @font-face {
+        font-family: "FontName";
+        src: local("FontName");
+        font-display: swap;
+      }
+
+      :root {
+        --page-width: 1602px;
+        --content-width: 1280px;
+        --ink: #101114;
+        --muted: #757984;
+        --soft: #9fa3ae;
+        --line: #dfe1e6;
+        --paper: #ffffff;
+        --paper-alt: #fcfcfc;
+        --hero: #050505;
+        --dark-card: #050505;
+        --dark-border: #18181a;
+        --serif: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", serif;
+        --display: "FontName", "Barlow Condensed", "Arial Narrow", sans-serif;
+        --brand: "Space Grotesk", sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, monospace;
+        --ui: "Inter", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-width: var(--page-width);
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--serif);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+      }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; width: 100%; height: auto; }
+
+      .frame-1602 { width: var(--page-width); margin: 0 auto; }
+      .container-1280 { width: var(--content-width); margin: 0 auto; position: relative; }
+      .mono {
+        font-family: var(--mono);
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+      }
+      .display-italic {
+        display: inline-block;
+        font-family: var(--display);
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: -0.08em;
+        text-transform: uppercase;
+      }
+      .brand-font {
+        font-family: var(--brand);
+        font-style: normal;
+        font-weight: 700;
+        letter-spacing: -0.07em;
+      }
+
+      .top-line {
+        position: fixed;
+        inset: 0 0 auto;
+        height: 4px;
+        background: linear-gradient(90deg, #27282d 0%, #696c76 100%);
+        transform-origin: left center;
+        transform: scaleX(var(--scroll-progress, 0));
+        z-index: 200;
+      }
+      .nav {
+        position: fixed;
+        inset: 4px 0 auto;
+        z-index: 180;
+        height: 88px;
+        background: rgba(5, 5, 5, 0.96);
+        transition: background 220ms ease, box-shadow 220ms ease;
+      }
+      .nav.is-light {
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 1px 0 rgba(16, 17, 20, 0.06);
+      }
+      .nav .container-1280 {
+        height: 88px;
+      }
+      .nav-inner {
+        position: relative;
+        height: 88px;
+      }
+      .nav-brand {
+        position: absolute;
+        left: 0;
+        top: 31px;
+        font-size: 20px;
+        line-height: 24px;
+        color: #ffffff;
+        transition: color 220ms ease;
+      }
+      .nav.is-light .nav-brand { color: var(--ink); }
+      .nav-links {
+        position: absolute;
+        right: 0;
+        top: 37px;
+        display: flex;
+        gap: 48px;
+      }
+      .nav-links a {
+        font-family: var(--serif);
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #a1a1aa;
+        transition: opacity 180ms ease, color 180ms ease;
+      }
+      .nav-links a.is-active {
+        color: rgba(255,255,255,0.78);
+      }
+      .nav.is-light .nav-links a.is-active {
+        color: #101114;
+      }
+      .nav-links a:hover,
+      .fine-link:hover { opacity: 0.58; }
+
+      .hero {
+        background: var(--hero);
+        height: 898px;
+        overflow: hidden;
+      }
+      .hero-stage {
+        position: relative;
+        height: 898px;
+      }
+      .hero-copy-shell {
+        position: absolute;
+        left: 0;
+        top: 314px;
+        width: 1602px;
+        height: 326px;
+      }
+      .hero-left {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1016px;
+        height: 326px;
+      }
+      .hero-right {
+        position: absolute;
+        left: 1034px;
+        top: 107px;
+        width: 480px;
+      }
+      .hero-role {
+        position: absolute;
+        left: 88px;
+        top: -8px;
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 0.48em;
+        color: #646771;
+      }
+      .hero-name {
+        position: absolute;
+        left: 88px;
+        top: 61px;
+        margin: 0;
+        display: inline-block;
+        font-family: var(--display);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 155px;
+        line-height: 128px;
+        letter-spacing: -11.21px;
+        text-transform: uppercase;
+        color: #ffffff;
+      }
+      .hero-portfolio {
+        position: absolute;
+        left: 88px;
+        top: 197px;
+        margin: 0;
+        display: inline-block;
+        font-family: var(--display);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 160.2px;
+        line-height: 128px;
+        letter-spacing: -6px;
+        text-transform: uppercase;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.18);
+      }
+      .hero-summary {
+        margin: 18px 0 0;
+        font-size: 20px;
+        line-height: 34px;
+        color: #a1a1aa;
+      }
+      .hero-scroll {
+        margin-top: 50px;
+      }
+      .hero-scroll-line {
+        width: 217px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+        margin-bottom: 18px;
+      }
+      .hero-scroll span { color: #71717a; letter-spacing: 0.3em; }
+      .hero-uiux {
+        position: absolute;
+        left: 576px;
+        top: 588px;
+        margin: 0;
+        display: inline-block;
+        font-family: var(--display);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 544.68px;
+        line-height: 414px;
+        letter-spacing: -43.57px;
+        color: rgba(255, 255, 255, 0.05);
+        user-select: none;
+        pointer-events: none;
+        will-change: transform;
+      }
+
+      .section-title {
+        margin: 0;
+        display: inline-block;
+        font-family: var(--display);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 128.16px;
+        line-height: 105px;
+        letter-spacing: -10.25px;
+        text-transform: uppercase;
+      }
+      .section-subtitle {
+        margin: 9px 0 0;
+        font-size: 48.06px;
+        line-height: 39px;
+        letter-spacing: -1.44px;
+        color: #dedfe5;
+      }
+      .section-body-copy,
+      .section-note {
+        margin: 0;
+        font-size: 18px;
+        line-height: 31px;
+      }
+
+      .works {
+        background: var(--paper);
+        padding: 129px 0 129px;
+      }
+      .works-head {
+        display: grid;
+        grid-template-columns: 680px 544px;
+        justify-content: space-between;
+        align-items: end;
+        min-height: 144px;
+      }
+      .works-copy {
+        padding-top: 42px;
+      }
+      .works-copy .section-body-copy { color: #5f636e; }
+      .works-copy .mono { display: block; margin-top: 27px; color: #a0a4af; letter-spacing: 0.28em; }
+      .works-grid {
+        margin-top: 96px;
+        display: grid;
+        grid-template-columns: 639px 639px;
+        grid-template-rows: 655px 568px;
+        gap: 1px;
+        background: #e7e7ea;
+        border: 1px solid #e7e7ea;
+      }
+      .work-card {
+        background: #ffffff;
+        overflow: hidden;
+        transition: background 700ms cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .work-card:hover {
+        background: #fcfcfd;
+      }
+      .work-card.featured { grid-column: 1 / span 2; }
+      .work-pad { padding: 48px; height: 100%; }
+      .work-meta {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: #9fa3ae;
+      }
+      .work-meta .line {
+        width: 28px;
+        height: 1px;
+        background: #dfe1e6;
+      }
+      .work-category {
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 3.5px;
+        text-transform: uppercase;
+        color: #9fa3ae;
+      }
+      .work-title-lg,
+      .work-title-sm {
+        margin: 0;
+        font-family: var(--serif);
+        font-style: normal;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: -3.36px;
+      }
+      .work-title-lg {
+        width: 430px;
+        font-size: 56px;
+        line-height: 67px;
+      }
+      .work-title-sm {
+        font-size: 56px;
+        line-height: 65px;
+      }
+      .featured-layout {
+        display: grid;
+        grid-template-columns: 518px 633px;
+        gap: 32px;
+        margin-top: 40px;
+        align-items: end;
+      }
+      .featured-copy {
+        min-height: 407px;
+        display: flex;
+        flex-direction: column;
+      }
+      .work-desc {
+        margin: 75px 0 0;
+        font-size: 17px;
+        line-height: 31px;
+        color: #757984;
+      }
+      .work-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        margin-top: auto;
+        padding-top: 44px;
+      }
+      .work-tag {
+        display: inline-block;
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        color: #8f949e;
+      }
+      .case-study {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 26px;
+        font-family: var(--mono);
+        font-size: 10px;
+        line-height: 12px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--ink);
+        transition: transform 300ms cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .work-card:hover .case-study {
+        transform: translateX(3px);
+      }
+      .work-image {
+        background: #f3f3f3;
+        overflow: hidden;
+      }
+      .work-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(0.08) brightness(0.985);
+        transition: transform 1000ms cubic-bezier(0.19, 1, 0.22, 1), filter 1000ms cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .work-card:hover .work-image img {
+        transform: scale(1.035);
+        filter: grayscale(0) brightness(1);
+      }
+      .work-image.large { width: 633px; height: 407px; }
+      .small-card-flow {
+        margin-top: 39px;
+      }
+      .work-title-sm--dongpo { max-width: 315.84px; }
+      .work-title-sm--ctf { max-width: 368.48px; }
+      .small-detail-layout {
+        display: grid;
+        grid-template-columns: 230px 281px;
+        gap: 32px;
+        margin-top: 29px;
+        align-items: start;
+      }
+      .small-copy { display: flex; flex-direction: column; min-height: 260px; }
+      .small-copy .work-desc { margin-top: 0; }
+      .work-image.small { width: 281px; height: 260px; margin-top: 0; }
+
+      .history {
+        background: #fcfcfc;
+        padding: 128px 0 129px;
+      }
+      .history-grid {
+        display: grid;
+        grid-template-columns: 447px 769px;
+        gap: 64px;
+      }
+      .history-head {
+        position: relative;
+        padding-top: 128px;
+      }
+      .history-head .section-title,
+      .history-head .section-subtitle { margin-left: -73px; }
+      .history-list {
+        padding-top: 0;
+      }
+      .history-item {
+        display: grid;
+        grid-template-columns: 202px 226px 261px;
+        column-gap: 40px;
+        padding: 64px 0 64px 32px;
+        border-top: 1px solid #e5e7eb;
+      }
+      .history-item:last-child { border-bottom: 1px solid #e5e7eb; }
+      .history-period { color: #9ea3ae; }
+      .history-company,
+      .history-role {
+        margin: 0;
+        font-family: var(--serif);
+        font-style: normal;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .history-company {
+        font-size: 25px;
+        line-height: 32px;
+        letter-spacing: -1.25px;
+      }
+      .history-role {
+        font-size: 24px;
+        line-height: 30px;
+        letter-spacing: -1.2px;
+      }
+      .history-desc {
+        margin-top: 16px;
+        font-size: 17px;
+        line-height: 31px;
+        color: #7b7f8a;
+      }
+
+      .expertise {
+        background: #050505;
+        padding: 128px 0;
+        color: #ffffff;
+      }
+      .expertise-head {
+        display: grid;
+        grid-template-columns: 680px 544px;
+        justify-content: space-between;
+        align-items: end;
+        min-height: 144px;
+      }
+      .expertise .section-title { color: #ffffff; }
+      .expertise .section-subtitle { color: rgba(255, 255, 255, 0.14); }
+      .expertise-copy {
+        padding-top: 0;
+      }
+      .expertise-copy p {
+        margin: 0;
+        font-size: 18px;
+        line-height: 31px;
+        color: #9195a0;
+      }
+      .skill-grid {
+        margin-top: 96px;
+        display: grid;
+        grid-template-columns: repeat(4, 319px);
+        gap: 1px;
+        background: #18181a;
+        border: 1px solid #18181a;
+      }
+      .skill-card {
+        min-height: 340px;
+        padding: 48px;
+        background: #050505;
+        transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+      }
+      .skill-card:hover {
+        transform: translateY(-3px);
+        background: #080809;
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+      }
+      .skill-index {
+        margin: 0 0 54px;
+        color: #626671;
+      }
+      .skill-title {
+        margin: 0 0 34px;
+        font-family: var(--ui);
+        font-size: 24px;
+        line-height: 29px;
+        letter-spacing: -1.2px;
+        font-weight: 700;
+        color: #ffffff;
+      }
+      .skill-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .skill-list li {
+        margin: 0;
+        font-size: 16px;
+        line-height: 30px;
+        color: #8f939d;
+      }
+
+      .talk {
+        background: #ffffff;
+        padding: 128px 0 127px;
+      }
+      .talk-grid {
+        display: grid;
+        grid-template-columns: 612px 612px;
+        gap: 56px;
+      }
+      .talk-list {
+        margin-top: 58px;
+      }
+      .talk-row + .talk-row { margin-top: 34px; }
+      .talk-link,
+      .talk-static {
+        display: block;
+        transition: opacity 180ms ease, transform 180ms ease;
+      }
+      .talk-link:hover,
+      .talk-static:hover { opacity: 0.68; transform: translateX(2px); }
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(22px);
+        transition: opacity 520ms cubic-bezier(0.22, 1, 0.36, 1), transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+      .talk-row-inner {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        column-gap: 16px;
+        align-items: start;
+      }
+      .talk-icon {
+        padding-top: 10px;
+        font-size: 24px;
+        line-height: 1;
+        color: #555963;
+      }
+      .talk-label {
+        margin: 0 0 6px;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #9ca0ab;
+      }
+      .talk-value {
+        margin: 0;
+        font-size: 24px;
+        line-height: 29px;
+        letter-spacing: -0.72px;
+        font-weight: 600;
+        color: var(--ink);
+        word-break: break-word;
+      }
+      .talk-copy {
+        padding-top: 203px;
+      }
+      .talk-copy p {
+        margin: 0 0 22px;
+        font-size: 18px;
+        line-height: 32px;
+        color: #6f737e;
+      }
+      .underline { text-decoration: underline; text-underline-offset: 4px; }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        margin-top: 192px;
+      }
+      .footer-left { padding-top: 64px; }
+      .footer-brand {
+        font-family: var(--brand);
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 700;
+        letter-spacing: -1.4px;
+        color: var(--ink);
+      }
+      .footer-copy {
+        margin-top: 12px;
+        color: #9ca0ab;
+        letter-spacing: 0.4em;
+      }
+      .footer-links {
+        display: flex;
+        gap: 28px;
+        color: #9ca0ab;
+        letter-spacing: 0.4em;
+      }
+
+      @media (max-width: 1680px) {
+        body { min-width: 0; }
+        .frame-1602 { width: 100%; }
+        .container-1280 { width: min(1280px, calc(100vw - 48px)); }
+        .nav-links { gap: 36px; }
+        .hero-copy-shell { width: 100%; }
+        .hero-left { width: 60%; }
+        .hero-right { left: auto; right: 88px; }
+        .hero-uiux { left: auto; right: -80px; }
+      }
+      @media (max-width: 1280px) {
+        .nav-brand,
+        .nav-links { position: static; }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+        .hero,
+        .hero-stage { height: auto; }
+        .hero-stage { padding: 210px 24px 96px; }
+        .hero-copy-shell { position: relative; left: auto; top: auto; width: 100%; height: auto; display: grid; gap: 52px; }
+        .hero-left,
+        .hero-right { position: relative; left: auto; right: auto; top: auto; width: 100%; height: auto; }
+        .hero-role,
+        .hero-name,
+        .hero-portfolio,
+        .hero-uiux { position: relative; left: auto; top: auto; }
+        .hero-role { margin-bottom: 42px; }
+        .hero-name { font-size: 120px; line-height: 0.82; }
+        .hero-portfolio { font-size: 124px; line-height: 0.82; margin-top: 18px; }
+        .hero-summary { margin-top: 0; }
+        .hero-uiux { margin-top: 24px; font-size: 260px; line-height: 0.78; }
+        .works-head,
+        .expertise-head,
+        .history-grid,
+        .talk-grid { grid-template-columns: 1fr; gap: 48px; }
+        .history-head .section-title,
+        .history-head .section-subtitle { margin-left: 0; }
+        .works-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+        .work-card.featured { grid-column: auto; }
+        .featured-layout,
+        .small-detail-layout { grid-template-columns: 1fr; }
+        .work-image.small { margin-top: 32px; width: 100%; }
+        .skill-grid { grid-template-columns: repeat(2, 1fr); }
+        .history-item { grid-template-columns: 1fr; row-gap: 20px; }
+        .footer { flex-direction: column; align-items: flex-start; gap: 24px; }
+      }
+      @media (max-width: 760px) {
+        .container-1280 { width: calc(100vw - 28px); }
+        .nav-links { gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+        .nav-links a { font-size: 9px; }
+        .hero-stage { padding-top: 176px; }
+        .hero-name { font-size: 82px; }
+        .hero-portfolio,
+        .section-title { font-size: 84px; }
+        .section-subtitle { font-size: 32px; line-height: 0.95; }
+        .skill-grid { grid-template-columns: 1fr; }
+        .talk-value { font-size: 20px; line-height: 25px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-line"></div>
+    <nav class="nav" id="site-nav">
+      <div class="container-1280 nav-inner">
+        <a class="nav-brand brand-font" href="#top">ABBIE.</a>
+        <div class="nav-links">
+          <a href="#works">作品展示</a>
+          <a href="#experience">工作经历</a>
+          <a href="#skills">专业技能</a>
+          <a href="#contact">联系我</a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero frame-1602" id="top">
+      <div class="hero-stage frame-1602">
+        <div class="hero-copy-shell">
+          <div class="hero-left">
+            <div class="hero-role mono">UI/UX 设计师 / 5年经验</div>
+            <h1 class="hero-name">ABBIE</h1>
+            <div class="hero-portfolio">PORTFOLIO</div>
+          </div>
+          <div class="hero-right">
+            <p class="hero-summary">“具备5年 B端 SaaS、支付系统及小程序增长场景经验。熟练运用 Figma + AI 工作流，擅长 AIGC 视觉资产生产与复杂场景设计。致力于通过清晰的界面表达和规范化设计，推动高质量方案落地。”</p>
+            <div class="hero-scroll">
+              <div class="hero-scroll-line"></div>
+              <span class="mono">Scroll to explore</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-uiux">UIUX</div>
+      </div>
+    </section>
+
+    <section class="works frame-1602" id="works">
+      <div class="container-1280">
+        <div class="works-head">
+          <div>
+            <h2 class="section-title">WORKS</h2>
+            <p class="section-subtitle">作品展示</p>
+          </div>
+          <div class="works-copy">
+            <p class="section-body-copy">“涵盖金融科技、SaaS 系统及电商零售领域的项目集合，专注于以用户为中心的解决方案与卓越的视觉表现。”</p>
+            <span class="mono">Portfolio / 2020-2026</span>
+          </div>
+        </div>
+
+        <div class="works-grid">
+          <article class="work-card featured">
+            <div class="work-pad">
+              <div class="work-meta">
+                <span class="mono">01</span>
+                <span class="line"></span>
+                <span class="work-category">金融科技 / UX 优化</span>
+              </div>
+              <div class="featured-layout">
+                <div class="featured-copy">
+                  <h3 class="work-title-lg">WeChat Pay HK<br />体验优化</h3>
+                  <p class="work-desc">聚焦香港本地用户的支付体验优化，围绕核心链路、本地化习惯与增长路径进行设计调整，在提升操作流畅度的同时增强产品的安全感与信任感。</p>
+                  <div class="work-tags">
+                    <span class="work-tag">UI/UX</span>
+                    <span class="work-tag">金融科技</span>
+                    <span class="work-tag">流程优化</span>
+                  </div>
+                  <a class="case-study fine-link" href="./public/zpj/WeChat%20Pay%20HK.pdf" target="_blank" rel="noreferrer">View Case Study <span>↗</span></a>
+                </div>
+                <div class="work-image large">
+                  <img src="https://www.figma.com/api/mcp/asset/deb51002-e180-4875-8bbd-3345636d4900" alt="WeChat Pay HK 体验优化" />
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="work-card">
+            <div class="work-pad">
+              <div class="work-meta">
+                <span class="mono">02</span>
+                <span class="line"></span>
+                <span class="work-category">B端 SaaS / 体验设计</span>
+              </div>
+              <div class="small-card-flow">
+                <h3 class="work-title-sm work-title-sm--dongpo">蔬东坡<br />智能分拣系统</h3>
+                <div class="small-detail-layout">
+                  <div class="small-copy">
+                    <p class="work-desc">围绕生鲜智能分拣 SaaS 核心作业场景，优化触屏交互、信息层级与状态反馈，提升一线操作效率。并将 AI 应用于视觉资产生产与设计交付协作。</p>
+                    <div class="work-tags">
+                      <span class="work-tag">SaaS</span>
+                      <span class="work-tag">B端</span>
+                      <span class="work-tag">交互设计</span>
+                    </div>
+                    <a class="case-study fine-link" href="./public/zpj/%E6%99%BA%E8%83%BD%E5%88%86%E6%8B%A3%E7%B3%BB%E7%BB%9F.pdf" target="_blank" rel="noreferrer">View Case Study <span>↗</span></a>
+                  </div>
+                  <div class="work-image small">
+                    <img src="https://www.figma.com/api/mcp/asset/bc527d1c-b93b-4ffe-99da-0446686edf83" alt="蔬东坡智能分拣系统" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="work-card">
+            <div class="work-pad">
+              <div class="work-meta">
+                <span class="mono">03</span>
+                <span class="line"></span>
+                <span class="work-category">电商 / 体验升级</span>
+              </div>
+              <div class="small-card-flow">
+                <h3 class="work-title-sm work-title-sm--ctf">周大福<br />官方小程序改版</h3>
+                <div class="small-detail-layout">
+                  <div class="small-copy">
+                    <p class="work-desc">针对高客单价珠宝类商品决策成本高的特点，优化品牌入口与详情页信息重构，在保持品牌调性的同时降低用户决策疑虑，提升下单转化率。</p>
+                    <div class="work-tags">
+                      <span class="work-tag">电商</span>
+                      <span class="work-tag">改版设计</span>
+                      <span class="work-tag">品牌视觉</span>
+                    </div>
+                    <a class="case-study fine-link" href="./public/zpj/chowtaifook.pdf" target="_blank" rel="noreferrer">View Case Study <span>↗</span></a>
+                  </div>
+                  <div class="work-image small">
+                    <img src="https://www.figma.com/api/mcp/asset/11639793-aa19-4ba2-b43d-2552536ea07f" alt="周大福官方小程序改版" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="history frame-1602" id="experience">
+      <div class="container-1280 history-grid">
+        <div class="history-head">
+          <h2 class="section-title">HISTORY</h2>
+          <p class="section-subtitle">工作经历</p>
+        </div>
+        <div class="history-list">
+          <article class="history-item">
+            <div>
+              <div class="mono history-period">2023.06 — 至今</div>
+            </div>
+            <div>
+              <h3 class="history-company">汇付信息科技（深圳）有限公司</h3>
+            </div>
+            <div>
+              <h4 class="history-role">UI/UX 设计师</h4>
+              <div class="history-desc">负责生鲜智能分拣 SaaS 系统核心场景体验设计。搭建设计侧 AI 工作流，输出标准化 3D 视觉资产，提升设计协作效率与业务识别准确率。</div>
+            </div>
+          </article>
+          <article class="history-item">
+            <div>
+              <div class="mono history-period">2022.04 — 2023.05</div>
+            </div>
+            <div>
+              <h3 class="history-company">腾讯科技（WeChat Pay HK 项目组）</h3>
+            </div>
+            <div>
+              <h4 class="history-role">UI/UX 设计师</h4>
+              <div class="history-desc">主导电讯缴费与绑卡链路优化。参与香港钱包全站设计规范维护，适配多语种逻辑，沉淀 30+ 金融核心组件，确保跨团队视觉一致性。</div>
+            </div>
+          </article>
+          <article class="history-item">
+            <div>
+              <div class="mono history-period">2020.11 — 2022.04</div>
+            </div>
+            <div>
+              <h3 class="history-company">周大福在线传媒有限公司</h3>
+            </div>
+            <div>
+              <h4 class="history-role">UI 设计师</h4>
+              <div class="history-desc">负责官方小程序体验升级。平衡品牌与转化，通过优化详情页信息层级与品牌集合页设计，降低用户决策疑虑，提升下单转化率。</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="expertise frame-1602" id="skills">
+      <div class="container-1280">
+        <div class="expertise-head">
+          <div>
+            <h2 class="section-title">EXPERTISE</h2>
+            <p class="section-subtitle">专业技能</p>
+          </div>
+          <div class="expertise-copy">
+            <p>“设计 / 技术 / 策略的完美融合。深耕 UI/UX 领域，并积极探索 AI 与设计的无限可能。通过 AIGC 工作流赋能创意，致力于构建更智能、更具温度的数字产品体验。”</p>
+          </div>
+        </div>
+        <div class="skill-grid">
+          <article class="skill-card">
+            <p class="mono skill-index">01</p>
+            <h3 class="skill-title">AI 设计协作</h3>
+            <ul class="skill-list">
+              <li>· Figma + Codex</li>
+              <li>· AIGC 工作流</li>
+            </ul>
+          </article>
+          <article class="skill-card">
+            <p class="mono skill-index">02</p>
+            <h3 class="skill-title">产品与界面设计</h3>
+            <ul class="skill-list">
+              <li>· Figma</li>
+              <li>· Photoshop</li>
+              <li>· Illustrator</li>
+            </ul>
+          </article>
+          <article class="skill-card">
+            <p class="mono skill-index">03</p>
+            <h3 class="skill-title">动效与视觉表达</h3>
+            <ul class="skill-list">
+              <li>· After Effects</li>
+              <li>· Lottie</li>
+            </ul>
+          </article>
+          <article class="skill-card">
+            <p class="mono skill-index">04</p>
+            <h3 class="skill-title">AI 应用实践</h3>
+            <ul class="skill-list">
+              <li>· Midjourney</li>
+              <li>· Gemini</li>
+              <li>· Claude</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="talk frame-1602" id="contact">
+      <div class="container-1280">
+        <div class="talk-grid">
+          <div>
+            <h2 class="section-title">TALK</h2>
+            <p class="section-subtitle">期待合作</p>
+            <div class="talk-list">
+              <div class="talk-row">
+                <a class="talk-link" href="mailto:linabbie@163.com">
+                  <div class="talk-row-inner">
+                    <span class="talk-icon">📮</span>
+                    <div>
+                      <p class="talk-label">邮箱</p>
+                      <p class="talk-value">linabbie@163.com</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="talk-row">
+                <a class="talk-link" href="tel:18576406631">
+                  <div class="talk-row-inner">
+                    <span class="talk-icon">☎️</span>
+                    <div>
+                      <p class="talk-label">电话</p>
+                      <p class="talk-value">18576406631</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="talk-row">
+                <div class="talk-static">
+                  <div class="talk-row-inner">
+                    <span class="talk-icon">💬</span>
+                    <div>
+                      <p class="talk-label">微信</p>
+                      <p class="talk-value">Abbie0-5</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="talk-row">
+                <a class="talk-link" href="./public/zpj/%E6%9E%97%E6%80%9D%E5%BD%A4-5%E5%B9%B4AI%2BUIUX%E8%AE%BE%E8%AE%A1%E7%BB%8F%E9%AA%8C-%E4%BD%9C%E5%93%81%E9%9B%86.pdf" target="_blank" rel="noreferrer">
+                  <div class="talk-row-inner">
+                    <span class="talk-icon">🙋</span>
+                    <div>
+                      <p class="talk-label">作品集pdf</p>
+                      <p class="talk-value">林思彤-5年AI+UIUX设计经验-作品集</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="talk-row">
+                <a class="talk-link" href="https://figma-cursor-collab.vercel.app/" target="_blank" rel="noreferrer">
+                  <div class="talk-row-inner">
+                    <span class="talk-icon">🖥️</span>
+                    <div>
+                      <p class="talk-label">Demo演示</p>
+                      <p class="talk-value underline">Figma*AI demo html</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="talk-copy">
+            <p>“我热衷于探索 AI 技术如何重塑 UI/UX 设计，致力于将前沿技术转化为直观、高效的用户体验。”</p>
+            <p>目前正在寻求新的机会和有趣的合作。如果您对 AI 赋能设计或复杂系统体验升级感兴趣，随时欢迎与我联系！</p>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div class="footer-left">
+            <div class="footer-brand">ABBIE.</div>
+            <div class="mono footer-copy">© 2026 Portfolio. All Rights Reserved.</div>
+          </div>
+          <div class="footer-links mono">
+            <a href="#">LinkedIn</a>
+            <a href="#">Dribbble</a>
+            <a href="#">Behance</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+
+    <script>
+      const nav = document.getElementById('site-nav');
+      const hero = document.getElementById('top');
+      const expertise = document.getElementById('skills');
+      const progress = document.querySelector('.top-line');
+      const heroGhost = document.querySelector('.hero-uiux');
+      const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+      const revealTargets = Array.from(document.querySelectorAll('.works-head, .work-card, .history-head, .history-item, .expertise-head, .skill-card, .talk-grid, .footer'));
+      revealTargets.forEach((el) => el.classList.add('reveal-on-scroll'));
+
+      const setActiveLink = () => {
+        const sections = ['works', 'experience', 'skills', 'contact']
+          .map((id) => document.getElementById(id))
+          .filter(Boolean);
+        let activeId = 'works';
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 140 && rect.bottom > 140) activeId = section.id;
+        });
+        navLinks.forEach((link) => {
+          const isActive = link.getAttribute('href') === `#${activeId}`;
+          link.classList.toggle('is-active', isActive);
+        });
+      };
+
+      const syncScrollFx = () => {
+        const scrollTop = window.scrollY || window.pageYOffset;
+        const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+        document.documentElement.style.setProperty('--scroll-progress', String(Math.min(scrollTop / maxScroll, 1)));
+
+        const heroBottom = hero.offsetTop + hero.offsetHeight;
+        const expertiseTop = expertise.offsetTop;
+        const expertiseBottom = expertiseTop + expertise.offsetHeight;
+        const inDark = scrollTop < heroBottom - 140 || (scrollTop >= expertiseTop - 120 && scrollTop < expertiseBottom - 120);
+        nav.classList.toggle('is-light', !inDark);
+
+        if (heroGhost) {
+          const x = Math.min(scrollTop * 0.05, 56);
+          const y = Math.min(scrollTop * 0.02, 24);
+          heroGhost.style.transform = `translate3d(${x}px, ${y}px, 0) skewX(-11deg) scaleX(0.9)`;
+        }
+        setActiveLink();
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        });
+      }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+
+      revealTargets.forEach((el) => observer.observe(el));
+      syncScrollFx();
+      window.addEventListener('scroll', syncScrollFx, { passive: true });
+      window.addEventListener('resize', syncScrollFx);
+    </script>
+  </body>
+</html>
