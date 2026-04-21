@@ -20,6 +20,7 @@ function toSibling(p: Project): CaseSibling {
     href: p.detailHref,
     accentVar: ACCENT_BY_SLUG[p.detailSlug] ?? "--case-ai",
     coverImage: p.coverImage,
+    prefetchHint: p.casePages?.[0],
   };
 }
 

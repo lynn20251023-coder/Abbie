@@ -19,6 +19,8 @@ export interface CaseSibling {
   href: string;
   accentVar: string;
   coverImage?: string;
+  /** First image of the target case — prefetched on hover for near-instant next navigation. */
+  prefetchHint?: string;
 }
 
 interface CaseViewerProps {
@@ -280,13 +282,33 @@ export default function CaseViewer({
  * color on hover, so the transition to the next case feels like stepping into
  * its identity before you click.
  */
+function prefetchResource(url: string) {
+  if (typeof document === "undefined") return;
+  // Avoid duplicates — if a link with this href already exists, bail.
+  const existing = document.head.querySelector(`link[rel="prefetch"][href="${CSS.escape(url)}"]`);
+  if (existing) return;
+  const link = document.createElement("link");
+  link.rel = "prefetch";
+  link.as = "image";
+  link.href = url;
+  document.head.appendChild(link);
+}
+
 function SiblingLink({ side, sibling }: { side: "prev" | "next"; sibling: CaseSibling }) {
   const isNext = side === "next";
   const targetAccent = { ["--sibling-accent" as string]: `var(${sibling.accentVar})` } as CSSProperties;
 
+  const onIntent = () => {
+    if (sibling.prefetchHint) prefetchResource(sibling.prefetchHint);
+    if (sibling.coverImage) prefetchResource(sibling.coverImage);
+  };
+
   return (
     <a
       href={sibling.href}
+      onMouseEnter={onIntent}
+      onFocus={onIntent}
+      onTouchStart={onIntent}
       className={`group relative flex flex-col justify-between overflow-hidden px-6 py-10 text-[var(--ink-900)] transition-colors duration-[var(--dur-base)] ease-[var(--ease-editorial)] md:px-10 md:py-14 ${
         isNext ? "md:text-right md:border-l md:border-[var(--line)]" : ""
       }`}
