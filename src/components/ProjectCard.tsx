@@ -160,8 +160,6 @@ function ProjectMedia({
     <img
       src={project.images[0]}
       alt={project.title}
-      loading="lazy"
-      decoding="async"
       className={`absolute max-w-none object-contain ${imageClass}`}
     />
   );

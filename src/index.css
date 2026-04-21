@@ -1,14 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;1,700;1,800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;600;700&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Space+Grotesk:wght@700&family=JetBrains+Mono:wght@400&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
 @theme {
   --font-sans: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
-  --font-display: "Arial Narrow", "Impact", "Helvetica Neue Condensed", sans-serif;
-  --font-brand: "Arial Narrow", "Inter", system-ui, sans-serif;
+  --font-display: "Tencent Sans", "FontName", "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-brand: "Space Grotesk", sans-serif;
   --font-serif: "Noto Serif SC", serif;
-  --font-ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-ui: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -48,6 +49,68 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@font-face {
+  font-family: "FontName";
+  src:
+    url("/fonts/tencentsans-w7.ttf") format("truetype"),
+    local("FontName"),
+    local("TencentSansW7"),
+    local("TencentSans W7 Regular"),
+    local("腾讯体"),
+    local("FontName Regular"),
+    local("FontName-Regular"),
+    local("FONTNAME"),
+    local("FONTNAME REGULAR");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FontName:Regular";
+  src:
+    url("/fonts/tencentsans-w7.ttf") format("truetype"),
+    local("FontName"),
+    local("TencentSansW7"),
+    local("TencentSans W7 Regular"),
+    local("腾讯体"),
+    local("FontName Regular"),
+    local("FontName-Regular"),
+    local("FONTNAME"),
+    local("FONTNAME REGULAR");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tencent Sans";
+  src:
+    url("/fonts/tencentsans-w7.ttf") format("truetype"),
+    local("TencentSansW7"),
+    local("TencentSans W7 Regular"),
+    local("腾讯体 W7"),
+    local("腾讯体"),
+    local("FontName");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tencent Sans";
+  src:
+    url("/fonts/tencentsans-w7.ttf") format("truetype"),
+    local("TencentSansW7"),
+    local("TencentSans W7 Regular"),
+    local("腾讯体 W7"),
+    local("腾讯体"),
+    local("FontName");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
 }
 
 :root {
@@ -144,18 +207,18 @@
   }
   .display-italic {
     display: inline-block;
-    font-family: var(--font-display);
+    font-family: "FontName", var(--font-display);
     font-style: normal;
-    font-weight: 900;
+    font-weight: 400;
     font-synthesis: none;
     letter-spacing: -0.08em;
     text-transform: uppercase;
   }
   .display-outline {
     display: inline-block;
-    font-family: var(--font-display);
+    font-family: "FontName", var(--font-display);
     font-style: normal;
-    font-weight: 900;
+    font-weight: 400;
     font-synthesis: none;
     letter-spacing: -0.05em;
     text-transform: uppercase;
@@ -176,7 +239,7 @@
     text-transform: uppercase;
   }
   .font-tencent {
-    font-family: "PingFang SC", "Microsoft YaHei", var(--font-ui);
+    font-family: "Tencent Sans", "TencentSansW7", "腾讯体", "FontName", "PingFang SC", sans-serif;
     font-style: normal;
     font-weight: 700;
     font-synthesis: none;
@@ -188,7 +251,7 @@
     font-synthesis: none;
   }
   .font-tencent-italic {
-    font-family: "PingFang SC", "Microsoft YaHei", var(--font-ui);
+    font-family: "Tencent Sans", "TencentSansW7", "腾讯体", "FontName", "PingFang SC", sans-serif;
     font-style: normal;
     font-weight: 700;
     font-synthesis: none;

@@ -158,8 +158,6 @@ export function FooterCards({ tone, cards }: FooterCardsProps) {
               <img
                 src={card.image}
                 alt={card.title}
-                loading="lazy"
-                decoding="async"
                 className="h-full w-full object-cover"
                 referrerPolicy="no-referrer"
               />
@@ -196,7 +194,6 @@ export function RemoteImage({ src, alt, className = "", style }: RemoteImageProp
     <img
       src={src}
       alt={alt}
-      decoding="async"
       referrerPolicy="no-referrer"
       className={className}
       style={style}

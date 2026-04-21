@@ -9,11 +9,9 @@ import Works from "./components/Works";
 import Experience from "./components/Experience";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
+import CaseStudyPage from "./components/CaseStudyPage";
 import { PROJECTS } from "./constants";
 import { motion, useScroll, useSpring } from "motion/react";
-import { lazy, Suspense } from "react";
-
-const CaseStudyPage = lazy(() => import("./components/CaseStudyPage"));
 
 export default function App() {
   const caseSlug =
@@ -39,9 +37,7 @@ export default function App() {
       ) : null}
 
       {selectedProject ? (
-        <Suspense fallback={<div className="min-h-screen bg-white" />}>
-          <CaseStudyPage project={selectedProject} />
-        </Suspense>
+        <CaseStudyPage project={selectedProject} />
       ) : (
         <>
           <Navbar />
