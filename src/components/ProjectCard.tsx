@@ -1,63 +1,11 @@
 import { motion } from "motion/react";
+import type { CSSProperties } from "react";
 import type { Project } from "@/src/constants";
 
 interface ProjectCardProps {
   project: Project;
   index: number;
 }
-
-interface CardLayout {
-  cardHeight: string;
-  contentWidth: string;
-  titleWidth: string;
-  descriptionWidth: string;
-  bodyHeight: string;
-  mediaFrame: string;
-  mediaImage: string;
-}
-
-const CARD_LAYOUTS: Record<string, CardLayout> = {
-  "ai-exploration": {
-    cardHeight: "min-h-[568px]",
-    contentWidth: "max-w-[374px]",
-    titleWidth: "max-w-[374px]",
-    descriptionWidth: "max-w-[230px]",
-    bodyHeight: "min-h-[414px]",
-    mediaFrame:
-      "max-md:h-[260px] md:absolute md:left-[261px] md:top-[160px] md:h-[260px] md:w-[281px]",
-    mediaImage: "left-0 top-0 h-full w-full",
-  },
-  "dongpo-sorting": {
-    cardHeight: "min-h-[568px]",
-    contentWidth: "max-w-[320px]",
-    titleWidth: "max-w-[320px]",
-    descriptionWidth: "max-w-[230px]",
-    bodyHeight: "min-h-[417px]",
-    mediaFrame:
-      "max-md:h-[260px] md:absolute md:left-[262px] md:top-[160px] md:h-[260px] md:w-[281px]",
-    mediaImage: "left-0 top-0 h-full w-full",
-  },
-  "wechat-pay-hk": {
-    cardHeight: "min-h-[568px]",
-    contentWidth: "max-w-[374px]",
-    titleWidth: "max-w-[374px]",
-    descriptionWidth: "max-w-[230px]",
-    bodyHeight: "min-h-[414px]",
-    mediaFrame:
-      "max-md:h-[260px] md:absolute md:left-[262px] md:top-[160px] md:h-[260px] md:w-[281px]",
-    mediaImage: "left-0 top-0 h-full w-full",
-  },
-  "chow-tai-fook": {
-    cardHeight: "min-h-[568px]",
-    contentWidth: "max-w-[374px]",
-    titleWidth: "max-w-[374px]",
-    descriptionWidth: "max-w-[230px]",
-    bodyHeight: "min-h-[414px]",
-    mediaFrame:
-      "max-md:h-[260px] md:absolute md:left-[262px] md:top-[160px] md:h-[260px] md:w-[281px]",
-    mediaImage: "left-0 top-0 h-full w-full",
-  },
-};
 
 const SIGNATURE_VAR_BY_SLUG: Record<string, string> = {
   ai: "--case-ai",
@@ -66,20 +14,19 @@ const SIGNATURE_VAR_BY_SLUG: Record<string, string> = {
   chowtaifook: "--case-chowtaifook",
 };
 
+/**
+ * ProjectCard — full-width editorial landscape tile.
+ *
+ * Rewritten from the original 1600px-grid card (absolute-positioned media
+ * pinned at left:262px) into a proper responsive two-column grid:
+ *   [content left · media right] on md+,  stacked on mobile.
+ * The media no longer overflows or gets clipped at different card widths.
+ *
+ * Stacks vertically in the parent Works grid, one card per row.
+ */
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   const signatureVar = SIGNATURE_VAR_BY_SLUG[project.detailSlug] ?? "--case-ai";
-  const layout = CARD_LAYOUTS[project.id] ?? {
-    cardHeight: "min-h-[520px] md:min-h-[494px]",
-    contentWidth: "max-w-[300px]",
-    titleWidth:
-      project.titleVariant === "wide" ? "max-w-[320px]" : "max-w-[296px]",
-    descriptionWidth: "max-w-[272px]",
-    bodyHeight: "min-h-[396px] md:min-h-[402px]",
-    mediaFrame:
-      "max-md:h-[286px] md:absolute md:bottom-[20px] md:right-[12px] md:h-[250px] md:w-[330px]",
-    mediaImage:
-      "left-1/2 top-1/2 w-[372px] -translate-x-1/2 -translate-y-1/2 md:left-[-38px] md:top-[-8px] md:w-[424px] md:translate-x-0 md:translate-y-0",
-  };
+  const accentStyle = { ["--case-accent" as string]: `var(${signatureVar})` } as CSSProperties;
 
   return (
     <motion.article
@@ -91,93 +38,79 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         ease: [0.19, 1, 0.22, 1],
         delay: index * 0.08,
       }}
-      className="group relative overflow-hidden bg-white transition-[background-color,box-shadow] duration-700 ease-editorial hover:z-[1] hover:bg-[#fcfcfd] hover:shadow-[0_28px_68px_rgba(16,17,20,0.06)]"
-      style={{ ["--case-accent" as string]: `var(${signatureVar})` }}
+      style={accentStyle}
+      className="group relative overflow-hidden bg-[var(--surface)] transition-[background-color,box-shadow] duration-700 ease-editorial hover:shadow-[0_28px_68px_rgba(16,17,20,0.06)]"
     >
-      {/* Signature color strip — slides in from the top on hover to preview the case's accent. */}
+      {/* Signature color strip at top — slides in on hover */}
       <span
         aria-hidden
         className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 transition-transform duration-[var(--dur-slow)] ease-[var(--ease-editorial)] group-hover:scale-x-100"
         style={{ background: "var(--case-accent)" }}
       />
-      <div className={`${layout.cardHeight} px-8 pb-8 pt-8 md:px-[48px] md:pb-[54px] md:pt-[48px]`}>
-        <div className="flex items-center gap-[16px] text-[#9fa3ae]">
-          <span className="mono-detail text-[10px] leading-[12px]">
-            {project.sequence}
-          </span>
-          <span className="h-px w-7 bg-[#dfe1e6]" />
-          <span className="font-serif text-[10px] uppercase leading-[12px] tracking-[0.35em]">
-            {project.category}
-          </span>
+
+      <div className="grid gap-8 p-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:items-center md:gap-16 md:p-14 lg:gap-20 lg:p-[72px]">
+        {/* Content column */}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-4 text-[var(--ink-300)]">
+            <span className="mono-detail">{project.sequence}</span>
+            <span className="h-px w-7 bg-[var(--line)]" />
+            <span className="font-serif text-[10px] uppercase tracking-[0.35em]">
+              {project.category}
+            </span>
+          </div>
+
+          <h3
+            className="font-serif font-semibold text-[var(--ink-900)] mt-10"
+            style={{
+              fontSize: "clamp(36px, 4.6vw, 56px)",
+              lineHeight: "1.05",
+              letterSpacing: "-0.04em",
+            }}
+          >
+            {project.titleLines.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </h3>
+
+          <p className="mt-6 max-w-[460px] font-serif text-[16px] leading-[1.75] text-[var(--ink-600)] md:text-[17px]">
+            {project.description}
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="font-serif text-[10px] uppercase tracking-[0.28em] text-[var(--ink-400)]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <a
+            href={project.detailHref}
+            className="mono-detail mt-10 inline-flex items-center gap-3 border-b border-[var(--ink-900)]/20 pb-2 self-start text-[var(--ink-900)] transition-[border-color,color] duration-[var(--dur-base)] ease-[var(--ease-editorial)] hover:border-[var(--case-accent)] hover:text-[var(--case-accent)]"
+          >
+            <span>View Case Study</span>
+            <span aria-hidden className="transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </a>
         </div>
 
-        <div className={`relative mt-[40px] ${layout.bodyHeight}`}>
-          <div className={`flex ${layout.bodyHeight} flex-col ${layout.contentWidth}`}>
-            <h3
-              className={`font-serif text-[48px] font-semibold leading-[1.05] tracking-[-0.06em] text-[#101114] md:text-[56px] md:leading-[65px] md:tracking-[-3.2px] ${layout.titleWidth}`}
-            >
-              {project.titleLines.map((line) => (
-                <span key={line} className="block md:whitespace-nowrap">
-                  {line}
-                </span>
-              ))}
-            </h3>
-
-            <p
-              className={`mt-[24px] font-serif text-[17px] leading-[30.6px] text-[#757984] md:text-[17px] md:leading-[30px] ${layout.descriptionWidth}`}
-            >
-              {project.description}
-            </p>
-
-            <div className="mt-auto pt-[30px]">
-              <div className="flex flex-wrap gap-[24px]">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="font-serif text-[10px] uppercase leading-[12px] tracking-[1.8px] text-[#8f949e]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <a
-                href={project.detailHref}
-                className="mono-detail mt-[22px] inline-flex items-center gap-[13px] text-[#101114] transition-[color,transform] duration-[var(--dur-base)] ease-[var(--ease-editorial)] group-hover:translate-x-[3px] group-hover:text-[var(--case-accent)]"
-              >
-                View Case Study <span>↗</span>
-              </a>
-            </div>
-          </div>
-
-          <div
-            className={[
-              "pointer-events-none relative overflow-hidden max-md:mt-10",
-              layout.mediaFrame,
-            ].join(" ")}
-          >
-            <ProjectMedia project={project} imageClass={layout.mediaImage} />
-          </div>
+        {/* Media column — responsive, aspect-ratio-driven, no absolute positioning */}
+        <div className="relative overflow-hidden bg-[var(--canvas)] aspect-[4/3] md:aspect-[5/4]">
+          <img
+            src={project.images[0]}
+            alt={project.title}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-[var(--dur-slow)] ease-[var(--ease-editorial)] group-hover:scale-[1.02]"
+          />
         </div>
       </div>
     </motion.article>
-  );
-}
-
-function ProjectMedia({
-  project,
-  imageClass,
-}: {
-  project: Project;
-  imageClass: string;
-}) {
-  return (
-    <img
-      src={project.images[0]}
-      alt={project.title}
-      loading="lazy"
-      decoding="async"
-      className={`absolute max-w-none object-contain ${imageClass}`}
-    />
   );
 }

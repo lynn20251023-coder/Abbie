@@ -15,25 +15,7 @@ import { PERSONAL_INFO } from "@/src/constants";
  */
 export default function Hero() {
   return (
-    <section
-      id="top"
-      className="relative overflow-hidden text-[var(--ink-900)]"
-      style={{
-        background:
-          "radial-gradient(ellipse 80% 90% at 12% 18%, var(--dawn) 0%, var(--canvas) 55%, var(--canvas) 100%)",
-      }}
-    >
-      {/* Soft inked grain — barely-there warmth so it doesn't read as flat CSS.
-          Uses a tiny SVG noise dataURI, capped at ~5% opacity. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-multiply"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
-        }}
-      />
-
+    <section id="top" className="relative overflow-hidden bg-[var(--canvas)] text-[var(--ink-900)]">
       {/* Watermark — decorative, pointer-events-none so it never eats clicks. */}
       <span
         aria-hidden

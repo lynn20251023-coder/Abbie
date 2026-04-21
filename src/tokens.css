@@ -13,13 +13,13 @@
   --ink-400: #8c8f98;
   --ink-300: #a0a4af;
   --ink-200: #dedfe5;
-  --line: #e5e4df;
+  --line: #ececea;
 
-  /* Warm paper tones — the home page sits on one continuous canvas, with the
-     lighter "dawn" used for soft radial gradients in the hero. Not alternating
-     bands — one atmosphere. */
-  --canvas: #f3efe8;
-  --dawn: #faf7f1;
+  /* Clean off-white page with tiny warmth — crisper than the earlier cream
+     canvas that read as "dirty" against dark text. Surface (cards, emphasis
+     areas) is pure white so cards feel like they lift off the page. */
+  --canvas: #fafaf8;
+  --dawn: #ffffff;
   --surface: #ffffff;
 
   /* Signature color per case — used by CaseViewer to set accent/scroll/hover.
