@@ -13,6 +13,14 @@ export interface CasePage {
   hotspots?: Hotspot[];
 }
 
+export interface CaseSibling {
+  title: string;
+  category: string;
+  href: string;
+  accentVar: string;
+  coverImage?: string;
+}
+
 interface CaseViewerProps {
   title: string;
   subtitle?: string;
@@ -22,6 +30,9 @@ interface CaseViewerProps {
   accentVar?: string;
   backHref?: string;
   footerExtra?: ReactNode;
+  /** Neighbors in the case order, shown as Prev / Next at the bottom. */
+  prev?: CaseSibling;
+  next?: CaseSibling;
 }
 
 function normalizePage(page: string | CasePage): CasePage {
@@ -47,6 +58,8 @@ export default function CaseViewer({
   accentVar = "--case-accent",
   backHref = "/#works",
   footerExtra,
+  prev,
+  next,
 }: CaseViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -204,9 +217,19 @@ export default function CaseViewer({
         ))}
       </div>
 
+      {/* Siblings navigation (next / prev case) */}
+      {!readingMode && (prev || next) && (
+        <nav className="border-t border-[var(--line)] bg-[var(--surface)]">
+          <div className="case-canvas grid gap-0 md:grid-cols-2">
+            {prev ? <SiblingLink side="prev" sibling={prev} /> : <div className="hidden md:block" />}
+            {next ? <SiblingLink side="next" sibling={next} /> : <div className="hidden md:block" />}
+          </div>
+        </nav>
+      )}
+
       {/* Footer shortcut hint */}
       {!readingMode && (
-        <footer className="border-t border-[var(--line)] bg-[var(--surface)]">
+        <footer className="border-t border-[var(--line)] bg-[var(--canvas)]">
           <div className="case-canvas flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
             <div className="mono-detail text-[var(--ink-300)]">
               <kbd className="mr-2 rounded border border-[var(--line)] px-1.5 py-0.5 text-[10px] tracking-[0.28em]">ESC</kbd>
@@ -249,5 +272,47 @@ export default function CaseViewer({
         </div>
       )}
     </div>
+  );
+}
+
+/**
+ * Sibling case link — a tall strip that fills with the target case's signature
+ * color on hover, so the transition to the next case feels like stepping into
+ * its identity before you click.
+ */
+function SiblingLink({ side, sibling }: { side: "prev" | "next"; sibling: CaseSibling }) {
+  const isNext = side === "next";
+  const targetAccent = { ["--sibling-accent" as string]: `var(${sibling.accentVar})` } as CSSProperties;
+
+  return (
+    <a
+      href={sibling.href}
+      className={`group relative flex flex-col justify-between overflow-hidden px-6 py-10 text-[var(--ink-900)] transition-colors duration-[var(--dur-base)] ease-[var(--ease-editorial)] md:px-10 md:py-14 ${
+        isNext ? "md:text-right md:border-l md:border-[var(--line)]" : ""
+      }`}
+      style={targetAccent}
+    >
+      {/* Sliding color fill */}
+      <span
+        aria-hidden
+        className={`absolute inset-0 -z-0 scale-x-0 transition-transform duration-[var(--dur-slow)] ease-[var(--ease-editorial)] group-hover:scale-x-100 ${
+          isNext ? "origin-right" : "origin-left"
+        }`}
+        style={{ background: "var(--sibling-accent)" }}
+      />
+      {/* Text layers */}
+      <div className={`relative flex items-center gap-3 text-[10px] font-[var(--font-mono)] uppercase tracking-[0.32em] text-[var(--ink-300)] group-hover:text-white/70 transition-colors ${isNext ? "md:justify-end" : ""}`}>
+        {!isNext && <span>← Previous Case</span>}
+        {isNext && <span>Next Case →</span>}
+      </div>
+      <div className="relative mt-6">
+        <h3 className="font-serif text-[32px] leading-[1.05] tracking-[-0.03em] text-[var(--ink-900)] transition-colors group-hover:text-white md:text-[44px]">
+          {sibling.title}
+        </h3>
+        <p className="mt-3 font-[var(--font-mono)] text-[11px] uppercase tracking-[0.28em] text-[var(--ink-600)] transition-colors group-hover:text-white/80">
+          {sibling.category}
+        </p>
+      </div>
+    </a>
   );
 }

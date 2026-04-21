@@ -1,9 +1,37 @@
-import type { Project } from "@/src/constants";
-import CaseViewer, { type CasePage } from "./CaseViewer";
+import { PROJECTS, type Project } from "@/src/constants";
+import CaseViewer, { type CasePage, type CaseSibling } from "./CaseViewer";
 import type { Hotspot } from "./AnnotatedImage";
 
 interface FigmaCasePageProps {
   project: Project;
+}
+
+const ACCENT_BY_SLUG: Record<string, string> = {
+  ai: "--case-ai",
+  sorting: "--case-sorting",
+  wechatpay: "--case-wechatpay",
+  chowtaifook: "--case-chowtaifook",
+};
+
+function toSibling(p: Project): CaseSibling {
+  return {
+    title: p.title,
+    category: p.category,
+    href: p.detailHref,
+    accentVar: ACCENT_BY_SLUG[p.detailSlug] ?? "--case-ai",
+    coverImage: p.coverImage,
+  };
+}
+
+function neighborsOf(slug: string): { prev?: CaseSibling; next?: CaseSibling } {
+  const index = PROJECTS.findIndex((p) => p.detailSlug === slug);
+  if (index < 0) return {};
+  const prevProject = index > 0 ? PROJECTS[index - 1] : undefined;
+  const nextProject = index < PROJECTS.length - 1 ? PROJECTS[index + 1] : undefined;
+  return {
+    prev: prevProject ? toSibling(prevProject) : undefined,
+    next: nextProject ? toSibling(nextProject) : undefined,
+  };
 }
 
 /**
@@ -157,6 +185,8 @@ function buildPages(casePages: string[] | undefined, annotations: HotspotMap): C
  * The AI case keeps its own dedicated AiCasePage (code-rendered timeline).
  */
 export default function FigmaCasePage({ project }: FigmaCasePageProps) {
+  const { prev, next } = neighborsOf(project.detailSlug);
+
   switch (project.detailSlug) {
     case "sorting":
       return (
@@ -171,6 +201,8 @@ export default function FigmaCasePage({ project }: FigmaCasePageProps) {
           ]}
           pages={buildPages(project.casePages, SORTING_ANNOTATIONS)}
           accentVar="--case-sorting"
+          prev={prev}
+          next={next}
         />
       );
     case "wechatpay":
@@ -186,6 +218,8 @@ export default function FigmaCasePage({ project }: FigmaCasePageProps) {
           ]}
           pages={buildPages(project.casePages, WECHATPAY_ANNOTATIONS)}
           accentVar="--case-wechatpay"
+          prev={prev}
+          next={next}
         />
       );
     case "chowtaifook":
@@ -201,6 +235,8 @@ export default function FigmaCasePage({ project }: FigmaCasePageProps) {
           ]}
           pages={buildPages(project.casePages, CHOWTAIFOOK_ANNOTATIONS)}
           accentVar="--case-chowtaifook"
+          prev={prev}
+          next={next}
         />
       );
     default:
