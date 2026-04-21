@@ -13,7 +13,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="scroll-mt-24 bg-[var(--surface)] py-20 text-[var(--ink-900)] md:py-[128px]"
+      className="scroll-mt-24 py-20 text-[var(--ink-900)] md:py-[128px]"
     >
       <div className="container-editorial">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,440px)] md:items-end md:gap-16">

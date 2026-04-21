@@ -5,7 +5,7 @@ const rowHeights = [330, 299, 299];
 
 export default function Experience() {
   return (
-    <section id="experience" className="bg-[var(--canvas)] text-[var(--ink-900)] max-lg:py-24">
+    <section id="experience" className="text-[var(--ink-900)] max-lg:py-24">
       <div className="container-editorial relative max-lg:space-y-20 lg:h-[1186px]">
         <div className="max-lg:space-y-2 lg:absolute lg:left-0 lg:top-[128px] lg:w-[447px]">
           <div className="lg:-ml-[73px]">

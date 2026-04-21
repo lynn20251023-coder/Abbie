@@ -4,7 +4,7 @@ import ProjectCard from "./ProjectCard";
 
 export default function Works() {
   return (
-    <section id="works" className="scroll-mt-24 bg-white py-24 text-[#101114] md:py-[128px]">
+    <section id="works" className="scroll-mt-24 py-24 text-[var(--ink-900)] md:py-[128px]">
       <div className="container-editorial">
         <div className="grid gap-10 lg:grid-cols-[680px_544px] lg:items-end lg:justify-between lg:gap-[56px]">
           <motion.div
@@ -37,13 +37,13 @@ export default function Works() {
           </motion.div>
         </div>
 
-        <div className="mt-[72px] grid border border-[#e7e7ea] md:grid-cols-2">
+        <div className="mt-[72px] grid border border-[var(--line)] md:grid-cols-2">
           {PROJECTS.map((project, index) => (
             <div
               key={project.id}
               className={[
-                index < 2 ? "border-b border-[#e7e7ea]" : "",
-                index % 2 === 0 ? "md:border-r md:border-[#e7e7ea]" : "",
+                index < 2 ? "border-b border-[var(--line)]" : "",
+                index % 2 === 0 ? "md:border-r md:border-[var(--line)]" : "",
               ].join(" ")}
             >
               <ProjectCard project={project} index={index} />
