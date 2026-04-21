@@ -58,18 +58,18 @@ export default function Navbar() {
           : "bg-[#050505]/96"
       )}
     >
-      <div className="relative mx-auto h-[88px] w-[1602px] max-w-none">
+      <div className="relative mx-auto h-[72px] w-full max-w-[1602px] px-6 md:h-[88px] md:px-10 xl:px-0">
         <a
           href="#top"
           className={cn(
-            "brand-word absolute left-[128px] top-[32px] text-[20px] leading-[24px] transition-colors duration-300 ease-editorial",
+            "brand-word absolute left-6 top-6 text-[20px] leading-[24px] transition-colors duration-300 ease-editorial md:left-10 md:top-[32px] xl:left-[128px]",
             lightMode ? "text-[#101114]" : "text-white"
           )}
         >
           ABBIE.
         </a>
 
-        <div className="absolute right-[128px] top-[38px] hidden items-center gap-[48px] md:flex">
+        <div className="absolute right-10 top-[38px] hidden items-center gap-8 md:flex xl:right-[128px] xl:gap-[48px]">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
@@ -101,7 +101,7 @@ export default function Navbar() {
           type="button"
           aria-label="Toggle navigation"
           className={cn(
-            "absolute right-6 top-6 inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors md:hidden",
+            "absolute right-6 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors md:hidden",
             lightMode ? "border-zinc-200 text-[#101114]" : "border-white/20 text-white"
           )}
           onClick={() => setIsOpen((open) => !open)}

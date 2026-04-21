@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { CasePageShell } from "./figma-case-pages/CasePageScaffold";
 
 const explorationAssets = {
   accountBars: [
@@ -264,8 +265,8 @@ function CanvasImage({
 
 export default function AiCasePage() {
   return (
-    <div className="overflow-x-auto bg-white pb-16 pt-16 md:pt-20">
-      <div className="relative mx-auto h-[4679px] w-[1600px] max-w-none bg-white font-serif text-[#333]">
+    <CasePageShell background="#FFFFFF" canvasHeight={4679}>
+      <div className="relative h-[4679px] w-[1600px] bg-white font-serif text-[#333]">
         <a
           href="/#works"
           className="absolute left-[128px] top-[32px] text-[16px] tracking-[0.2em] text-[#333] transition-opacity hover:opacity-70"
@@ -544,6 +545,6 @@ export default function AiCasePage() {
           BACK TO WORKS 👉
         </a>
       </div>
-    </div>
+    </CasePageShell>
   );
 }

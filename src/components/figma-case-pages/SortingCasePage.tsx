@@ -290,7 +290,7 @@ function VerticalGuide({
 
 export default function SortingCasePage() {
   return (
-    <CasePageShell background="#FFFFFF">
+    <CasePageShell background="#FFFFFF" canvasHeight={8095}>
       <div className="relative h-[8095px] w-[1600px] bg-white">
         <a
           href="/#works"

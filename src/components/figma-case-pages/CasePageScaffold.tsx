@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { useEffect, useState } from "react";
 
 interface Tone {
   accent: string;
@@ -12,6 +13,8 @@ interface Tone {
 interface ShellProps {
   children: ReactNode;
   background?: string;
+  canvasHeight?: number;
+  canvasWidth?: number;
 }
 
 interface TopBarProps {
@@ -57,11 +60,53 @@ interface RemoteImageProps {
 
 export type { Tone };
 
-export function CasePageShell({ children, background = "#f5f5f2" }: ShellProps) {
+function useViewportScale(width: number, gutter: number) {
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const updateScale = () => {
+      const availableWidth = Math.max(320, window.innerWidth - gutter);
+      setScale(Math.min(1, availableWidth / width));
+    };
+
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
+  }, [gutter, width]);
+
+  return scale;
+}
+
+export function CasePageShell({
+  children,
+  background = "#f5f5f2",
+  canvasHeight,
+  canvasWidth = 1600,
+}: ShellProps) {
+  const scale = useViewportScale(canvasWidth, 24);
+  const isScaled = canvasHeight && scale < 0.999;
+
   return (
-    <div className="overflow-x-auto" style={{ background }}>
-      <div className="mx-auto w-[1600px] max-w-none overflow-hidden bg-white text-[#111]">
-        {children}
+    <div className="overflow-x-hidden" style={{ background }}>
+      <div
+        className="relative mx-auto max-w-full overflow-visible bg-white text-[#111]"
+        style={{
+          width: isScaled ? canvasWidth * scale : canvasWidth,
+          height: isScaled ? canvasHeight * scale : undefined,
+        }}
+      >
+        <div
+          style={{
+            width: canvasWidth,
+            position: isScaled ? "absolute" : undefined,
+            left: isScaled ? 0 : undefined,
+            top: isScaled ? 0 : undefined,
+            transform: isScaled ? `scale(${scale})` : undefined,
+            transformOrigin: "top left",
+          }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

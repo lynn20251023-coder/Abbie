@@ -279,7 +279,7 @@ function FooterCard({
 
 export default function WechatPayCasePage() {
   return (
-    <CasePageShell background="#FFFFFF">
+    <CasePageShell background="#FFFFFF" canvasHeight={16440}>
       <div className="relative h-[16440px] w-[1600px] bg-white">
         <div id="home" className="absolute left-0 top-0" />
 

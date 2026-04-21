@@ -24,7 +24,7 @@ const CARD_LAYOUTS: Record<string, CardLayout> = {
     descriptionWidth: "max-w-[230px]",
     bodyHeight: "min-h-[414px]",
     mediaFrame:
-      "max-md:h-[260px] md:absolute md:left-[261px] md:top-[160px] md:h-[260px] md:w-[281px]",
+      "max-lg:h-[260px] lg:absolute lg:left-[261px] lg:top-[160px] lg:h-[260px] lg:w-[281px]",
     mediaImage: "left-0 top-0 h-full w-full",
   },
   "dongpo-sorting": {
@@ -34,7 +34,7 @@ const CARD_LAYOUTS: Record<string, CardLayout> = {
     descriptionWidth: "max-w-[230px]",
     bodyHeight: "min-h-[417px]",
     mediaFrame:
-      "max-md:h-[260px] md:absolute md:left-[262px] md:top-[160px] md:h-[260px] md:w-[281px]",
+      "max-lg:h-[260px] lg:absolute lg:left-[262px] lg:top-[160px] lg:h-[260px] lg:w-[281px]",
     mediaImage: "left-0 top-0 h-full w-full",
   },
   "wechat-pay-hk": {
@@ -44,7 +44,7 @@ const CARD_LAYOUTS: Record<string, CardLayout> = {
     descriptionWidth: "max-w-[230px]",
     bodyHeight: "min-h-[414px]",
     mediaFrame:
-      "max-md:h-[260px] md:absolute md:left-[262px] md:top-[160px] md:h-[260px] md:w-[281px]",
+      "max-lg:h-[260px] lg:absolute lg:left-[262px] lg:top-[160px] lg:h-[260px] lg:w-[281px]",
     mediaImage: "left-0 top-0 h-full w-full",
   },
   "chow-tai-fook": {
@@ -54,7 +54,7 @@ const CARD_LAYOUTS: Record<string, CardLayout> = {
     descriptionWidth: "max-w-[230px]",
     bodyHeight: "min-h-[414px]",
     mediaFrame:
-      "max-md:h-[260px] md:absolute md:left-[262px] md:top-[160px] md:h-[260px] md:w-[281px]",
+      "max-lg:h-[260px] lg:absolute lg:left-[262px] lg:top-[160px] lg:h-[260px] lg:w-[281px]",
     mediaImage: "left-0 top-0 h-full w-full",
   },
 };
@@ -68,9 +68,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
     descriptionWidth: "max-w-[272px]",
     bodyHeight: "min-h-[396px] md:min-h-[402px]",
     mediaFrame:
-      "max-md:h-[286px] md:absolute md:bottom-[20px] md:right-[12px] md:h-[250px] md:w-[330px]",
+      "max-lg:h-[286px] lg:absolute lg:bottom-[20px] lg:right-[12px] lg:h-[250px] lg:w-[330px]",
     mediaImage:
-      "left-1/2 top-1/2 w-[372px] -translate-x-1/2 -translate-y-1/2 md:left-[-38px] md:top-[-8px] md:w-[424px] md:translate-x-0 md:translate-y-0",
+      "left-1/2 top-1/2 w-[372px] -translate-x-1/2 -translate-y-1/2 lg:left-[-38px] lg:top-[-8px] lg:w-[424px] lg:translate-x-0 lg:translate-y-0",
   };
 
   return (
@@ -99,7 +99,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         <div className={`relative mt-[40px] ${layout.bodyHeight}`}>
           <div className={`flex ${layout.bodyHeight} flex-col ${layout.contentWidth}`}>
             <h3
-              className={`font-serif text-[48px] font-semibold leading-[1.05] tracking-[-0.06em] text-[#101114] md:text-[56px] md:leading-[65px] md:tracking-[-3.2px] ${layout.titleWidth}`}
+              className={`font-serif text-[clamp(40px,12vw,48px)] font-semibold leading-[1.05] tracking-[-0.06em] text-[#101114] md:text-[56px] md:leading-[65px] md:tracking-[-3.2px] ${layout.titleWidth}`}
             >
               {project.titleLines.map((line) => (
                 <span key={line} className="block md:whitespace-nowrap">
@@ -137,7 +137,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
           <div
             className={[
-              "pointer-events-none relative overflow-hidden max-md:mt-10",
+              "pointer-events-none relative overflow-hidden max-lg:mt-10",
               layout.mediaFrame,
             ].join(" ")}
           >
