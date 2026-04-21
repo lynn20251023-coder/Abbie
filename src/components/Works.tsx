@@ -37,13 +37,19 @@ export default function Works() {
           </motion.div>
         </div>
 
-        <div className="mt-[72px] grid border border-[var(--line)] md:grid-cols-2">
-          {PROJECTS.map((project, index) => (
+        {/* Works grid shows only the three B-to-B product case studies.
+            The AI practice is a different genre ("how I work", not "what I
+            made") and lives above in <AiManifesto />. PROJECTS still holds
+            the AI entry so it stays routable at /?case=ai.
+            With three items we use a single column on small screens and a
+            three-column row on large ones — no awkward 2+1 orphan. */}
+        <div className="mt-[72px] grid border border-[var(--line)] lg:grid-cols-3">
+          {PROJECTS.filter((p) => p.detailSlug !== "ai").map((project, index, arr) => (
             <div
               key={project.id}
               className={[
-                index < 2 ? "border-b border-[var(--line)]" : "",
-                index % 2 === 0 ? "md:border-r md:border-[var(--line)]" : "",
+                index < arr.length - 1 ? "border-b border-[var(--line)]" : "",
+                index < arr.length - 1 ? "lg:border-b-0 lg:border-r lg:border-[var(--line)]" : "",
               ].join(" ")}
             >
               <ProjectCard project={project} index={index} />

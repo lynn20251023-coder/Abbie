@@ -1,56 +1,77 @@
 import { motion } from "motion/react";
 import { EXPERIENCE } from "@/src/constants";
 
-const rowHeights = [330, 299, 299];
-
+/**
+ * Experience / History — editorial timeline.
+ *
+ * Rewritten from absolute-px-on-1186px-height layout that overflowed on
+ * narrower viewports. Now pure responsive grid: left column holds the
+ * display title, right column the timeline rows. Each row itself is a
+ * fluid grid of [period · company · role+blurb] that collapses to stacked
+ * on mobile.
+ */
 export default function Experience() {
   return (
-    <section id="experience" className="text-[var(--ink-900)] max-lg:py-24">
-      <div className="container-editorial relative max-lg:space-y-20 lg:h-[1186px]">
-        <div className="max-lg:space-y-2 lg:absolute lg:left-0 lg:top-[128px] lg:w-[447px]">
-          <div className="lg:-ml-[73px]">
-            <h2 className="display-italic text-[84px] leading-[0.82] tracking-[-0.08em] text-[#101114] md:text-[128.16px] md:leading-[105px] md:tracking-[-10.25px]">
+    <section id="experience" className="py-24 text-[var(--ink-900)] md:py-[128px]">
+      <div className="container-editorial">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)] lg:gap-20">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.72, ease: [0.19, 1, 0.22, 1] }}
+          >
+            <h2
+              className="display-italic text-[var(--ink-900)]"
+              style={{
+                fontSize: "clamp(72px, 11vw, 128px)",
+                lineHeight: "0.82",
+                letterSpacing: "-0.08em",
+              }}
+            >
               HISTORY
             </h2>
-            <p className="mt-[9px] font-serif text-[32px] leading-[0.95] tracking-[-0.03em] text-[#dedfe5] md:text-[48.06px] md:leading-[39px] md:tracking-[-1.44px]">
+            <p
+              className="mt-3 font-serif text-[var(--ink-200)]"
+              style={{
+                fontSize: "clamp(28px, 4vw, 48px)",
+                lineHeight: "0.95",
+                letterSpacing: "-0.03em",
+              }}
+            >
               工作经历
             </p>
-          </div>
-        </div>
+          </motion.div>
 
-        <div className="max-lg:space-y-0 lg:absolute lg:left-[511px] lg:top-[128px] lg:w-[769px]">
-          {EXPERIENCE.map((item, index) => (
-            <motion.article
-              key={item.company}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.28 }}
-              transition={{ duration: 0.66, delay: index * 0.07, ease: [0.19, 1, 0.22, 1] }}
-              className="border-t border-[#e5e7eb] max-lg:grid max-lg:gap-y-6 max-lg:py-12 lg:grid lg:grid-cols-[202px_226px_261px] lg:gap-x-10 lg:px-8"
-              style={{ height: rowHeights[index] }}
-            >
-              <div className="lg:pt-[64px]">
-                <p className="font-[var(--font-mono)] text-[10px] leading-[12px] uppercase tracking-[4.2px] text-[#9ea3ae]">
+          <div>
+            {EXPERIENCE.map((item, index) => (
+              <motion.article
+                key={item.company}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.28 }}
+                transition={{ duration: 0.66, delay: index * 0.07, ease: [0.19, 1, 0.22, 1] }}
+                className="grid gap-3 border-t border-[var(--line)] py-10 md:gap-6 md:py-14 md:grid-cols-[minmax(0,120px)_minmax(0,1fr)_minmax(0,1.6fr)] md:gap-x-8 md:items-baseline"
+              >
+                <p className="font-[var(--font-mono)] text-[10px] uppercase leading-[12px] tracking-[0.32em] text-[var(--ink-400)]">
                   {item.period}
                 </p>
-              </div>
 
-              <div className="lg:pt-[64px]">
-                <h3 className="font-serif text-[25px] font-bold leading-[32px] tracking-[-1.25px] text-[#101114]">
+                <h3 className="font-serif text-[22px] font-bold leading-[1.25] tracking-[-0.02em] text-[var(--ink-900)] md:text-[24px]">
                   {item.company}
                 </h3>
-              </div>
 
-              <div className="lg:pt-[64px]">
-                <p className="font-serif text-[24px] font-bold leading-[30px] tracking-[-1.2px] text-[#101114]">
-                  {item.role}
-                </p>
-                <p className="mt-4 max-w-[271px] font-serif text-[17px] leading-[31px] text-[#7b7f8a]">
-                  {item.description}
-                </p>
-              </div>
-            </motion.article>
-          ))}
+                <div>
+                  <p className="font-serif text-[20px] font-bold leading-[1.25] tracking-[-0.02em] text-[var(--ink-900)] md:text-[22px]">
+                    {item.role}
+                  </p>
+                  <p className="mt-3 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
+                    {item.description}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

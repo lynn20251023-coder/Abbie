@@ -5,6 +5,7 @@
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import AiManifesto from "./components/AiManifesto";
 import Works from "./components/Works";
 import Experience from "./components/Experience";
 import Skills from "./components/Skills";
@@ -49,6 +50,7 @@ export default function App() {
 
           <main>
             <Hero />
+            <AiManifesto />
             <Works />
             <Experience />
             <Skills />
