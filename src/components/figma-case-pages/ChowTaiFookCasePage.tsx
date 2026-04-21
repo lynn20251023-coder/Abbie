@@ -15,7 +15,7 @@ const navItems = [
 const slices = [
   {
     id: "home",
-    src: "/case-assets/zhoudafu/group-28620.png",
+    src: "/case-assets/zhoudafu/group-28620.webp",
     alt: "周大福小程序改版首页介绍与项目信息",
     left: 128,
     top: 111,
@@ -24,7 +24,7 @@ const slices = [
   },
   {
     id: "background",
-    src: "/case-assets/zhoudafu/group-28621.png",
+    src: "/case-assets/zhoudafu/group-28621.webp",
     alt: "周大福小程序改版背景与当前问题",
     left: 75,
     top: 1254,
@@ -33,7 +33,7 @@ const slices = [
   },
   {
     id: "analysis",
-    src: "/case-assets/zhoudafu/section-23.png",
+    src: "/case-assets/zhoudafu/section-23.webp",
     alt: "商城购物主力分析",
     left: 0,
     top: 2196,
@@ -42,7 +42,7 @@ const slices = [
   },
   {
     id: "goals",
-    src: "/case-assets/zhoudafu/group-28622.png",
+    src: "/case-assets/zhoudafu/group-28622.webp",
     alt: "周大福小程序改版设计目标",
     left: 76,
     top: 3179,
@@ -51,7 +51,7 @@ const slices = [
   },
   {
     id: "home-optimization",
-    src: "/case-assets/zhoudafu/group-28623.png",
+    src: "/case-assets/zhoudafu/group-28623.webp",
     alt: "周大福小程序首页优化策略",
     left: 76,
     top: 4116,
@@ -60,7 +60,7 @@ const slices = [
   },
   {
     id: "home-display",
-    src: "/case-assets/zhoudafu/group-28606.png",
+    src: "/case-assets/zhoudafu/group-28606.webp",
     alt: "周大福小程序首页展示",
     left: 90,
     top: 5038,
@@ -69,7 +69,7 @@ const slices = [
   },
   {
     id: "brand-entry",
-    src: "/case-assets/zhoudafu/group-28624.png",
+    src: "/case-assets/zhoudafu/group-28624.webp",
     alt: "周大福小程序旗下品牌入口",
     left: 67,
     top: 6171,
@@ -78,7 +78,7 @@ const slices = [
   },
   {
     id: "home-brand-entry",
-    src: "/case-assets/zhoudafu/group-28608.png",
+    src: "/case-assets/zhoudafu/group-28608.webp",
     alt: "周大福小程序首页品牌入口方案",
     left: 62,
     top: 7019,
@@ -87,7 +87,7 @@ const slices = [
   },
   {
     id: "brand-collection",
-    src: "/case-assets/zhoudafu/group-28609.png",
+    src: "/case-assets/zhoudafu/group-28609.webp",
     alt: "周大福小程序品牌集合页",
     left: 62,
     top: 8118,
@@ -96,7 +96,7 @@ const slices = [
   },
   {
     id: "cart",
-    src: "/case-assets/zhoudafu/group-28610.png",
+    src: "/case-assets/zhoudafu/group-28610.webp",
     alt: "周大福小程序我的购物车",
     left: 62,
     top: 9162,
@@ -105,7 +105,7 @@ const slices = [
   },
   {
     id: "visual",
-    src: "/case-assets/zhoudafu/section-56.png",
+    src: "/case-assets/zhoudafu/section-56.webp",
     alt: "周大福女王节主推产品视觉",
     left: 0,
     top: 10264,
@@ -219,13 +219,13 @@ export default function ChowTaiFookCasePage() {
         <FooterProjectCard
           left={69}
           href="/?case=wechatpay"
-          image="/case-assets/zhoudafu/footer-wechatpay.png"
+          image="/case-assets/zhoudafu/footer-wechatpay.webp"
           alt="WeChat Pay HK"
         />
         <FooterProjectCard
           left={816}
           href="/?case=sorting"
-          image="/case-assets/zhoudafu/footer-sorting.png"
+          image="/case-assets/zhoudafu/footer-sorting.webp"
           alt="蔬东坡智能分拣系统"
         />
 

@@ -44,7 +44,7 @@ export interface Project {
 function buildCasePages(slug: string, count: number) {
   return Array.from(
     { length: count },
-    (_, index) => `/case-studies/${slug}/page-${String(index + 1).padStart(2, "0")}.jpg`
+    (_, index) => `/case-studies/${slug}/page-${String(index + 1).padStart(2, "0")}.webp`
   );
 }
 
@@ -65,7 +65,7 @@ export const PROJECTS: Project[] = [
     resourceHref: PERSONAL_INFO.demoHref,
     resourceLabel: "打开外部 Demo",
     resourceExternal: true,
-    coverImage: "/case-studies/ai-cover.png",
+    coverImage: "/case-studies/ai-cover.webp",
     tags: ["生成式AI", "Vibe Coding"],
     titleVariant: "wide",
     mediaKind: "collage",
@@ -86,18 +86,13 @@ export const PROJECTS: Project[] = [
       "面向生鲜现场作业链路，重做分拣任务、异常反馈与硬件协同信息表达，兼顾一线效率与系统配置能力。",
     resourceHref: "/zpj/%E6%99%BA%E8%83%BD%E5%88%86%E6%8B%A3%E7%B3%BB%E7%BB%9F.pdf",
     resourceLabel: "打开原始案例 PDF",
-    coverImage: "/case-studies/sorting-cover.png",
+    coverImage: "/case-studies/sorting-cover.webp",
     viewerHeight: 4200,
     tags: ["SaaS", "B端", "交互设计"],
     titleVariant: "compact",
     mediaKind: "stack",
     casePages: buildCasePages("sorting", 12),
-    images: ["/case-assets/home-works/sorting-preview.png"],
-    icons: [
-      "https://www.figma.com/api/mcp/asset/fc108ad0-658f-4117-ae37-f12f1b217ae7",
-      "https://www.figma.com/api/mcp/asset/cc0589da-7a0b-46d1-9228-1695e5e0fc49",
-      "https://www.figma.com/api/mcp/asset/ad5f8eaf-19e5-4b1d-a81c-596fec7f6849",
-    ],
+    images: ["/case-assets/home-works/sorting-preview.webp"],
   },
   {
     id: "wechat-pay-hk",
@@ -114,13 +109,13 @@ export const PROJECTS: Project[] = [
       "围绕本地缴费、绑卡与增长链路，兼顾金融产品信任感、流程效率和香港用户的使用语境做系统化优化。",
     resourceHref: "/zpj/WeChat%20Pay%20HK.pdf",
     resourceLabel: "打开原始案例 PDF",
-    coverImage: "/case-studies/wechatpay-cover.png",
+    coverImage: "/case-studies/wechatpay-cover.webp",
     viewerHeight: 5200,
     tags: ["UI/UX", "金融科技", "流程优化"],
     titleVariant: "compact",
     mediaKind: "phone",
     casePages: buildCasePages("wechatpay", 21),
-    images: ["/case-assets/home-works/wechatpay-preview.png"],
+    images: ["/case-assets/home-works/wechatpay-preview.webp"],
   },
   {
     id: "chow-tai-fook",
@@ -137,13 +132,13 @@ export const PROJECTS: Project[] = [
       "从品牌集合页到详情与购物车链路，重构高决策成本珠宝商品的信息路径，在品牌质感和转化效率之间找到平衡。",
     resourceHref: "/zpj/chowtaifook.pdf",
     resourceLabel: "打开原始案例 PDF",
-    coverImage: "/case-studies/chowtaifook-cover.png",
+    coverImage: "/case-studies/chowtaifook-cover.webp",
     viewerHeight: 6400,
     tags: ["电商", "改版设计", "品牌视觉"],
     titleVariant: "wide",
     mediaKind: "phone",
     casePages: buildCasePages("chowtaifook", 14),
-    images: ["/case-assets/home-works/chowtaifook-preview.png"],
+    images: ["/case-assets/home-works/chowtaifook-preview.webp"],
   },
 ];
 

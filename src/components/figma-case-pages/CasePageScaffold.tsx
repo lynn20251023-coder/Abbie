@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 interface Tone {
   accent: string;
@@ -57,10 +57,58 @@ interface RemoteImageProps {
 
 export type { Tone };
 
+/**
+ * Proportionally scales the fixed 1600px canvas to fit narrower viewports.
+ * Measures the inner content height so the outer container shrinks with the
+ * scale factor and no horizontal scroll is required.
+ *
+ * TODO(phase2): Replace with a fully fluid Section component model.
+ * See PHASE2-PLAN.md for the migration strategy.
+ */
+function useProportionalScale(ref: { current: HTMLDivElement | null }) {
+  const [scale, setScale] = useState(1);
+  const [innerHeight, setInnerHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    const update = () => {
+      const vw = window.innerWidth;
+      setScale(Math.min(1, vw / 1600));
+    };
+    update();
+    window.addEventListener("resize", update);
+
+    let observer: ResizeObserver | null = null;
+    if (ref.current && typeof ResizeObserver !== "undefined") {
+      observer = new ResizeObserver((entries) => {
+        for (const entry of entries) setInnerHeight(entry.contentRect.height);
+      });
+      observer.observe(ref.current);
+    }
+    return () => {
+      window.removeEventListener("resize", update);
+      observer?.disconnect();
+    };
+  }, [ref]);
+
+  return { scale, innerHeight };
+}
+
 export function CasePageShell({ children, background = "#f5f5f2" }: ShellProps) {
+  const innerRef = useRef<HTMLDivElement>(null);
+  const { scale, innerHeight } = useProportionalScale(innerRef);
+  const outerHeight = innerHeight !== null ? innerHeight * scale : undefined;
+
   return (
-    <div className="overflow-x-auto" style={{ background }}>
-      <div className="mx-auto w-[1600px] max-w-none overflow-hidden bg-white text-[#111]">
+    <div className="case-legacy-shell overflow-hidden" style={{ background, height: outerHeight }}>
+      <div
+        ref={innerRef}
+        className="mx-auto w-[1600px] max-w-none overflow-hidden bg-white text-[#111]"
+        style={{
+          transform: `scale(${scale})`,
+          transformOrigin: "top left",
+          marginLeft: scale < 1 ? `calc((100vw - 1600px * ${scale}) / 2)` : "auto",
+        }}
+      >
         {children}
       </div>
     </div>
