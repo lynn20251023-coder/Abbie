@@ -1,24 +1,22 @@
 import { motion } from "motion/react";
 import { EXPERIENCE } from "@/src/constants";
+import SectionMarker from "./SectionMarker";
 
-const rowHeights = [330, 299, 299];
-
+/**
+ * Experience / History — editorial timeline.
+ *
+ * Section marker replaces the former big HISTORY/工作经历 display-italic
+ * title block. One first-person connector sentence bridges from Works.
+ */
 export default function Experience() {
   return (
-    <section id="experience" className="bg-[#fcfcfc] text-[#101114] max-lg:py-24">
-      <div className="container-editorial relative max-lg:space-y-20 lg:h-[1186px]">
-        <div className="max-lg:space-y-2 lg:absolute lg:left-0 lg:top-[128px] lg:w-[447px]">
-          <div className="lg:-ml-[73px]">
-            <h2 className="display-italic text-[84px] leading-[0.82] tracking-[-0.08em] text-[#101114] md:text-[128.16px] md:leading-[105px] md:tracking-[-10.25px]">
-              HISTORY
-            </h2>
-            <p className="mt-[9px] font-serif text-[32px] leading-[0.95] tracking-[-0.03em] text-[#dedfe5] md:text-[48.06px] md:leading-[39px] md:tracking-[-1.44px]">
-              工作经历
-            </p>
-          </div>
-        </div>
+    <section id="experience" className="py-20 text-[var(--ink-900)] md:py-28">
+      <div className="container-editorial">
+        <SectionMarker label="HISTORY" labelCn="工作经历" trail="3 companies">
+          它们分别来自三家挺不一样的公司。
+        </SectionMarker>
 
-        <div className="max-lg:space-y-0 lg:absolute lg:left-[511px] lg:top-[128px] lg:w-[769px]">
+        <div className="mt-12 md:mt-16">
           {EXPERIENCE.map((item, index) => (
             <motion.article
               key={item.company}
@@ -26,26 +24,21 @@ export default function Experience() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.28 }}
               transition={{ duration: 0.66, delay: index * 0.07, ease: [0.19, 1, 0.22, 1] }}
-              className="border-t border-[#e5e7eb] max-lg:grid max-lg:gap-y-6 max-lg:py-12 lg:grid lg:grid-cols-[202px_226px_261px] lg:gap-x-10 lg:px-8"
-              style={{ height: rowHeights[index] }}
+              className="grid gap-3 border-t border-[var(--line)] py-10 md:gap-6 md:py-14 md:grid-cols-[minmax(0,120px)_minmax(0,1fr)_minmax(0,1.6fr)] md:gap-x-8 md:items-baseline"
             >
-              <div className="lg:pt-[64px]">
-                <p className="font-[var(--font-mono)] text-[10px] leading-[12px] uppercase tracking-[4.2px] text-[#9ea3ae]">
-                  {item.period}
-                </p>
-              </div>
+              <p className="font-[var(--font-mono)] text-[10px] uppercase leading-[12px] tracking-[0.32em] text-[var(--ink-400)]">
+                {item.period}
+              </p>
 
-              <div className="lg:pt-[64px]">
-                <h3 className="font-serif text-[25px] font-bold leading-[32px] tracking-[-1.25px] text-[#101114]">
-                  {item.company}
-                </h3>
-              </div>
+              <h3 className="font-serif text-[22px] font-bold leading-[1.25] tracking-[-0.02em] text-[var(--ink-900)] md:text-[24px]">
+                {item.company}
+              </h3>
 
-              <div className="lg:pt-[64px]">
-                <p className="font-serif text-[24px] font-bold leading-[30px] tracking-[-1.2px] text-[#101114]">
+              <div>
+                <p className="font-serif text-[20px] font-bold leading-[1.25] tracking-[-0.02em] text-[var(--ink-900)] md:text-[22px]">
                   {item.role}
                 </p>
-                <p className="mt-4 max-w-[271px] font-serif text-[17px] leading-[31px] text-[#7b7f8a]">
+                <p className="mt-3 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
                   {item.description}
                 </p>
               </div>

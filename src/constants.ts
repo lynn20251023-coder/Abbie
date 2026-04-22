@@ -1,12 +1,12 @@
 export const PERSONAL_INFO = {
   name: "Abbie",
-  role: "UI/UX 设计师",
-  experience: "5年经验",
+  role: "UI/UX 设计师 · AI 工作流",
+  experience: "since 2020",
   email: "linabbie@163.com",
   phone: "18576406631",
   wechat: "Abbie0-5",
   summary:
-    "具备5年 B端 SaaS、支付系统及小程序增长场景经验。熟练运用 Figma + AI 工作流，擅长 AIGC 视觉资产生产与复杂场景设计。致力于通过清晰的界面表达和规范化设计，推动高质量方案落地。",
+    "我有 5 年 B 端 SaaS、支付系统和小程序增长场景的经验。熟练用 Figma + AI 工作流，擅长 AIGC 视觉资产生产与复杂场景设计。我想通过清晰的界面表达和规范化设计，把高质量方案落地。",
   portfolioPdfName: "个人网站作品集",
   portfolioPdfHref: "/#works",
   demoLabel: "Figma*AI demo html",
@@ -44,7 +44,7 @@ export interface Project {
 function buildCasePages(slug: string, count: number) {
   return Array.from(
     { length: count },
-    (_, index) => `/case-studies/${slug}/page-${String(index + 1).padStart(2, "0")}.jpg`
+    (_, index) => `/case-studies/${slug}/page-${String(index + 1).padStart(2, "0")}.webp`
   );
 }
 
@@ -65,11 +65,11 @@ export const PROJECTS: Project[] = [
     resourceHref: PERSONAL_INFO.demoHref,
     resourceLabel: "打开外部 Demo",
     resourceExternal: true,
-    coverImage: "/case-studies/ai-cover.png",
+    coverImage: "/case-studies/ai-cover.webp",
     tags: ["生成式AI", "Vibe Coding"],
     titleVariant: "wide",
     mediaKind: "collage",
-    images: ["/case-assets/home-works/ai-preview.png"],
+    images: ["/case-assets/home-works/ai-preview.webp"],
   },
   {
     id: "dongpo-sorting",
@@ -86,18 +86,13 @@ export const PROJECTS: Project[] = [
       "面向生鲜现场作业链路，重做分拣任务、异常反馈与硬件协同信息表达，兼顾一线效率与系统配置能力。",
     resourceHref: "/zpj/%E6%99%BA%E8%83%BD%E5%88%86%E6%8B%A3%E7%B3%BB%E7%BB%9F.pdf",
     resourceLabel: "打开原始案例 PDF",
-    coverImage: "/case-studies/sorting-cover.png",
+    coverImage: "/case-studies/sorting-cover.webp",
     viewerHeight: 4200,
     tags: ["SaaS", "B端", "交互设计"],
     titleVariant: "compact",
     mediaKind: "stack",
-    casePages: buildCasePages("sorting", 12),
-    images: ["/case-assets/home-works/sorting-preview.png"],
-    icons: [
-      "https://www.figma.com/api/mcp/asset/fc108ad0-658f-4117-ae37-f12f1b217ae7",
-      "https://www.figma.com/api/mcp/asset/cc0589da-7a0b-46d1-9228-1695e5e0fc49",
-      "https://www.figma.com/api/mcp/asset/ad5f8eaf-19e5-4b1d-a81c-596fec7f6849",
-    ],
+    casePages: buildCasePages("sorting", 15),
+    images: ["/case-assets/home-works/sorting-preview.webp"],
   },
   {
     id: "wechat-pay-hk",
@@ -114,13 +109,13 @@ export const PROJECTS: Project[] = [
       "围绕本地缴费、绑卡与增长链路，兼顾金融产品信任感、流程效率和香港用户的使用语境做系统化优化。",
     resourceHref: "/zpj/WeChat%20Pay%20HK.pdf",
     resourceLabel: "打开原始案例 PDF",
-    coverImage: "/case-studies/wechatpay-cover.png",
+    coverImage: "/case-studies/wechatpay-cover.webp",
     viewerHeight: 5200,
     tags: ["UI/UX", "金融科技", "流程优化"],
     titleVariant: "compact",
     mediaKind: "phone",
-    casePages: buildCasePages("wechatpay", 21),
-    images: ["/case-assets/home-works/wechatpay-preview.png"],
+    casePages: buildCasePages("wechatpay", 15),
+    images: ["/case-assets/home-works/wechatpay-preview.webp"],
   },
   {
     id: "chow-tai-fook",
@@ -137,13 +132,13 @@ export const PROJECTS: Project[] = [
       "从品牌集合页到详情与购物车链路，重构高决策成本珠宝商品的信息路径，在品牌质感和转化效率之间找到平衡。",
     resourceHref: "/zpj/chowtaifook.pdf",
     resourceLabel: "打开原始案例 PDF",
-    coverImage: "/case-studies/chowtaifook-cover.png",
+    coverImage: "/case-studies/chowtaifook-cover.webp",
     viewerHeight: 6400,
     tags: ["电商", "改版设计", "品牌视觉"],
     titleVariant: "wide",
     mediaKind: "phone",
-    casePages: buildCasePages("chowtaifook", 14),
-    images: ["/case-assets/home-works/chowtaifook-preview.png"],
+    casePages: buildCasePages("chowtaifook", 12),
+    images: ["/case-assets/home-works/chowtaifook-preview.webp"],
   },
 ];
 
@@ -153,21 +148,21 @@ export const EXPERIENCE = [
     role: "UI/UX 设计师",
     period: "2023.06 — 至今",
     description:
-      "负责生鲜智能分拣 SaaS 系统核心场景体验设计。搭建设计侧 AI 工作流，输出标准化 3D 视觉资产，提升设计协作效率与业务识别准确率。",
+      "我负责生鲜智能分拣 SaaS 系统核心场景的体验设计。搭了一套设计侧 AI 工作流，输出标准化 3D 视觉资产，提升设计协作效率与业务识别准确率。",
   },
   {
     company: "腾讯科技（WeChat Pay HK 项目组）",
     role: "UI/UX 设计师",
     period: "2022.04 — 2023.05",
     description:
-      "主导电讯缴费与绑卡链路优化。参与香港钱包全站设计规范维护，适配多语种逻辑，沉淀 30+ 金融核心组件，确保跨团队视觉一致性。",
+      "我主导了电讯缴费与绑卡链路的优化。参与香港钱包全站设计规范维护，适配多语种逻辑，沉淀 30+ 金融核心组件，确保跨团队视觉一致性。",
   },
   {
     company: "周大福在线传媒有限公司",
     role: "UI 设计师",
     period: "2020.11 — 2022.04",
     description:
-      "负责官方小程序体验升级。平衡品牌与转化，通过优化详情页信息层级与品牌集合页设计，降低用户决策疑虑，提升下单转化率。",
+      "我负责官方小程序的体验升级。在品牌与转化之间找平衡，通过优化详情页信息层级与品牌集合页设计，降低用户决策疑虑，提升下单转化率。",
   },
 ];
 

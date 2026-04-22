@@ -1,0 +1,140 @@
+{
+  "generatedAt": "2026-04-22T03:24:48.735Z",
+  "quality": 85,
+  "threshold": 0,
+  "manifest": [
+    {
+      "from": "case-assets/ai/cube-07.png",
+      "to": "case-assets/ai/cube-07.webp",
+      "before": 29949,
+      "after": 6770,
+      "ratio": 77.4
+    },
+    {
+      "from": "case-assets/ai/cube-13.png",
+      "to": "case-assets/ai/cube-13.webp",
+      "before": 24165,
+      "after": 5458,
+      "ratio": 77.4
+    },
+    {
+      "from": "case-assets/ai/cube-11.png",
+      "to": "case-assets/ai/cube-11.webp",
+      "before": 22923,
+      "after": 5776,
+      "ratio": 74.8
+    },
+    {
+      "from": "case-assets/ai/screen-02.png",
+      "to": "case-assets/ai/screen-02.webp",
+      "before": 20483,
+      "after": 14744,
+      "ratio": 28
+    },
+    {
+      "from": "case-assets/ai/logo-lovable.png",
+      "to": "case-assets/ai/logo-lovable.webp",
+      "before": 17334,
+      "after": 2240,
+      "ratio": 87.1
+    },
+    {
+      "from": "case-assets/ai/logo-claude.png",
+      "to": "case-assets/ai/logo-claude.webp",
+      "before": 7937,
+      "after": 3908,
+      "ratio": 50.8
+    },
+    {
+      "from": "workflow/codex-color.png",
+      "to": "workflow/codex-color.webp",
+      "before": 7578,
+      "after": 9930,
+      "ratio": -31
+    },
+    {
+      "from": "case-assets/ai/logo-stability.png",
+      "to": "case-assets/ai/logo-stability.webp",
+      "before": 7423,
+      "after": 2452,
+      "ratio": 67
+    },
+    {
+      "from": "case-assets/ai/logo-stablediffusion.png",
+      "to": "case-assets/ai/logo-stablediffusion.webp",
+      "before": 6857,
+      "after": 3166,
+      "ratio": 53.8
+    },
+    {
+      "from": "case-assets/ai/logo-midjourney.png",
+      "to": "case-assets/ai/logo-midjourney.webp",
+      "before": 4860,
+      "after": 2540,
+      "ratio": 47.7
+    },
+    {
+      "from": "case-assets/ai/logo-figma.png",
+      "to": "case-assets/ai/logo-figma.webp",
+      "before": 4310,
+      "after": 1500,
+      "ratio": 65.2
+    },
+    {
+      "from": "case-assets/ai/logo-cursor.png",
+      "to": "case-assets/ai/logo-cursor.webp",
+      "before": 4249,
+      "after": 832,
+      "ratio": 80.4
+    },
+    {
+      "from": "case-assets/ai/logo-chatgpt.png",
+      "to": "case-assets/ai/logo-chatgpt.webp",
+      "before": 4036,
+      "after": 2382,
+      "ratio": 41
+    },
+    {
+      "from": "case-assets/ai/logo-codex.png",
+      "to": "case-assets/ai/logo-codex.webp",
+      "before": 3242,
+      "after": 1616,
+      "ratio": 50.2
+    },
+    {
+      "from": "case-assets/ai/logo-gemini.png",
+      "to": "case-assets/ai/logo-gemini.webp",
+      "before": 3142,
+      "after": 1808,
+      "ratio": 42.5
+    },
+    {
+      "from": "case-assets/ai/logo-figma-alt.png",
+      "to": "case-assets/ai/logo-figma-alt.webp",
+      "before": 2460,
+      "after": 986,
+      "ratio": 59.9
+    },
+    {
+      "from": "case-assets/ai/logo-runway.png",
+      "to": "case-assets/ai/logo-runway.webp",
+      "before": 2395,
+      "after": 1104,
+      "ratio": 53.9
+    },
+    {
+      "from": "case-assets/ai/logo-github.png",
+      "to": "case-assets/ai/logo-github.webp",
+      "before": 1892,
+      "after": 1062,
+      "ratio": 43.9
+    },
+    {
+      "from": "case-assets/ai/logo-v0.png",
+      "to": "case-assets/ai/logo-v0.webp",
+      "before": 1314,
+      "after": 758,
+      "ratio": 42.3
+    }
+  ]
+}

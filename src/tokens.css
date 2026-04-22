@@ -1,0 +1,105 @@
+/**
+ * Design tokens for Abbie's Portfolio.
+ * Extends the existing Tailwind v4 @theme setup in index.css.
+ * Goal: single source of truth for colors, spacing, signature palette,
+ * so the whole site (home + case pages) stays visually consistent.
+ */
+
+:root {
+  /* Ink scale — neutral type & surfaces (matches existing usage) */
+  --ink-900: #101114;
+  --ink-700: #2a2b30;
+  --ink-600: #5f636e;
+  --ink-400: #8c8f98;
+  --ink-300: #a0a4af;
+  --ink-200: #dedfe5;
+  --line: #ececea;
+
+  /* Clean off-white page with tiny warmth — crisper than the earlier cream
+     canvas that read as "dirty" against dark text. Surface (cards, emphasis
+     areas) is pure white so cards feel like they lift off the page. */
+  --canvas: #fafaf8;
+  --dawn: #ffffff;
+  --surface: #ffffff;
+
+  /* Signature color per case — used by CaseViewer to set accent/scroll/hover.
+     These bleed into the page via --case-accent when a case is active. */
+  --case-ai: #101114;
+  --case-sorting: #3f8a6f;
+  --case-chowtaifook: #a8733a;
+  --case-wechatpay: #07c160;
+
+  /* Default accent (home) */
+  --case-accent: var(--ink-900);
+  --case-accent-soft: color-mix(in oklch, var(--case-accent) 12%, white);
+
+  /* Fluid type scale — clamp() for responsive without media queries */
+  --fs-display: clamp(56px, 10vw, 128px);
+  --fs-h1: clamp(40px, 6vw, 84px);
+  --fs-h2: clamp(28px, 3.6vw, 48px);
+  --fs-lead: clamp(18px, 1.8vw, 24px);
+  --fs-body: 16px;
+  --fs-caption: 11px;
+
+  /* Spacing — 8pt grid */
+  --sp-1: 8px;
+  --sp-2: 16px;
+  --sp-3: 24px;
+  --sp-4: 32px;
+  --sp-5: 48px;
+  --sp-6: 64px;
+  --sp-7: 96px;
+  --sp-8: 128px;
+
+  /* Motion */
+  --ease-editorial: cubic-bezier(0.19, 1, 0.22, 1);
+  --dur-quick: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 620ms;
+
+  /* Case viewer chrome */
+  --viewer-max-w: 1600px;
+  --viewer-gutter: clamp(16px, 3vw, 48px);
+}
+
+@keyframes hotspot-pulse {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  70%  { transform: scale(2.2); opacity: 0;    }
+  100% { transform: scale(2.2); opacity: 0;    }
+}
+
+@layer utilities {
+  /* Unified case page container — responsive, centered, with mobile padding.
+     Replaces the bare `w-[1600px]` pattern that used to force horizontal scroll. */
+  .case-canvas {
+    width: 100%;
+    max-width: var(--viewer-max-w);
+    margin-inline: auto;
+    padding-inline: var(--viewer-gutter);
+  }
+
+  /* Drop-in for legacy 1600px absolute-positioned pages: don't break their layout,
+     but let mobile scroll horizontally instead of clipping. */
+  .case-legacy-shell {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+  }
+
+  /* AI case page scale container — dimensions/scale set inline via React
+     (JS-computed from window.innerWidth) to avoid CSS length-vs-number type
+     conflicts in clamp(). See AiCasePage.tsx. */
+
+  /* Progress bar used by CaseViewer */
+  .viewer-progress {
+    background: color-mix(in oklch, var(--case-accent) 85%, black);
+  }
+
+  /* Signature-aware accent surfaces */
+  .accent-dot {
+    background: var(--case-accent);
+  }
+  .accent-text {
+    color: var(--case-accent);
+  }
+}
