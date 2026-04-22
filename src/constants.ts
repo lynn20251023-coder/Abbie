@@ -1,7 +1,7 @@
 export const PERSONAL_INFO = {
   name: "Abbie",
-  role: "UI/UX 设计师",
-  experience: "5年经验",
+  role: "UI/UX 设计师 · AI 工作流",
+  experience: "since 2020",
   email: "linabbie@163.com",
   phone: "18576406631",
   wechat: "Abbie0-5",

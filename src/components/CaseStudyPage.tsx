@@ -21,7 +21,7 @@ export default function CaseStudyPage({ project }: CaseStudyPageProps) {
   }, [project.title]);
 
   return (
-    <main className="min-h-screen bg-white text-[#101114]">
+    <main className="min-h-screen bg-[var(--canvas)] text-[var(--ink-900)]">
       {project.detailSlug === "ai" ? <AiCasePage /> : <FigmaCasePage project={project} />}
     </main>
   );
