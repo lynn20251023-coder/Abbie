@@ -248,6 +248,7 @@ function useCanvasScale() {
 
 export default function AiCasePage() {
   const scale = useCanvasScale();
+  const [hoveredPhone, setHoveredPhone] = useState<number | null>(null);
 
   const shellStyle: CSSProperties = {
     width: "100%",
@@ -274,6 +275,21 @@ export default function AiCasePage() {
 
   return (
     <div style={{ background: CANVAS }}>
+      {/* Hover-preview overlay: lives outside the transformed canvas so the
+          full-res image isn't also squeezed by the canvas scale. */}
+      {hoveredPhone !== null && (
+        <div
+          className="pointer-events-none fixed inset-0 z-[80] flex items-center justify-center bg-[rgba(16,17,20,0.55)] backdrop-blur-sm"
+          aria-hidden="true"
+        >
+          <img
+            src={phoneShots[hoveredPhone]}
+            alt=""
+            className="max-h-[88vh] max-w-[88vw] rounded-[6px] shadow-[0_24px_80px_rgba(16,17,20,0.35)]"
+          />
+        </div>
+      )}
+
       {/* Sticky top nav — matches CaseViewer for consistent cross-case UX */}
       <header className="sticky top-0 z-[70] border-b border-[var(--line)] bg-[var(--surface)]/85 backdrop-blur-md">
         <div className="case-canvas flex items-center justify-between py-3 text-[11.2px] uppercase tracking-[0.32em] text-[var(--ink-600)]">
@@ -360,14 +376,16 @@ export default function AiCasePage() {
           </div>
         ))}
 
-        {explorationVisuals.map((visual) => (
+        {explorationVisuals.map((visual, i) => (
           <img
             key={`${visual.src}-${visual.style.left}-${visual.style.top}`}
             src={visual.src}
             alt=""
             loading="lazy"
             decoding="async"
-            className="absolute block"
+            onMouseEnter={() => setHoveredPhone(i)}
+            onMouseLeave={() => setHoveredPhone((prev) => (prev === i ? null : prev))}
+            className="absolute block cursor-zoom-in transition-transform duration-200 hover:scale-[1.03]"
             style={{ ...visual.style, objectFit: "contain" }}
           />
         ))}
