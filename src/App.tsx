@@ -10,7 +10,6 @@ import Works from "./components/Works";
 import Experience from "./components/Experience";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
-import AboutThisBuild from "./components/AboutThisBuild";
 import { PROJECTS } from "./constants";
 import { motion, useScroll, useSpring } from "motion/react";
 import { lazy, Suspense } from "react";
@@ -54,7 +53,6 @@ export default function App() {
             <Works />
             <Experience />
             <Skills />
-            <AboutThisBuild />
             <Contact />
           </main>
         </>

@@ -39,7 +39,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         delay: index * 0.08,
       }}
       style={accentStyle}
-      className="group relative overflow-hidden bg-[var(--surface)] transition-[background-color,box-shadow] duration-700 ease-editorial hover:shadow-[0_28px_68px_rgba(16,17,20,0.06)]"
+      className="group relative overflow-hidden rounded-[3px] border border-[var(--line)] bg-[var(--surface)] shadow-[0_1px_2px_rgba(16,17,20,0.03),0_6px_18px_-10px_rgba(16,17,20,0.06)] transition-[background-color,box-shadow,border-color,transform] duration-700 ease-editorial hover:-translate-y-[2px] hover:border-[var(--ink-200)] hover:shadow-[0_2px_4px_rgba(16,17,20,0.04),0_24px_48px_-20px_rgba(16,17,20,0.1)]"
     >
       {/* Signature color strip at top — slides in on hover */}
       <span
@@ -48,7 +48,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         style={{ background: "var(--case-accent)" }}
       />
 
-      <div className="grid gap-8 p-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:items-center md:gap-16 md:p-14 lg:gap-20 lg:p-[72px]">
+      <div className="grid gap-6 p-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] md:items-center md:gap-10 md:p-10 lg:gap-14 lg:p-14">
         {/* Content column */}
         <div className="flex flex-col">
           <div className="flex items-center gap-4 text-[var(--ink-300)]">
@@ -60,11 +60,11 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
 
           <h3
-            className="font-serif font-semibold text-[var(--ink-900)] mt-10"
+            className="font-serif font-semibold text-[var(--ink-900)] mt-6"
             style={{
-              fontSize: "clamp(36px, 4.6vw, 56px)",
-              lineHeight: "1.05",
-              letterSpacing: "-0.04em",
+              fontSize: "clamp(28px, 3.4vw, 42px)",
+              lineHeight: "1.08",
+              letterSpacing: "-0.035em",
             }}
           >
             {project.titleLines.map((line) => (
@@ -74,11 +74,11 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             ))}
           </h3>
 
-          <p className="mt-6 max-w-[460px] font-serif text-[16px] leading-[1.75] text-[var(--ink-600)] md:text-[17px]">
+          <p className="mt-5 max-w-[460px] font-serif text-[15px] leading-[1.7] text-[var(--ink-600)] md:text-[16px]">
             {project.description}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
             {project.tags.map((tag) => (
               <span
                 key={tag}
@@ -91,7 +91,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
           <a
             href={project.detailHref}
-            className="mono-detail mt-10 inline-flex items-center gap-3 border-b border-[var(--ink-900)]/20 pb-2 self-start text-[var(--ink-900)] transition-[border-color,color] duration-[var(--dur-base)] ease-[var(--ease-editorial)] hover:border-[var(--case-accent)] hover:text-[var(--case-accent)]"
+            className="mono-detail mt-8 inline-flex items-center gap-3 border-b border-[var(--ink-900)]/20 pb-2 self-start text-[var(--ink-900)] transition-[border-color,color] duration-[var(--dur-base)] ease-[var(--ease-editorial)] hover:border-[var(--case-accent)] hover:text-[var(--case-accent)]"
           >
             <span>View Case Study</span>
             <span aria-hidden className="transition-transform group-hover:translate-x-1">
@@ -101,7 +101,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
 
         {/* Media column — responsive, aspect-ratio-driven, no absolute positioning */}
-        <div className="relative overflow-hidden bg-[var(--canvas)] aspect-[4/3] md:aspect-[5/4]">
+        <div className="relative overflow-hidden rounded-[2px] bg-[var(--canvas)] aspect-[4/3] md:aspect-[16/10]">
           <img
             src={project.images[0]}
             alt={project.title}

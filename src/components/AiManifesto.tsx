@@ -39,21 +39,27 @@ export default function AiManifesto() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.72, ease: [0.19, 1, 0.22, 1] }}
-          className="max-w-[860px]"
         >
-          <p className="mono-detail text-[var(--ink-300)]">How I work with AI</p>
           <h2
-            className="display-italic mt-5"
+            className="display-italic"
             style={{
-              fontSize: "clamp(44px, 7.4vw, 96px)",
-              lineHeight: "0.94",
-              letterSpacing: "-0.06em",
+              fontSize: "clamp(72px, 11vw, 128px)",
+              lineHeight: "0.82",
+              letterSpacing: "-0.08em",
             }}
           >
-            AI IN MY
-            <br />
-            DESIGN WORKFLOW.
+            AI PRACTICE
           </h2>
+          <p
+            className="mt-3 font-serif text-[var(--ink-200)]"
+            style={{
+              fontSize: "clamp(28px, 4vw, 48px)",
+              lineHeight: "0.95",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            设计工作流里的 AI
+          </p>
         </motion.div>
 
         <ol className="mt-14 grid gap-px bg-[var(--line)] md:mt-20 md:grid-cols-4">
