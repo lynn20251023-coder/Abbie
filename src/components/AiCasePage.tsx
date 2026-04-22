@@ -23,20 +23,20 @@ const logos = {
   stability: `${MAT}/stability.png`,
   openai: `${MAT}/openai.png`,
   figma: `${MAT}/figma.png`,
-  blackForest: `${MAT}/blackforest.png`,
+  blackForest: `${MAT}/blackforest.png`, // Black Forest Labs wordmark (images 1.png)
+  bolt: `${MAT}/bolt.png`, // 159165768 1.png — purple bolt app icon
   v0: `${MAT}/v0.png`,
   gemini: `${MAT}/gemini.png`,
-  lovart: `${MAT}/lovart.png`,
-  figmaMake: `${MAT}/figma-make.png`,
-  cursor: `${MAT}/cursor.png`,
+  procreate: `${MAT}/cursor.png`, // purple AppIcon (image-thumb-Purple211…)
+  codex: `${MAT}/codex.png`, // OpenAI Codex color mark
   claude: `${MAT}/claude.png`,
 };
 
 // 3D vegetable crate renders for the business section (3×3)
 const vegCrates = Array.from({ length: 9 }, (_, i) => `${MAT}/veg-${String(i + 1).padStart(2, "0")}.png`);
 
-// Phone screenshots for 2026 timeline entry
-const phoneShots = [`${MAT}/phone-01.png`, `${MAT}/phone-02.png`, `${MAT}/phone-03.png`];
+// 示意图 per-year screenshots for the timeline (one image per row).
+const phoneShots = Array.from({ length: 4 }, (_, i) => `${MAT}/phone-${String(i + 1).padStart(2, "0")}.png`);
 
 const explorationAssets = {
   accountBars: [
@@ -127,7 +127,7 @@ const timelineCopy: TimelineEntry[] = [
     logos: [
       { src: logos.openai, w: 32, h: 32 },
       { src: logos.figma, w: 32, h: 32 },
-      { src: logos.blackForest, w: 110, h: 32 },
+      { src: logos.blackForest, w: 110, h: 28 },
     ],
   },
   {
@@ -144,10 +144,10 @@ const timelineCopy: TimelineEntry[] = [
       "Figma Make 本地 Agent 设计规范与变量管理",
     ],
     logos: [
-      { src: logos.lovart, w: 44, h: 32 },
+      { src: logos.bolt, w: 32, h: 32 },
       { src: logos.v0, w: 32, h: 32 },
       { src: logos.gemini, w: 32, h: 32 },
-      { src: logos.figmaMake, w: 44, h: 32 },
+      { src: logos.procreate, w: 32, h: 32 },
     ],
   },
   {
@@ -164,24 +164,28 @@ const timelineCopy: TimelineEntry[] = [
       "个人 Vibe Coding 为自己所用",
     ],
     logos: [
-      { src: logos.cursor, w: 32, h: 32 },
+      { src: logos.codex, w: 32, h: 32 },
       { src: logos.claude, w: 110, h: 32 },
     ],
   },
 ];
 
+// One 示意图 per timeline year. Source is 540×680 (aspect 0.794 portrait).
+//
+// Row spacing budget (bodyTop deltas): 2023→2024 = 342px, 2024→2025 = 360px,
+// 2025→2026 = 413px. Each row also loses 24px to its caption above the image.
+// Tightest row is 2023 at 342 - 24 = 318px. Pick image height = 280 so every
+// row has ≥36px of breathing room; width = round(280 × 540/680) = 222.
+// Captions are positioned at (phone.top - 24) so they never collide with the
+// phone above them either (gap ≥ 36px proven above).
+const PHONE_W = 222;
+const PHONE_H = 280;
+const PHONE_LEFT = 1060;
 const explorationVisuals = [
-  { src: explorationAssets.accountBars[0], style: { left: 960, top: 442.48, width: 217.3, height: 56.58 }, className: "rounded-[2.9px]" },
-  { src: explorationAssets.accountBars[1], style: { left: 960, top: 501.8, width: 217.3, height: 40.9 }, className: "rounded-[2.9px]" },
-  { src: explorationAssets.accountBars[2], style: { left: 960, top: 545.44, width: 217.3, height: 39.28 }, className: "rounded-[2.9px]" },
-  { src: explorationAssets.accountBars[3], style: { left: 960, top: 587.46, width: 217.3, height: 39.46 }, className: "rounded-[2.9px]" },
-  { src: explorationAssets.media.darkCards, style: { left: 1085, top: 447, width: 214.26, height: 167.96 }, className: "rounded-[9px] shadow-[10px_10px_30px_rgba(0,0,0,0.08)]" },
-  { src: explorationAssets.media.accountPanel, style: { left: 1262, top: 351, width: 170.03, height: 369.66 }, className: "rounded-[6px] border border-black/5" },
-  { src: explorationAssets.media.jewelryFlow, style: { left: 1085, top: 764, width: 297, height: 239 }, className: "rounded-[4px] border border-black/5" },
-  { src: explorationAssets.media.paymentDialog, style: { left: 961, top: 823, width: 268, height: 231 }, className: "rounded-[4px] border border-black/5" },
-  { src: explorationAssets.media.designSheet, style: { left: 961, top: 1156, width: 291, height: 271 }, className: "rounded-[4px] border border-black/5" },
-  { src: explorationAssets.media.generatedPage, style: { left: 1061, top: 1211, width: 383, height: 215 }, className: "rounded-[4px] border border-black/5" },
-  { src: explorationAssets.media.vibeCoding, style: { left: 961, top: 1519, width: 483, height: 298 }, className: "rounded-[4px] border border-black/5" },
+  { src: phoneShots[0], style: { left: PHONE_LEFT, top: 378, width: PHONE_W, height: PHONE_H }, className: "" },
+  { src: phoneShots[1], style: { left: PHONE_LEFT, top: 718, width: PHONE_W, height: PHONE_H }, className: "" },
+  { src: phoneShots[2], style: { left: PHONE_LEFT, top: 1080, width: PHONE_W, height: PHONE_H }, className: "" },
+  { src: phoneShots[3], style: { left: PHONE_LEFT, top: 1492, width: PHONE_W, height: PHONE_H }, className: "" },
 ];
 
 // 3×3 grid of vegetable crate renders
@@ -245,6 +249,7 @@ function useCanvasScale() {
 
 export default function AiCasePage() {
   const scale = useCanvasScale();
+  const [hoveredPhone, setHoveredPhone] = useState<number | null>(null);
 
   const shellStyle: CSSProperties = {
     width: "100%",
@@ -271,6 +276,21 @@ export default function AiCasePage() {
 
   return (
     <div style={{ background: CANVAS }}>
+      {/* Hover-preview overlay: lives outside the transformed canvas so the
+          full-res image isn't also squeezed by the canvas scale. */}
+      {hoveredPhone !== null && (
+        <div
+          className="pointer-events-none fixed inset-0 z-[80] flex items-center justify-center bg-[rgba(16,17,20,0.55)] backdrop-blur-sm"
+          aria-hidden="true"
+        >
+          <img
+            src={phoneShots[hoveredPhone]}
+            alt=""
+            className="max-h-[88vh] max-w-[88vw] rounded-[6px] shadow-[0_24px_80px_rgba(16,17,20,0.35)]"
+          />
+        </div>
+      )}
+
       {/* Sticky top nav — matches CaseViewer for consistent cross-case UX */}
       <header className="sticky top-0 z-[70] border-b border-[var(--line)] bg-[var(--surface)]/85 backdrop-blur-md">
         <div className="case-canvas flex items-center justify-between py-3 text-[11.2px] uppercase tracking-[0.32em] text-[var(--ink-600)]">
@@ -357,25 +377,31 @@ export default function AiCasePage() {
           </div>
         ))}
 
-        {explorationVisuals.map((visual) => (
-          <CanvasImage
+        {explorationVisuals.map((visual, i) => (
+          <img
             key={`${visual.src}-${visual.style.left}-${visual.style.top}`}
             src={visual.src}
-            style={visual.style}
-            className={visual.className}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            onMouseEnter={() => setHoveredPhone(i)}
+            onMouseLeave={() => setHoveredPhone((prev) => (prev === i ? null : prev))}
+            className="absolute block cursor-zoom-in transition-transform duration-200 hover:scale-[1.03]"
+            style={{ ...visual.style, objectFit: "contain" }}
           />
         ))}
 
-        <p className="absolute left-[960px] top-[394px] text-[12px]" style={{ color: INK_600 }}>
+        {/* Captions sit above each 示意图 (phone image), aligned to its left edge. */}
+        <p className="absolute left-[1060px] top-[354px] text-[12px]" style={{ color: INK_600 }}>
           用AI探索自媒体
         </p>
-        <p className="absolute left-[960px] top-[753px] text-[12px]" style={{ color: INK_600 }}>
+        <p className="absolute left-[1060px] top-[694px] text-[12px]" style={{ color: INK_600 }}>
           方案探索
         </p>
-        <p className="absolute left-[961px] top-[1115px] text-[12px]" style={{ color: INK_600 }}>
+        <p className="absolute left-[1060px] top-[1056px] text-[12px]" style={{ color: INK_600 }}>
           用生成的设计规范、变量让AI自己搭建页面
         </p>
-        <p className="absolute left-[961px] top-[1477px] text-[12px]" style={{ color: INK_600 }}>
+        <p className="absolute left-[1060px] top-[1468px] text-[12px]" style={{ color: INK_600 }}>
           用Vibe Coding解决自己日常的需求的工具搭建ing...
         </p>
 
@@ -480,11 +506,14 @@ export default function AiCasePage() {
         />
 
         {businessIconLayouts.map((layout, index) => (
-          <CanvasImage
+          <img
             key={`${layout.left}-${layout.top}`}
             src={businessAssets.icons[index]}
-            style={layout}
-            className="shadow-[0_4px_12px_rgba(16,17,20,0.06)]"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="absolute block"
+            style={{ ...layout, objectFit: "contain" }}
           />
         ))}
 
