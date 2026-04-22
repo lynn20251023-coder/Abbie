@@ -169,12 +169,22 @@ const timelineCopy: TimelineEntry[] = [
   },
 ];
 
-// One 示意图 per timeline year; 540×680 source, rendered at 280×352 (same aspect).
+// One 示意图 per timeline year. Source is 540×680 (aspect 0.794 portrait).
+//
+// Row spacing budget (bodyTop deltas): 2023→2024 = 342px, 2024→2025 = 360px,
+// 2025→2026 = 413px. Each row also loses 24px to its caption above the image.
+// Tightest row is 2023 at 342 - 24 = 318px. Pick image height = 280 so every
+// row has ≥36px of breathing room; width = round(280 × 540/680) = 222.
+// Captions are positioned at (phone.top - 24) so they never collide with the
+// phone above them either (gap ≥ 36px proven above).
+const PHONE_W = 222;
+const PHONE_H = 280;
+const PHONE_LEFT = 1060;
 const explorationVisuals = [
-  { src: phoneShots[0], style: { left: 1060, top: 378, width: 280, height: 352 }, className: "" },
-  { src: phoneShots[1], style: { left: 1060, top: 718, width: 280, height: 352 }, className: "" },
-  { src: phoneShots[2], style: { left: 1060, top: 1080, width: 280, height: 352 }, className: "" },
-  { src: phoneShots[3], style: { left: 1060, top: 1492, width: 280, height: 352 }, className: "" },
+  { src: phoneShots[0], style: { left: PHONE_LEFT, top: 378, width: PHONE_W, height: PHONE_H }, className: "" },
+  { src: phoneShots[1], style: { left: PHONE_LEFT, top: 718, width: PHONE_W, height: PHONE_H }, className: "" },
+  { src: phoneShots[2], style: { left: PHONE_LEFT, top: 1080, width: PHONE_W, height: PHONE_H }, className: "" },
+  { src: phoneShots[3], style: { left: PHONE_LEFT, top: 1492, width: PHONE_W, height: PHONE_H }, className: "" },
 ];
 
 // 3×3 grid of vegetable crate renders
@@ -351,11 +361,14 @@ export default function AiCasePage() {
         ))}
 
         {explorationVisuals.map((visual) => (
-          <CanvasImage
+          <img
             key={`${visual.src}-${visual.style.left}-${visual.style.top}`}
             src={visual.src}
-            style={visual.style}
-            className={visual.className}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="absolute block"
+            style={{ ...visual.style, objectFit: "contain" }}
           />
         ))}
 
