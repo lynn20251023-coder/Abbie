@@ -48,7 +48,7 @@ function normalizePage(page: string | CasePage): CasePage {
  *   - fluid responsive width (srcset-less images scale to viewport)
  *   - per-case signature accent color (drives scroll progress + hover)
  *   - reading progress bar pinned to top
- *   - keyboard nav: Esc → back, F → reading mode, ← → jump between pages
+ *   - keyboard nav: Esc → back, ↑↓←→ → jump between pages
  *   - click-to-zoom lightbox for any page
  *   - IntersectionObserver-driven page indicator "03 / 14"
  */
@@ -66,7 +66,6 @@ export default function CaseViewer({
   const containerRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [readingMode, setReadingMode] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const normalizedPages = useMemo(() => pages.map(normalizePage), [pages]);
@@ -96,19 +95,12 @@ export default function CaseViewer({
     return () => observer.disconnect();
   }, [pages.length]);
 
-  // Keyboard shortcuts
+  // Keyboard shortcuts (no visible hints — kept because they're standard browse UX)
   useEffect(() => {
     if (lightboxIndex !== null) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        if (readingMode) {
-          setReadingMode(false);
-        } else {
-          window.location.href = backHref;
-        }
-      } else if (e.key === "f" || e.key === "F") {
-        e.preventDefault();
-        setReadingMode((v) => !v);
+        window.location.href = backHref;
       } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
         e.preventDefault();
         pageRefs.current[Math.min(activeIndex + 1, pages.length - 1)]?.scrollIntoView({ behavior: "smooth" });
@@ -119,7 +111,7 @@ export default function CaseViewer({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [activeIndex, pages.length, readingMode, backHref, lightboxIndex]);
+  }, [activeIndex, pages.length, backHref, lightboxIndex]);
 
   // Lightbox keyboard
   useEffect(() => {
@@ -142,36 +134,20 @@ export default function CaseViewer({
         style={{ scaleX }}
       />
 
-      {/* Chrome */}
-      {!readingMode && (
-        <header className="sticky top-0 z-[70] border-b border-[var(--line)] bg-[var(--surface)]/85 backdrop-blur-md">
-          <div className="case-canvas flex items-center justify-between py-3 text-[11.2px] uppercase tracking-[0.32em] text-[var(--ink-600)]">
-            <a href={backHref} className="transition-opacity hover:opacity-70">
-              ← Back to Works
-            </a>
-            <div className="hidden items-center gap-4 md:flex">
-              <span className="font-[var(--font-mono)]">
-                {String(activeIndex + 1).padStart(2, "0")} / {String(pages.length).padStart(2, "0")}
-              </span>
-              <button
-                type="button"
-                onClick={() => setReadingMode(true)}
-                className="transition-opacity hover:opacity-70"
-                title="Reading mode (F)"
-              >
-                Reading Mode · F
-              </button>
-            </div>
-            <span className="md:hidden font-[var(--font-mono)]">
-              {activeIndex + 1}/{pages.length}
-            </span>
-          </div>
-        </header>
-      )}
+      {/* Sticky top nav — unified across all case pages */}
+      <header className="sticky top-0 z-[70] border-b border-[var(--line)] bg-[var(--surface)]/85 backdrop-blur-md">
+        <div className="case-canvas flex items-center justify-between py-3 text-[11.2px] uppercase tracking-[0.32em] text-[var(--ink-600)]">
+          <a href={backHref} className="transition-opacity hover:opacity-70">
+            ← Back to Works
+          </a>
+          <span className="font-[var(--font-mono)] tracking-[0.2em]">
+            {String(activeIndex + 1).padStart(2, "0")} / {String(pages.length).padStart(2, "0")}
+          </span>
+        </div>
+      </header>
 
       {/* Title block */}
-      {!readingMode && (
-        <section className="case-canvas pb-10 pt-14 md:pb-14 md:pt-20">
+      <section className="case-canvas pb-10 pt-14 md:pb-14 md:pt-20">
           <p className="mono-detail accent-text mb-4">Case Study</p>
           <h1 className="font-serif text-[var(--fs-h1)] leading-[0.96] tracking-[-0.04em] text-[var(--ink-900)]">
             {title}
@@ -192,17 +168,16 @@ export default function CaseViewer({
             </dl>
           ) : null}
         </section>
-      )}
 
       {/* Pages */}
-      <div className={readingMode ? "py-0" : "pb-24"}>
+      <div className="pb-24">
         {normalizedPages.map((page, index) => (
           <motion.figure
             key={page.src}
             ref={(el) => {
               pageRefs.current[index] = el;
             }}
-            className={readingMode ? "case-canvas py-2" : "case-canvas py-3 md:py-4"}
+            className="case-canvas py-3 md:py-4"
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
@@ -211,7 +186,7 @@ export default function CaseViewer({
             <AnnotatedImage
               src={page.src}
               alt={`${title} — page ${index + 1}`}
-              hotspots={readingMode ? [] : page.hotspots}
+              hotspots={page.hotspots}
               loading={index < 2 ? "eager" : "lazy"}
               onImageClick={() => setLightboxIndex(index)}
             />
@@ -220,7 +195,7 @@ export default function CaseViewer({
       </div>
 
       {/* Siblings navigation (next / prev case) */}
-      {!readingMode && (prev || next) && (
+      {(prev || next) && (
         <nav className="border-t border-[var(--line)] bg-[var(--surface)]">
           <div className="case-canvas grid gap-0 md:grid-cols-2">
             {prev ? <SiblingLink side="prev" sibling={prev} /> : <div className="hidden md:block" />}
@@ -229,22 +204,11 @@ export default function CaseViewer({
         </nav>
       )}
 
-      {/* Footer shortcut hint */}
-      {!readingMode && (
+      {footerExtra ? (
         <footer className="border-t border-[var(--line)] bg-[var(--canvas)]">
-          <div className="case-canvas flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
-            <div className="mono-detail text-[var(--ink-300)]">
-              <kbd className="mr-2 rounded border border-[var(--line)] px-1.5 py-0.5 text-[10px] tracking-[0.28em]">ESC</kbd>
-              back
-              <kbd className="ml-4 mr-2 rounded border border-[var(--line)] px-1.5 py-0.5 text-[10px] tracking-[0.28em]">F</kbd>
-              reading mode
-              <kbd className="ml-4 mr-2 rounded border border-[var(--line)] px-1.5 py-0.5 text-[10px] tracking-[0.28em]">↑↓</kbd>
-              prev / next page
-            </div>
-            {footerExtra}
-          </div>
+          <div className="case-canvas py-10">{footerExtra}</div>
         </footer>
-      )}
+      ) : null}
 
       {/* Lightbox */}
       {lightboxIndex !== null && (

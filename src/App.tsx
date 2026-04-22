@@ -31,7 +31,7 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[var(--canvas)] font-sans selection:bg-zinc-200 selection:text-black">
+    <div className="min-h-screen overflow-x-clip bg-[var(--canvas)] font-sans selection:bg-zinc-200 selection:text-black">
       {!selectedProject ? (
         <motion.div
           className="fixed left-0 right-0 top-0 z-[70] h-1 origin-left bg-zinc-800"

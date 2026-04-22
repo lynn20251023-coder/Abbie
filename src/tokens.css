@@ -86,6 +86,10 @@
     overscroll-behavior-x: contain;
   }
 
+  /* AI case page scale container — dimensions/scale set inline via React
+     (JS-computed from window.innerWidth) to avoid CSS length-vs-number type
+     conflicts in clamp(). See AiCasePage.tsx. */
+
   /* Progress bar used by CaseViewer */
   .viewer-progress {
     background: color-mix(in oklch, var(--case-accent) 85%, black);

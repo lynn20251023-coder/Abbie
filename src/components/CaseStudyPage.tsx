@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import type { Project } from "@/src/constants";
 import AiCasePage from "./AiCasePage";
 import FigmaCasePage from "./FigmaCasePage";
+import SiteFooter from "./SiteFooter";
 
 interface CaseStudyPageProps {
   project: Project;
@@ -23,6 +24,7 @@ export default function CaseStudyPage({ project }: CaseStudyPageProps) {
   return (
     <main className="min-h-screen bg-[var(--canvas)] text-[var(--ink-900)]">
       {project.detailSlug === "ai" ? <AiCasePage /> : <FigmaCasePage project={project} />}
+      <SiteFooter />
     </main>
   );
 }
