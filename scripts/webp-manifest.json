@@ -1,427 +1,469 @@
 {
-  "generatedAt": "2026-04-21T15:20:56.910Z",
+  "generatedAt": "2026-04-22T03:20:16.940Z",
   "quality": 82,
-  "threshold": 51200,
+  "threshold": 40960,
   "manifest": [
     {
-      "from": "case-studies/wechatpay/page-14.jpg",
-      "to": "case-studies/wechatpay/page-14.webp",
-      "before": 307087,
-      "after": 140138,
-      "ratio": 54.4
+      "from": "case-assets/ai/ai-overview.png",
+      "to": "case-assets/ai/ai-overview.webp",
+      "before": 3162679,
+      "after": 506282,
+      "ratio": 84
     },
     {
-      "from": "case-assets/zhoudafu/group-28622.png",
-      "to": "case-assets/zhoudafu/group-28622.webp",
-      "before": 306642,
-      "after": 331598,
-      "ratio": -8.1
-    },
-    {
-      "from": "case-studies/sorting/page-09.jpg",
-      "to": "case-studies/sorting/page-09.webp",
-      "before": 300113,
-      "after": 147212,
-      "ratio": 50.9
-    },
-    {
-      "from": "case-studies/wechatpay/page-09.jpg",
-      "to": "case-studies/wechatpay/page-09.webp",
-      "before": 297636,
-      "after": 121820,
-      "ratio": 59.1
-    },
-    {
-      "from": "case-studies/wechatpay/page-03.jpg",
-      "to": "case-studies/wechatpay/page-03.webp",
-      "before": 292518,
-      "after": 101882,
-      "ratio": 65.2
-    },
-    {
-      "from": "case-studies/wechatpay/page-13.jpg",
-      "to": "case-studies/wechatpay/page-13.webp",
-      "before": 288288,
-      "after": 146616,
-      "ratio": 49.1
-    },
-    {
-      "from": "case-studies/wechatpay/page-12.jpg",
-      "to": "case-studies/wechatpay/page-12.webp",
-      "before": 288084,
-      "after": 177080,
-      "ratio": 38.5
-    },
-    {
-      "from": "case-studies/wechatpay/page-20.jpg",
-      "to": "case-studies/wechatpay/page-20.webp",
-      "before": 284071,
-      "after": 150094,
-      "ratio": 47.2
-    },
-    {
-      "from": "case-studies/chowtaifook/page-03.jpg",
-      "to": "case-studies/chowtaifook/page-03.webp",
-      "before": 275741,
-      "after": 137136,
-      "ratio": 50.3
-    },
-    {
-      "from": "case-studies/wechatpay/page-10.jpg",
-      "to": "case-studies/wechatpay/page-10.webp",
-      "before": 274120,
-      "after": 114116,
-      "ratio": 58.4
-    },
-    {
-      "from": "case-studies/chowtaifook/page-02.jpg",
-      "to": "case-studies/chowtaifook/page-02.webp",
-      "before": 264601,
-      "after": 118800,
-      "ratio": 55.1
-    },
-    {
-      "from": "case-studies/chowtaifook/page-10.jpg",
-      "to": "case-studies/chowtaifook/page-10.webp",
-      "before": 262148,
-      "after": 118958,
-      "ratio": 54.6
-    },
-    {
-      "from": "case-studies/wechatpay/page-08.jpg",
-      "to": "case-studies/wechatpay/page-08.webp",
-      "before": 260025,
-      "after": 107812,
-      "ratio": 58.5
-    },
-    {
-      "from": "case-studies/wechatpay/page-02.jpg",
-      "to": "case-studies/wechatpay/page-02.webp",
-      "before": 257229,
-      "after": 117312,
-      "ratio": 54.4
-    },
-    {
-      "from": "case-studies/chowtaifook/page-11.jpg",
-      "to": "case-studies/chowtaifook/page-11.webp",
-      "before": 255474,
-      "after": 116174,
-      "ratio": 54.5
-    },
-    {
-      "from": "case-studies/chowtaifook/page-04.jpg",
-      "to": "case-studies/chowtaifook/page-04.webp",
-      "before": 252242,
-      "after": 120380,
-      "ratio": 52.3
-    },
-    {
-      "from": "case-studies/sorting/page-10.jpg",
-      "to": "case-studies/sorting/page-10.webp",
-      "before": 251996,
-      "after": 99686,
-      "ratio": 60.4
-    },
-    {
-      "from": "case-studies/sorting/page-08.jpg",
-      "to": "case-studies/sorting/page-08.webp",
-      "before": 251500,
-      "after": 109628,
-      "ratio": 56.4
-    },
-    {
-      "from": "case-studies/sorting/page-11.jpg",
-      "to": "case-studies/sorting/page-11.webp",
-      "before": 240097,
-      "after": 93352,
-      "ratio": 61.1
-    },
-    {
-      "from": "case-assets/wechatpay/group28597.png",
-      "to": "case-assets/wechatpay/group28597.webp",
-      "before": 239137,
-      "after": 253046,
-      "ratio": -5.8
-    },
-    {
-      "from": "case-studies/chowtaifook/page-06.jpg",
-      "to": "case-studies/chowtaifook/page-06.webp",
-      "before": 236765,
-      "after": 105886,
-      "ratio": 55.3
-    },
-    {
-      "from": "case-studies/sorting/page-04.jpg",
-      "to": "case-studies/sorting/page-04.webp",
-      "before": 232998,
-      "after": 100654,
-      "ratio": 56.8
-    },
-    {
-      "from": "case-studies/sorting/page-02.jpg",
-      "to": "case-studies/sorting/page-02.webp",
-      "before": 228697,
-      "after": 102054,
-      "ratio": 55.4
-    },
-    {
-      "from": "case-studies/sorting/page-03.jpg",
-      "to": "case-studies/sorting/page-03.webp",
-      "before": 228577,
-      "after": 102808,
-      "ratio": 55
-    },
-    {
-      "from": "case-studies/sorting/page-06.jpg",
-      "to": "case-studies/sorting/page-06.webp",
-      "before": 225347,
-      "after": 96004,
-      "ratio": 57.4
-    },
-    {
-      "from": "case-studies/wechatpay/page-07.jpg",
-      "to": "case-studies/wechatpay/page-07.webp",
-      "before": 224455,
-      "after": 68892,
-      "ratio": 69.3
-    },
-    {
-      "from": "case-studies/sorting/page-12.jpg",
-      "to": "case-studies/sorting/page-12.webp",
-      "before": 222253,
-      "after": 89390,
-      "ratio": 59.8
-    },
-    {
-      "from": "case-studies/sorting/page-07.jpg",
-      "to": "case-studies/sorting/page-07.webp",
-      "before": 214714,
-      "after": 80806,
-      "ratio": 62.4
-    },
-    {
-      "from": "case-studies/chowtaifook/page-05.jpg",
-      "to": "case-studies/chowtaifook/page-05.webp",
-      "before": 207164,
-      "after": 84874,
-      "ratio": 59
-    },
-    {
-      "from": "case-studies/wechatpay/page-17.jpg",
-      "to": "case-studies/wechatpay/page-17.webp",
-      "before": 195333,
-      "after": 75910,
-      "ratio": 61.1
-    },
-    {
-      "from": "case-studies/wechatpay/page-04.jpg",
-      "to": "case-studies/wechatpay/page-04.webp",
-      "before": 193947,
-      "after": 80746,
-      "ratio": 58.4
-    },
-    {
-      "from": "case-studies/sorting/page-05.jpg",
-      "to": "case-studies/sorting/page-05.webp",
-      "before": 193364,
-      "after": 72240,
-      "ratio": 62.6
-    },
-    {
-      "from": "case-assets/home-works/chowtaifook-preview.png",
-      "to": "case-assets/home-works/chowtaifook-preview.webp",
-      "before": 193326,
-      "after": 28344,
-      "ratio": 85.3
-    },
-    {
-      "from": "case-studies/chowtaifook/page-08.jpg",
-      "to": "case-studies/chowtaifook/page-08.webp",
-      "before": 182041,
-      "after": 71372,
-      "ratio": 60.8
-    },
-    {
-      "from": "case-studies/sorting/page-01.jpg",
-      "to": "case-studies/sorting/page-01.webp",
-      "before": 179016,
-      "after": 62758,
-      "ratio": 64.9
-    },
-    {
-      "from": "case-studies/wechatpay/page-18.jpg",
-      "to": "case-studies/wechatpay/page-18.webp",
-      "before": 177928,
-      "after": 62054,
-      "ratio": 65.1
-    },
-    {
-      "from": "case-studies/chowtaifook-cover.png",
-      "to": "case-studies/chowtaifook-cover.webp",
-      "before": 173887,
-      "after": 34622,
-      "ratio": 80.1
-    },
-    {
-      "from": "case-studies/wechatpay-cover.png",
-      "to": "case-studies/wechatpay-cover.webp",
-      "before": 173342,
-      "after": 32822,
-      "ratio": 81.1
-    },
-    {
-      "from": "case-studies/sorting-cover.png",
-      "to": "case-studies/sorting-cover.webp",
-      "before": 172730,
-      "after": 38008,
-      "ratio": 78
-    },
-    {
-      "from": "case-studies/chowtaifook/page-13.jpg",
-      "to": "case-studies/chowtaifook/page-13.webp",
-      "before": 170493,
-      "after": 60786,
-      "ratio": 64.3
-    },
-    {
-      "from": "case-studies/chowtaifook/page-01.jpg",
-      "to": "case-studies/chowtaifook/page-01.webp",
-      "before": 169276,
-      "after": 56632,
-      "ratio": 66.5
+      "from": "case-studies/chowtaifook/page-12.jpg",
+      "to": "case-studies/chowtaifook/page-12.webp",
+      "before": 2988848,
+      "after": 217336,
+      "ratio": 92.7
     },
     {
       "from": "case-studies/wechatpay/page-05.jpg",
       "to": "case-studies/wechatpay/page-05.webp",
-      "before": 167906,
-      "after": 56584,
-      "ratio": 66.3
+      "before": 2823504,
+      "after": 74882,
+      "ratio": 97.3
     },
     {
-      "from": "case-studies/wechatpay/page-19.jpg",
-      "to": "case-studies/wechatpay/page-19.webp",
-      "before": 167787,
-      "after": 56478,
-      "ratio": 66.3
+      "from": "case-studies/wechatpay/page-13.jpg",
+      "to": "case-studies/wechatpay/page-13.webp",
+      "before": 2297028,
+      "after": 219038,
+      "ratio": 90.5
     },
     {
-      "from": "case-studies/wechatpay/page-01.jpg",
-      "to": "case-studies/wechatpay/page-01.webp",
-      "before": 162475,
-      "after": 54134,
-      "ratio": 66.7
+      "from": "case-studies/wechatpay/page-14.jpg",
+      "to": "case-studies/wechatpay/page-14.webp",
+      "before": 1981363,
+      "after": 52828,
+      "ratio": 97.3
+    },
+    {
+      "from": "case-studies/wechatpay/page-15.jpg",
+      "to": "case-studies/wechatpay/page-15.webp",
+      "before": 1925420,
+      "after": 150844,
+      "ratio": 92.2
+    },
+    {
+      "from": "case-studies/chowtaifook/page-07.jpg",
+      "to": "case-studies/chowtaifook/page-07.webp",
+      "before": 1807871,
+      "after": 155794,
+      "ratio": 91.4
+    },
+    {
+      "from": "case-studies/sorting/page-03.jpg",
+      "to": "case-studies/sorting/page-03.webp",
+      "before": 1749086,
+      "after": 155670,
+      "ratio": 91.1
+    },
+    {
+      "from": "case-studies/chowtaifook/page-09.jpg",
+      "to": "case-studies/chowtaifook/page-09.webp",
+      "before": 1700452,
+      "after": 143548,
+      "ratio": 91.6
+    },
+    {
+      "from": "case-studies/chowtaifook/page-04.jpg",
+      "to": "case-studies/chowtaifook/page-04.webp",
+      "before": 1529225,
+      "after": 115932,
+      "ratio": 92.4
     },
     {
       "from": "case-studies/wechatpay/page-11.jpg",
       "to": "case-studies/wechatpay/page-11.webp",
-      "before": 161441,
-      "after": 66948,
-      "ratio": 58.5
+      "before": 1519641,
+      "after": 176490,
+      "ratio": 88.4
     },
     {
-      "from": "case-assets/wechatpay/group28598.png",
-      "to": "case-assets/wechatpay/group28598.webp",
-      "before": 158648,
-      "after": 147986,
-      "ratio": 6.7
+      "from": "case-studies/chowtaifook/page-03.jpg",
+      "to": "case-studies/chowtaifook/page-03.webp",
+      "before": 1503579,
+      "after": 134700,
+      "ratio": 91
     },
     {
-      "from": "case-studies/sorting/fidelity/list-visual.png",
-      "to": "case-studies/sorting/fidelity/list-visual.webp",
-      "before": 130257,
-      "after": 25304,
-      "ratio": 80.6
+      "from": "case-studies/sorting/page-12.jpg",
+      "to": "case-studies/sorting/page-12.webp",
+      "before": 1436410,
+      "after": 141118,
+      "ratio": 90.2
+    },
+    {
+      "from": "case-studies/sorting/page-05.jpg",
+      "to": "case-studies/sorting/page-05.webp",
+      "before": 1283583,
+      "after": 86480,
+      "ratio": 93.3
+    },
+    {
+      "from": "case-studies/wechatpay/page-12.jpg",
+      "to": "case-studies/wechatpay/page-12.webp",
+      "before": 1275343,
+      "after": 145124,
+      "ratio": 88.6
+    },
+    {
+      "from": "case-studies/chowtaifook/page-10.jpg",
+      "to": "case-studies/chowtaifook/page-10.webp",
+      "before": 1266545,
+      "after": 114796,
+      "ratio": 90.9
+    },
+    {
+      "from": "case-studies/chowtaifook/page-11.jpg",
+      "to": "case-studies/chowtaifook/page-11.webp",
+      "before": 1185771,
+      "after": 113038,
+      "ratio": 90.5
+    },
+    {
+      "from": "case-studies/chowtaifook/page-02.jpg",
+      "to": "case-studies/chowtaifook/page-02.webp",
+      "before": 1155464,
+      "after": 115380,
+      "ratio": 90
+    },
+    {
+      "from": "case-studies/wechatpay/page-08.jpg",
+      "to": "case-studies/wechatpay/page-08.webp",
+      "before": 1139879,
+      "after": 116908,
+      "ratio": 89.7
+    },
+    {
+      "from": "case-studies/chowtaifook/page-06.jpg",
+      "to": "case-studies/chowtaifook/page-06.webp",
+      "before": 1110465,
+      "after": 102010,
+      "ratio": 90.8
+    },
+    {
+      "from": "case-studies/sorting/page-11.jpg",
+      "to": "case-studies/sorting/page-11.webp",
+      "before": 1089714,
+      "after": 107108,
+      "ratio": 90.2
+    },
+    {
+      "from": "case-studies/wechatpay/page-09.jpg",
+      "to": "case-studies/wechatpay/page-09.webp",
+      "before": 1056206,
+      "after": 110066,
+      "ratio": 89.6
+    },
+    {
+      "from": "case-studies/sorting/page-06.jpg",
+      "to": "case-studies/sorting/page-06.webp",
+      "before": 1045471,
+      "after": 101754,
+      "ratio": 90.3
+    },
+    {
+      "from": "case-studies/wechatpay/page-07.jpg",
+      "to": "case-studies/wechatpay/page-07.webp",
+      "before": 1044340,
+      "after": 102620,
+      "ratio": 90.2
+    },
+    {
+      "from": "case-studies/sorting/page-07.jpg",
+      "to": "case-studies/sorting/page-07.webp",
+      "before": 1026897,
+      "after": 99036,
+      "ratio": 90.4
+    },
+    {
+      "from": "case-studies/sorting/page-13.jpg",
+      "to": "case-studies/sorting/page-13.webp",
+      "before": 1007263,
+      "after": 95540,
+      "ratio": 90.5
+    },
+    {
+      "from": "case-studies/sorting/page-09.jpg",
+      "to": "case-studies/sorting/page-09.webp",
+      "before": 1003436,
+      "after": 94680,
+      "ratio": 90.6
+    },
+    {
+      "from": "case-studies/wechatpay/page-02.jpg",
+      "to": "case-studies/wechatpay/page-02.webp",
+      "before": 988997,
+      "after": 114140,
+      "ratio": 88.5
+    },
+    {
+      "from": "case-studies/sorting/page-15.jpg",
+      "to": "case-studies/sorting/page-15.webp",
+      "before": 988154,
+      "after": 87692,
+      "ratio": 91.1
+    },
+    {
+      "from": "case-studies/sorting/page-14.jpg",
+      "to": "case-studies/sorting/page-14.webp",
+      "before": 938420,
+      "after": 90960,
+      "ratio": 90.3
+    },
+    {
+      "from": "case-studies/wechatpay/page-03.jpg",
+      "to": "case-studies/wechatpay/page-03.webp",
+      "before": 924939,
+      "after": 96262,
+      "ratio": 89.6
+    },
+    {
+      "from": "case-studies/sorting/page-10.jpg",
+      "to": "case-studies/sorting/page-10.webp",
+      "before": 884208,
+      "after": 78302,
+      "ratio": 91.1
+    },
+    {
+      "from": "case-studies/chowtaifook/page-08.jpg",
+      "to": "case-studies/chowtaifook/page-08.webp",
+      "before": 803466,
+      "after": 70040,
+      "ratio": 91.3
+    },
+    {
+      "from": "case-studies/chowtaifook/page-05.jpg",
+      "to": "case-studies/chowtaifook/page-05.webp",
+      "before": 795566,
+      "after": 80508,
+      "ratio": 89.9
+    },
+    {
+      "from": "case-studies/sorting/page-08.jpg",
+      "to": "case-studies/sorting/page-08.webp",
+      "before": 788676,
+      "after": 70212,
+      "ratio": 91.1
+    },
+    {
+      "from": "case-studies/sorting/page-04.jpg",
+      "to": "case-studies/sorting/page-04.webp",
+      "before": 774330,
+      "after": 85648,
+      "ratio": 88.9
+    },
+    {
+      "from": "case-studies/wechatpay/page-04.jpg",
+      "to": "case-studies/wechatpay/page-04.webp",
+      "before": 637757,
+      "after": 64968,
+      "ratio": 89.8
+    },
+    {
+      "from": "case-studies/wechatpay/page-10.jpg",
+      "to": "case-studies/wechatpay/page-10.webp",
+      "before": 625155,
+      "after": 64592,
+      "ratio": 89.7
+    },
+    {
+      "from": "case-studies/chowtaifook-cover.png",
+      "to": "case-studies/chowtaifook-cover.webp",
+      "before": 602560,
+      "after": 68704,
+      "ratio": 88.6
+    },
+    {
+      "from": "case-studies/sorting/page-02.jpg",
+      "to": "case-studies/sorting/page-02.webp",
+      "before": 599151,
+      "after": 61732,
+      "ratio": 89.7
+    },
+    {
+      "from": "case-studies/wechatpay/page-06.jpg",
+      "to": "case-studies/wechatpay/page-06.webp",
+      "before": 551376,
+      "after": 55638,
+      "ratio": 89.9
+    },
+    {
+      "from": "case-studies/sorting/page-01.jpg",
+      "to": "case-studies/sorting/page-01.webp",
+      "before": 547934,
+      "after": 59882,
+      "ratio": 89.1
+    },
+    {
+      "from": "case-studies/wechatpay/page-01.jpg",
+      "to": "case-studies/wechatpay/page-01.webp",
+      "before": 516725,
+      "after": 53784,
+      "ratio": 89.6
+    },
+    {
+      "from": "case-studies/chowtaifook/page-01.jpg",
+      "to": "case-studies/chowtaifook/page-01.webp",
+      "before": 431067,
+      "after": 39386,
+      "ratio": 90.9
+    },
+    {
+      "from": "case-studies/wechatpay-cover.png",
+      "to": "case-studies/wechatpay-cover.webp",
+      "before": 335871,
+      "after": 52954,
+      "ratio": 84.2
+    },
+    {
+      "from": "case-studies/sorting-cover.png",
+      "to": "case-studies/sorting-cover.webp",
+      "before": 239051,
+      "after": 46024,
+      "ratio": 80.7
+    },
+    {
+      "from": "case-assets/ai/screen-07.png",
+      "to": "case-assets/ai/screen-07.webp",
+      "before": 173512,
+      "after": 34048,
+      "ratio": 80.4
+    },
+    {
+      "from": "case-assets/ai/cube-09.png",
+      "to": "case-assets/ai/cube-09.webp",
+      "before": 152489,
+      "after": 26252,
+      "ratio": 82.8
+    },
+    {
+      "from": "case-assets/ai/cube-05.png",
+      "to": "case-assets/ai/cube-05.webp",
+      "before": 151716,
+      "after": 24860,
+      "ratio": 83.6
+    },
+    {
+      "from": "case-assets/ai/cube-08.png",
+      "to": "case-assets/ai/cube-08.webp",
+      "before": 149804,
+      "after": 25708,
+      "ratio": 82.8
+    },
+    {
+      "from": "case-assets/ai/cube-06.png",
+      "to": "case-assets/ai/cube-06.webp",
+      "before": 148639,
+      "after": 24374,
+      "ratio": 83.6
+    },
+    {
+      "from": "case-assets/ai/cube-14.png",
+      "to": "case-assets/ai/cube-14.webp",
+      "before": 145229,
+      "after": 23984,
+      "ratio": 83.5
+    },
+    {
+      "from": "case-assets/ai/cube-02.png",
+      "to": "case-assets/ai/cube-02.webp",
+      "before": 142424,
+      "after": 24414,
+      "ratio": 82.9
     },
     {
       "from": "case-studies/ai-cover.png",
       "to": "case-studies/ai-cover.webp",
-      "before": 130209,
-      "after": 27712,
-      "ratio": 78.7
+      "before": 141502,
+      "after": 39360,
+      "ratio": 72.2
     },
     {
-      "from": "case-assets/home-works/wechatpay-preview.png",
-      "to": "case-assets/home-works/wechatpay-preview.webp",
-      "before": 108957,
-      "after": 20424,
-      "ratio": 81.3
+      "from": "case-assets/ai/cube-12.png",
+      "to": "case-assets/ai/cube-12.webp",
+      "before": 140346,
+      "after": 22506,
+      "ratio": 84
     },
     {
-      "from": "case-assets/wechatpay/problemImage4.png",
-      "to": "case-assets/wechatpay/problemImage4.webp",
-      "before": 93584,
-      "after": 41666,
-      "ratio": 55.5
+      "from": "case-assets/ai/cube-03.png",
+      "to": "case-assets/ai/cube-03.webp",
+      "before": 140292,
+      "after": 23056,
+      "ratio": 83.6
     },
     {
-      "from": "case-assets/wechatpay/carrierLogo1.png",
-      "to": "case-assets/wechatpay/carrierLogo1.webp",
-      "before": 93578,
-      "after": 17892,
-      "ratio": 80.9
+      "from": "case-assets/ai/cube-01.png",
+      "to": "case-assets/ai/cube-01.webp",
+      "before": 139979,
+      "after": 22026,
+      "ratio": 84.3
     },
     {
-      "from": "case-assets/wechatpay/hkbnLogo.png",
-      "to": "case-assets/wechatpay/hkbnLogo.webp",
-      "before": 89530,
-      "after": 40642,
-      "ratio": 54.6
+      "from": "case-assets/ai/cube-10.png",
+      "to": "case-assets/ai/cube-10.webp",
+      "before": 139073,
+      "after": 23120,
+      "ratio": 83.4
     },
     {
-      "from": "case-studies/sorting/fidelity/list-decision.png",
-      "to": "case-studies/sorting/fidelity/list-decision.webp",
-      "before": 86228,
-      "after": 22916,
-      "ratio": 73.4
+      "from": "case-assets/ai/cube-15.png",
+      "to": "case-assets/ai/cube-15.webp",
+      "before": 134827,
+      "after": 21222,
+      "ratio": 84.3
     },
     {
-      "from": "case-studies/sorting/fidelity/dashboard-board.png",
-      "to": "case-studies/sorting/fidelity/dashboard-board.webp",
-      "before": 85616,
-      "after": 23956,
-      "ratio": 72
+      "from": "case-assets/ai/cube-04.png",
+      "to": "case-assets/ai/cube-04.webp",
+      "before": 132866,
+      "after": 16788,
+      "ratio": 87.4
     },
     {
-      "from": "case-assets/wechatpay/carrierLogo2.png",
-      "to": "case-assets/wechatpay/carrierLogo2.webp",
-      "before": 84770,
-      "after": 39718,
-      "ratio": 53.1
+      "from": "case-assets/ai/screen-03.png",
+      "to": "case-assets/ai/screen-03.webp",
+      "before": 113372,
+      "after": 11372,
+      "ratio": 90
     },
     {
-      "from": "case-assets/wechatpay/problemImage2.png",
-      "to": "case-assets/wechatpay/problemImage2.webp",
-      "before": 82256,
-      "after": 34348,
-      "ratio": 58.2
+      "from": "case-assets/ai/screen-04.png",
+      "to": "case-assets/ai/screen-04.webp",
+      "before": 109673,
+      "after": 26236,
+      "ratio": 76.1
     },
     {
-      "from": "case-studies/sorting/fidelity/config-hardware.png",
-      "to": "case-studies/sorting/fidelity/config-hardware.webp",
-      "before": 81227,
-      "after": 18534,
-      "ratio": 77.2
+      "from": "case-assets/ai/screen-05.png",
+      "to": "case-assets/ai/screen-05.webp",
+      "before": 85989,
+      "after": 32458,
+      "ratio": 62.3
     },
     {
-      "from": "case-assets/wechatpay/problemImage3.png",
-      "to": "case-assets/wechatpay/problemImage3.webp",
-      "before": 80285,
-      "after": 29648,
-      "ratio": 63.1
+      "from": "case-assets/ai/screen-06.png",
+      "to": "case-assets/ai/screen-06.webp",
+      "before": 62376,
+      "after": 18598,
+      "ratio": 70.2
     },
     {
-      "from": "case-assets/home-works/sorting-preview.png",
-      "to": "case-assets/home-works/sorting-preview.webp",
-      "before": 79287,
-      "after": 16454,
-      "ratio": 79.2
+      "from": "case-assets/ai/screen-01.png",
+      "to": "case-assets/ai/screen-01.webp",
+      "before": 62151,
+      "after": 10098,
+      "ratio": 83.8
     },
     {
-      "from": "case-assets/wechatpay/carrierLogo3.png",
-      "to": "case-assets/wechatpay/carrierLogo3.webp",
-      "before": 56975,
-      "after": 29360,
-      "ratio": 48.5
+      "from": "case-assets/home-works/ai-preview.png",
+      "to": "case-assets/home-works/ai-preview.webp",
+      "before": 46658,
+      "after": 14038,
+      "ratio": 69.9
     }
   ]
 }

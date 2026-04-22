@@ -69,7 +69,7 @@ export const PROJECTS: Project[] = [
     tags: ["生成式AI", "Vibe Coding"],
     titleVariant: "wide",
     mediaKind: "collage",
-    images: ["/case-assets/home-works/ai-preview.png"],
+    images: ["/case-assets/home-works/ai-preview.webp"],
   },
   {
     id: "dongpo-sorting",
@@ -91,7 +91,7 @@ export const PROJECTS: Project[] = [
     tags: ["SaaS", "B端", "交互设计"],
     titleVariant: "compact",
     mediaKind: "stack",
-    casePages: buildCasePages("sorting", 12),
+    casePages: buildCasePages("sorting", 15),
     images: ["/case-assets/home-works/sorting-preview.webp"],
   },
   {
@@ -114,7 +114,7 @@ export const PROJECTS: Project[] = [
     tags: ["UI/UX", "金融科技", "流程优化"],
     titleVariant: "compact",
     mediaKind: "phone",
-    casePages: buildCasePages("wechatpay", 21),
+    casePages: buildCasePages("wechatpay", 15),
     images: ["/case-assets/home-works/wechatpay-preview.webp"],
   },
   {
@@ -137,7 +137,7 @@ export const PROJECTS: Project[] = [
     tags: ["电商", "改版设计", "品牌视觉"],
     titleVariant: "wide",
     mediaKind: "phone",
-    casePages: buildCasePages("chowtaifook", 14),
+    casePages: buildCasePages("chowtaifook", 12),
     images: ["/case-assets/home-works/chowtaifook-preview.webp"],
   },
 ];
