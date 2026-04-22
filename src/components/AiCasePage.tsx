@@ -16,6 +16,27 @@ import { useLayoutEffect, useState, type CSSProperties } from "react";
  */
 
 const AI = "/case-assets/ai-figma";
+const MAT = "/case-assets/ai-mat";
+
+const logos = {
+  midjourney: `${MAT}/midjourney.png`,
+  stability: `${MAT}/stability.png`,
+  openai: `${MAT}/openai.png`,
+  figma: `${MAT}/figma.png`,
+  blackForest: `${MAT}/blackforest.png`,
+  v0: `${MAT}/v0.png`,
+  gemini: `${MAT}/gemini.png`,
+  lovart: `${MAT}/lovart.png`,
+  figmaMake: `${MAT}/figma-make.png`,
+  cursor: `${MAT}/cursor.png`,
+  claude: `${MAT}/claude.png`,
+};
+
+// 3D vegetable crate renders for the business section (3×3)
+const vegCrates = Array.from({ length: 9 }, (_, i) => `${MAT}/veg-${String(i + 1).padStart(2, "0")}.png`);
+
+// Phone screenshots for 2026 timeline entry
+const phoneShots = [`${MAT}/phone-01.png`, `${MAT}/phone-02.png`, `${MAT}/phone-03.png`];
 
 const explorationAssets = {
   accountBars: [
@@ -37,22 +58,7 @@ const explorationAssets = {
 
 const businessAssets = {
   arrow: `${AI}/f36ddff2-209a-4e84-989e-7faea3d49408.svg`,
-  icons: [
-    `${AI}/ac689464-ea2a-456d-8c3b-3340bc1cce71.png`,
-    `${AI}/11a9b719-f032-4f8c-ab62-c40b8c8a583b.png`,
-    `${AI}/6b71e47e-4cc4-4c02-a81e-48573bccb43b.png`,
-    `${AI}/31f215dd-8250-4c05-ad12-441115fd1e2a.png`,
-    `${AI}/15f3d000-28f7-411e-b036-94ba59ffa30d.png`,
-    `${AI}/360155d0-59e9-4222-b001-2f0d66065b67.png`,
-    `${AI}/eefebd2c-d60f-45ea-a3af-e6d796cbbe37.png`,
-    `${AI}/d0a26de7-20ad-4107-82d5-b13b7bbcaa6c.png`,
-    `${AI}/4ab68d0b-aae1-4be3-b7ec-cbd527eca5e5.png`,
-    `${AI}/a76f70d7-2021-45cd-ba9d-32515bb932fe.png`,
-    `${AI}/12159041-f455-4b77-abcb-31395d28bba5.png`,
-    `${AI}/4ab68d0b-aae1-4be3-b7ec-cbd527eca5e5.png`,
-    `${AI}/d0a26de7-20ad-4107-82d5-b13b7bbcaa6c.png`,
-    `${AI}/31f215dd-8250-4c05-ad12-441115fd1e2a.png`,
-  ],
+  icons: vegCrates,
 };
 
 const internalAssets = {
@@ -73,118 +79,94 @@ const INK_400 = "#a0a4af";
 const INK_200 = "#dedfe5";
 const CANVAS = "#fafaf8";
 
-const timelineCopy = [
+type TimelineLogo = { src: string; w: number; h: number };
+type TimelineEntry = {
+  year: string;
+  yearStyle: CSSProperties;
+  connectorTop: number;
+  dotTop: number;
+  bodyTop: number;
+  subtitle: string;
+  pill: { text: string; bg: string; color: string };
+  bullets: string[];
+  logos: TimelineLogo[];
+};
+
+const timelineCopy: TimelineEntry[] = [
   {
-    year: "2023 爆发年",
-    yearStyle: { left: 187, top: 390 },
+    year: "2023 · AIGC 视觉探索",
+    yearStyle: { left: 115, top: 390 },
     connectorTop: 408.5,
     dotTop: 400,
     bodyTop: 390,
-    body: (
-      <>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·生成式的鼻祖：</span>
-          <span style={{ color: INK_400 }}>
-            Midjourney的诞生，虽然当时它对于人物等一致性控制性还相对较差，但是在审美上Mid一直都不错，当时出于很想“征服”它，一直在探索并且思考它能为我做什么产出，当时用于工作还比较吃力，但是他在做自媒体来说是一把好手吧，至少我做出来了并且批量化+得到了很多的收益。
-          </span>
-        </p>
-        <p className="text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·Stable Diffusion：</span>
-          <span style={{ color: INK_400 }}>从“A girlXXX”开始追踪SD，探索怎么炼丹...</span>
-        </p>
-      </>
-    ),
+    subtitle: "流量爆发：审美破局",
+    pill: { text: "🔥 累计获粉 3.8w+", bg: "#fff1e6", color: "#d4570a" },
+    bullets: [
+      "Midjourney 探索结构化控图公式辅助脑爆视觉",
+      "Stable Diffusion 从 “A girl...” 开始炼丹",
+      "利用 MJ 的审美和控图能力跑通自媒体副业",
+    ],
+    logos: [
+      { src: logos.midjourney, w: 32, h: 32 },
+      { src: logos.stability, w: 110, h: 32 },
+    ],
   },
   {
-    year: "2024 控制年",
-    yearStyle: { left: 187, top: 732 },
+    year: "2024 · 介入真实工作流",
+    yearStyle: { left: 115, top: 732 },
     connectorTop: 749,
     dotTop: 757,
     bodyTop: 732,
-    body: (
-      <>
-        <p className="mb-0 text-[18px] leading-[normal]" style={{ color: INK_700 }}>
-          从“惊艳”转向“可控、可编辑、可接入工作流”
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·Figma AI：</span>
-          <span style={{ color: INK_400 }}>把 AI 放进视觉搜索、资源搜索、文案填充、快速原型、UI 首稿生成真实设计动作里...</span>
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·SD和Mid</span>
-          <span style={{ color: INK_400 }}>
-            也变得越来越可控，局部的控制、6根手指的问题等等都慢慢得到优化，虽然成本比较高，但是SD已经可以做一些商业的运营设计了，电商方向最为明显。
-          </span>
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]" style={{ color: INK_400 }}>·视频方向的 Runway 也开始崭露头角</p>
-        <p className="mb-0 text-[18px] leading-[normal]" style={{ color: INK_400 }}>·DomoAI 在扩展视频质量、尺寸等还不错</p>
-        <p className="text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·GPT-4o 图像生成</span>
-          <span style={{ color: INK_400 }}>对文字渲染、图像输入理解、对话式多轮编辑更强了</span>
-        </p>
-      </>
-    ),
+    subtitle: "逻辑落地：介入业务",
+    pill: { text: "🎯 拒绝随机性·可控产出", bg: "#e8f5eb", color: "#2a8a4d" },
+    bullets: [
+      "GPT-4 辅助 UX 逻辑推演、交互文案等",
+      "探索实践 FLUX，保证稳定可控和细节能力",
+      "4o 图像辅助脑爆",
+    ],
+    logos: [
+      { src: logos.openai, w: 32, h: 32 },
+      { src: logos.figma, w: 32, h: 32 },
+      { src: logos.blackForest, w: 110, h: 32 },
+    ],
   },
   {
-    year: "2025 多模态融合年",
+    year: "2025 · AI + UIUX 工作流",
     yearStyle: { left: 115, top: 1092 },
     connectorTop: 1110,
     dotTop: 1118,
     bodyTop: 1092,
-    body: (
-      <>
-        <p className="mb-0 text-[18px] leading-[normal]" style={{ color: INK_700 }}>
-          AI 开始不只是“生成资产”，而是逐渐能理解上下文、连续修改、做原型，甚至碰到代码
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·Figma Make：</span>
-          <span style={{ color: INK_400 }}>prompt-to-app，从静态稿直接走向可交互原型</span>
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·Gemini：</span>
-          <span style={{ color: INK_400 }}>Nanobanana、veo3 从静态到动态都在业内有了质的飞跃</span>
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·国内的AI也越来越强，即梦、LibLibAI...</span>
-          <span style={{ color: INK_400 }}>在设计工作流慢慢普及，国内的AI更懂中国市场且性价比较高</span>
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·本地Agent（Claude、Codex..）</span>
-          <span style={{ color: INK_400 }}>开始协助UIUX设计工作</span>
-        </p>
-        <p className="text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·Lovable、Lovart、Galileo AI、UX Pilot...</span>
-          <span style={{ color: INK_400 }}>对话式设计开始兴起，帮助设计师探索更多的可能</span>
-        </p>
-      </>
-    ),
+    subtitle: "效率革命：原型闭环",
+    pill: { text: "✨ Prompt-to-App", bg: "#f0ebff", color: "#6741d9" },
+    bullets: [
+      "v0、Lovable... 快速搭建高保真 UI 方案",
+      "Lovart、Gemini... 协助视觉方向的脑爆 + 产出",
+      "Figma Make 本地 Agent 设计规范与变量管理",
+    ],
+    logos: [
+      { src: logos.lovart, w: 44, h: 32 },
+      { src: logos.v0, w: 32, h: 32 },
+      { src: logos.gemini, w: 32, h: 32 },
+      { src: logos.figmaMake, w: 44, h: 32 },
+    ],
   },
   {
-    year: "2026 设计工作流好伙伴",
-    yearStyle: { left: 67, top: 1505 },
+    year: "2026 · 跨界交付：系统调度者",
+    yearStyle: { left: 115, top: 1505 },
     connectorTop: 1522,
     dotTop: 1530,
     bodyTop: 1505,
-    body: (
-      <>
-        <p className="mb-0 text-[18px] leading-[normal]" style={{ color: INK_700 }}>
-          AI 已经能帮 UI 设计师做首稿、搜相似界面、填真实文案、快速出原型、把静态稿变交互稿，甚至往代码和原型走
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·Figma Make、sitich、UX Pilot、Vercel v0、Dovetail...</span>
-          <span style={{ color: INK_400 }}>协助设计师探索方向、出方案</span>
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·Figma、Paper、Pencil...</span>
-          <span style={{ color: INK_400 }}>可以接入 MCP 让本地Agent协同，让设计到交付效率都得以提升</span>
-        </p>
-        <p className="mb-0 text-[18px] leading-[normal]">
-          <span style={{ color: INK_700 }}>·通过本地Agent还有 Skill</span>
-          <span style={{ color: INK_400 }}> 已经能帮助我们生成设计规范...</span>
-        </p>
-        <p className="text-[18px] leading-[normal]" style={{ color: INK_700 }}>·还有很多待续...</p>
-      </>
-    ),
+    subtitle: "跨界交付：系统调度",
+    pill: { text: "🧊 Vibe Coding 实战", bg: "#f0ebff", color: "#6741d9" },
+    bullets: [
+      "设计师从 “像素级推演者” 升级为 “系统调度者”",
+      "利用 Agent 生成 HTML 帮助团队协作效率",
+      "个人 Vibe Coding 为自己所用",
+    ],
+    logos: [
+      { src: logos.cursor, w: 32, h: 32 },
+      { src: logos.claude, w: 110, h: 32 },
+    ],
   },
 ];
 
@@ -202,22 +184,25 @@ const explorationVisuals = [
   { src: explorationAssets.media.vibeCoding, style: { left: 961, top: 1519, width: 483, height: 298 }, className: "rounded-[4px] border border-black/5" },
 ];
 
-const businessIconLayouts = [
-  { left: 808, top: 2849, width: 137, height: 145 },
-  { left: 997, top: 2849, width: 143, height: 145 },
-  { left: 1176, top: 2839, width: 164, height: 164 },
-  { left: 1370, top: 2844, width: 154, height: 154 },
-  { left: 802, top: 3012, width: 149, height: 149 },
-  { left: 991, top: 3010, width: 154, height: 154 },
-  { left: 1169, top: 2998, width: 177, height: 177 },
-  { left: 1371, top: 3009, width: 155, height: 155 },
-  { left: 793, top: 3184, width: 166, height: 166 },
-  { left: 991, top: 3190, width: 154, height: 154 },
-  { left: 1180, top: 3189, width: 155, height: 155 },
-  { left: 1362, top: 3185, width: 164, height: 164 },
-  { left: 1554, top: 3185, width: 164, height: 164 },
-  { left: 1563, top: 3009, width: 155, height: 155 },
-];
+// 3×3 grid of vegetable crate renders
+const businessIconLayouts = (() => {
+  const startLeft = 820;
+  const startTop = 2835;
+  const size = 170;
+  const gap = 20;
+  const out: Array<{ left: number; top: number; width: number; height: number }> = [];
+  for (let row = 0; row < 3; row += 1) {
+    for (let col = 0; col < 3; col += 1) {
+      out.push({
+        left: startLeft + col * (size + gap),
+        top: startTop + row * (size + gap),
+        width: size,
+        height: size,
+      });
+    }
+  }
+  return out;
+})();
 
 function CanvasImage({
   src,
@@ -300,10 +285,16 @@ export default function AiCasePage() {
       <div style={bodyStyle}>
       <div className="font-serif" style={canvasStyle}>
         <p
-          className="absolute left-[74px] top-[180px] text-[50px] font-medium leading-[72px]"
+          className="absolute left-[74px] top-[170px] text-[50px] font-medium leading-[64px]"
           style={{ color: INK_900 }}
         >
-          个人对于AI的持续探索
+          从视觉探索到全栈工作流
+        </p>
+        <p
+          className="absolute left-[74px] top-[246px] text-[20px] leading-[normal]"
+          style={{ color: INK_600 }}
+        >
+          2023 – 2026 · 拥抱变革，我与 AI 协同进化的 1000+ 天
         </p>
         <p
           className="absolute left-[1279px] top-[202px] text-[13px] opacity-60"
@@ -328,13 +319,40 @@ export default function AiCasePage() {
               style={{ left: 343, top: item.dotTop, background: INK_900 }}
             />
             <p
-              className="absolute text-[24px] font-medium leading-[34px]"
-              style={{ ...item.yearStyle, color: INK_900 }}
+              className="absolute text-[22px] font-medium leading-[32px]"
+              style={{ ...item.yearStyle, color: INK_900, width: 220 }}
             >
               {item.year}
             </p>
             <div className="absolute w-[420px]" style={{ left: 442, top: item.bodyTop }}>
-              {item.body}
+              <p className="mb-2 text-[22px] font-semibold leading-[30px]" style={{ color: INK_900 }}>
+                {item.subtitle}
+              </p>
+              <div
+                className="mb-4 inline-flex items-center rounded-[20px] px-3 py-1 text-[14px] font-medium"
+                style={{ background: item.pill.bg, color: item.pill.color }}
+              >
+                {item.pill.text}
+              </div>
+              <ul className="list-none space-y-1 p-0">
+                {item.bullets.map((b) => (
+                  <li key={b} className="text-[16px] leading-[1.55]" style={{ color: INK_700 }}>
+                    · {b}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-5 flex items-center gap-5">
+                {item.logos.map((lg) => (
+                  <img
+                    key={lg.src}
+                    src={lg.src}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    style={{ width: lg.w, height: lg.h, objectFit: "contain" }}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         ))}
@@ -542,18 +560,18 @@ export default function AiCasePage() {
           Now
         </p>
 
-        <div className="absolute left-[99px] top-[3938px] w-[340px]" style={{ color: INK_900 }}>
-          <p className="text-[18px] font-medium">✅ 消除“像素级走查”误差</p>
+        <div className="absolute left-[99px] top-[3938px] w-[420px]" style={{ color: INK_900 }}>
+          <p className="text-[18px] font-medium">✅ 消除 “像素级走查” 沟通成本</p>
           <p className="mt-2 text-[15px] leading-[1.55]" style={{ color: INK_600 }}>
-            Padding、圆角与色彩等通过 AI 直接转化为 HTML/CSS 样式，实现 100% 视觉还原
+            面对 B 端复杂的动态反馈，Figma 难以实现真实交互，Demo 让前端开发不靠脑补
           </p>
-          <p className="mt-6 text-[18px] font-medium">✅ 释放前端还原生产力</p>
+          <p className="mt-6 text-[18px] font-medium">✅ 降低前端理解设计的成本</p>
           <p className="mt-2 text-[15px] leading-[1.55]" style={{ color: INK_600 }}>
-            为开发提供开箱即用，使其专注业务接口逻辑，联调时间缩短约 20%
+            “一张静态图 + 批注” 的低效沟通，对于特殊数据状态切换，通过 Demo 将联调时间缩短 20%
           </p>
           <p className="mt-6 text-[18px] font-medium">✅ 重塑产研沟通语言</p>
           <p className="mt-2 text-[15px] leading-[1.55]" style={{ color: INK_600 }}>
-            从“抛设计图”升级为“交付可运行代码片段”，用开发者的语言进行无缝跨职能协作
+            上传 HTML 到 GitHub 上，方便上下游去看产品方案，并且可基于现有方案来做优化 / 迭代
           </p>
         </div>
 
