@@ -1,599 +1,528 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
-import { PERSONAL_INFO } from "@/src/constants";
+import { useEffect, type CSSProperties } from "react";
 
 /**
- * AiCasePage — detail view for "/?case=ai".
+ * AiCasePage — faithful port of Abbie's original 1600×4679 AI case layout.
  *
- * Faithful port of Abbie's original 1600px Figma layout, with two changes:
- *   1. Responsive (no absolute positioning, no fixed height).
- *   2. Dead Figma MCP URLs replaced with local assets under /case-assets/ai/.
+ * The live deployed site (https://abbie-portfolio-v2.vercel.app/?case=ai) uses
+ * absolute positioning on a fixed 1600px canvas and horizontal-scrolls on
+ * mobile via overflow-x-auto on the outer wrapper. This matches that 1:1.
  *
- * Content, section order, captions, and visual identity of each block
- * (prompt demo, cube grid, data-mapping flow, Figma→browser→GitHub trio)
- * preserved from the original.
+ * The only change from the original: dead Figma MCP asset URLs are swapped
+ * for local /case-assets/ai/*.webp files. Asset mapping was done by
+ * inspecting each uploaded file and matching it to the slot in the original
+ * that has visually identical content.
  */
 
 const AI = "/case-assets/ai";
 
-interface Era {
-  year: string;
-  theme: string;
-  caption: string;           // small label next to the media stack
-  body: ReactNode;
-  media: Array<{ src: string; aspect?: string; tilt?: string }>;
-}
+// Asset map — the original had dead figma.com/api/mcp/asset/<uuid> URLs.
+// These local files are the re-uploaded screenshots; mapping by visual content.
+const explorationAssets = {
+  // 2023 era: 小红书 account bars (inside the composed screenshot below)
+  // and Midjourney exploration — we only have screen-04 which composes all of
+  // these in one image, so place it at the combined footprint.
+  mediaCollage: `${AI}/screen-04.webp`,
+  // 2024 era: payment/jewelry flow assets not re-uploaded — fall back to
+  // composed screen-04 (which includes 2024-era Midjourney/SD exploration).
+  // 2025 era: design-sheet + generated-page screenshots.
+  designSheet: `${AI}/screen-05.webp`,
+  generatedPage: `${AI}/screen-06.webp`,
+  // 2026 era: Vibe Coding screenshot.
+  vibeCoding: `${AI}/screen-07.webp`,
+};
 
-const ERAS: Era[] = [
+// 3D business icons for the 对外 cube grid.
+const businessIcons = [
+  `${AI}/cube-01.webp`, `${AI}/cube-02.webp`, `${AI}/cube-03.webp`, `${AI}/cube-04.webp`,
+  `${AI}/cube-05.webp`, `${AI}/cube-06.webp`, `${AI}/cube-07.webp`, `${AI}/cube-08.webp`,
+  `${AI}/cube-09.webp`, `${AI}/cube-10.webp`, `${AI}/cube-11.webp`, `${AI}/cube-12.webp`,
+  `${AI}/cube-13.webp`, `${AI}/cube-14.webp`,
+];
+
+// 对内 assets
+const internalAssets = {
+  figmaIcon: `${AI}/logo-figma.webp`,
+  githubIcon: `${AI}/logo-github.webp`,
+  designCard: `${AI}/screen-01.webp`,   // DESIGN card showing 智能分拣管理系统 Notion screenshot
+  htmlCssCard: `${AI}/screen-02.webp`,  // HTML/CSS code screenshot (optional; original draws inline)
+  githubPoster: `${AI}/screen-03.webp`, // git部署 poster
+};
+
+const timelineCopy = [
   {
-    year: "2023",
-    theme: "爆发年",
-    caption: "用 AI 探索自媒体",
+    year: "2023 爆发年",
+    yearStyle: { left: 187, top: 390 },
+    connectorTop: 408.5,
+    dotTop: 400,
+    bodyTop: 390,
     body: (
       <>
-        <p className="font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· 生成式的鼻祖 Midjourney：</span>
-          当时它对人物一致性的控制还相对较差，但审美一直不错。出于想「征服」它的心态，我持续探索它能为我产出什么——用于工作还比较吃力，但做自媒体是一把好手，批量化产出也得到了真实传播反馈。
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·生成式的鼻祖：</span>
+          <span className="text-[#999]">
+            Midjourney的诞生，虽然当时它对于人物等一致性控制性还相对较差，但是在审美上Mid一直都不错，当时出于很想"征服"它，一直在探索并且思考它能为我做什么产出，当时用于工作还比较吃力，但是他在做自媒体来说是一把好手吧，至少我做出来了并且批量化+得到了很多的收益。
+          </span>
         </p>
-        <p className="mt-3 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· Stable Diffusion：</span>
-          从「A girl XXX」开始追踪 SD，探索怎么炼丹、怎么控制一致性。
+        <p className="text-[18px] leading-[normal]">
+          <span className="text-[#333]">·Stable Diffusion：</span>
+          <span className="text-[#999]">从"A girlXXX"开始追踪SD，探索怎么炼丹...</span>
         </p>
       </>
     ),
-    media: [
-      { src: `${AI}/screen-01.webp` },
-      { src: `${AI}/screen-02.webp` },
-    ],
   },
   {
-    year: "2024",
-    theme: "控制年",
-    caption: "方案探索",
+    year: "2024 控制年",
+    yearStyle: { left: 187, top: 732 },
+    connectorTop: 749,
+    dotTop: 757,
+    bodyTop: 732,
     body: (
       <>
-        <p className="font-serif text-[15px] leading-[1.55] text-[var(--ink-900)] md:text-[16px]">
-          从「惊艳」转向「可控、可编辑、可接入工作流」。
+        <p className="mb-0 text-[18px] leading-[normal] text-[#333]">从"惊艳"转向"可控、可编辑、可接入工作流"</p>
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·Figma AI：</span>
+          <span className="text-[#999]">把 AI 放进视觉搜索、资源搜索、文案填充、快速原型、UI 首稿生成真实设计动作里...</span>
         </p>
-        <p className="mt-3 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· Figma AI：</span>
-          把 AI 放进视觉搜索、资源搜索、文案填充、快速原型、UI 首稿生成等真实设计动作里。
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·SD和Mid</span>
+          <span className="text-[#999]">
+            也变得越来越可控，局部的控制、6根手指的问题等等都慢慢得到优化，虽然成本比较高，但是SD已经可以做一些商业的运营设计了，电商方向最为明显。
+          </span>
         </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· SD 和 Midjourney</span>
-          也变得越来越可控，局部控制、6 根手指的问题都慢慢得到优化，SD 已经可以做一些商业运营设计了，电商方向最为明显。
-        </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· Runway</span>
-          开始崭露头角，DomoAI 在扩展视频质量、尺寸上不错。
-        </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· GPT-4o 图像生成</span>
-          对文字渲染、图像输入理解、对话式多轮编辑更强了。
+        <p className="mb-0 text-[18px] leading-[normal] text-[#999]">·视频方向的 Runway 也开始崭露头角</p>
+        <p className="mb-0 text-[18px] leading-[normal] text-[#999]">·DomoAI 在扩展视频质量、尺寸等还不错</p>
+        <p className="text-[18px] leading-[normal]">
+          <span className="text-[#333]">·GPT-4o 图像生成</span>
+          <span className="text-[#999]">对文字渲染、图像输入理解、对话式多轮编辑更强了</span>
         </p>
       </>
     ),
-    media: [
-      { src: `${AI}/screen-03.webp` },
-      { src: `${AI}/screen-04.webp` },
-    ],
   },
   {
-    year: "2025",
-    theme: "多模态融合年",
-    caption: "用生成的设计规范、变量让 AI 自己搭建页面",
+    year: "2025 多模态融合年",
+    yearStyle: { left: 115, top: 1092 },
+    connectorTop: 1110,
+    dotTop: 1118,
+    bodyTop: 1092,
     body: (
       <>
-        <p className="font-serif text-[15px] leading-[1.55] text-[var(--ink-900)] md:text-[16px]">
-          AI 开始不只是「生成资产」，而是逐渐能理解上下文、连续修改、做原型，甚至碰到代码。
+        <p className="mb-0 text-[18px] leading-[normal] text-[#333]">
+          AI 开始不只是"生成资产"，而是逐渐能理解上下文、连续修改、做原型，甚至碰到代码
         </p>
-        <p className="mt-3 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· Figma Make：</span>
-          prompt-to-app，从静态稿直接走向可交互原型。
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·Figma Make：</span>
+          <span className="text-[#999]">prompt-to-app，从静态稿直接走向可交互原型</span>
         </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· Gemini：</span>
-          Nanobanana、veo3 从静态到动态都在业内有了质的飞跃。
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·Gemini：</span>
+          <span className="text-[#999]">Nanobanana、veo3 从静态到动态都在业内有了质的飞跃</span>
         </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· 国内的 AI（即梦、LibLibAI...）</span>
-          在设计工作流慢慢普及，更懂中国市场且性价比较高。
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·国内的AI也越来越强，即梦、LibLibAI...</span>
+          <span className="text-[#999]">在设计工作流慢慢普及，国内的AI更懂中国市场且性价比较高</span>
         </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· 本地 Agent（Claude、Codex..）</span>
-          开始协助 UI/UX 设计工作。
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·本地Agent（Claude、Codex..）</span>
+          <span className="text-[#999]">开始协助UIUX设计工作</span>
         </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· Lovable、Lovart、Galileo AI、UX Pilot...</span>
-          对话式设计开始兴起，帮助设计师探索更多可能。
+        <p className="text-[18px] leading-[normal]">
+          <span className="text-[#333]">·Lovable、Lovart、Galileo AI、UX Pilot...</span>
+          <span className="text-[#999]">对话式设计开始兴起，帮助设计师探索更多的可能</span>
         </p>
       </>
     ),
-    media: [
-      { src: `${AI}/screen-05.webp` },
-      { src: `${AI}/screen-06.webp` },
-    ],
   },
   {
-    year: "2026",
-    theme: "设计工作流好伙伴",
-    caption: "用 Vibe Coding 解决自己日常的需求的工具搭建 ing...",
+    year: "2026 设计工作流好伙伴",
+    yearStyle: { left: 67, top: 1505 },
+    connectorTop: 1522,
+    dotTop: 1530,
+    bodyTop: 1505,
     body: (
       <>
-        <p className="font-serif text-[15px] leading-[1.55] text-[var(--ink-900)] md:text-[16px]">
-          AI 已经能帮 UI 设计师做首稿、搜相似界面、填真实文案、快速出原型、把静态稿变交互稿，甚至往代码和原型走。
+        <p className="mb-0 text-[18px] leading-[normal] text-[#333]">
+          AI 已经能帮 UI 设计师做首稿、搜相似界面、填真实文案、快速出原型、把静态稿变交互稿，甚至往代码和原型走
         </p>
-        <p className="mt-3 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· Figma Make、Stitch、UX Pilot、Vercel v0、Dovetail...</span>
-          协助设计师探索方向、出方案。
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·Figma Make、sitich、UX Pilot、Vercel v0、Dovetail...</span>
+          <span className="text-[#999]">协助设计师探索方向、出方案</span>
         </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· Figma、Paper、Pencil...</span>
-          可以接入 MCP 让本地 Agent 协同，让设计到交付效率都得以提升。
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·Figma、Paper、Pencil...</span>
+          <span className="text-[#999]">可以接入 MCP 让本地Agent协同，让设计到交付效率都得以提升</span>
         </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-600)] md:text-[16px]">
-          <span className="font-semibold text-[var(--ink-900)]">· 通过本地 Agent 还有 Skill</span>
-          已经能帮助我们生成设计规范...
+        <p className="mb-0 text-[18px] leading-[normal]">
+          <span className="text-[#333]">·通过本地Agent还有 Skill</span>
+          <span className="text-[#999]"> 已经能帮助我们生成设计规范...</span>
         </p>
-        <p className="mt-2 font-serif text-[15px] leading-[1.75] text-[var(--ink-900)] md:text-[16px]">· 还有很多待续...</p>
+        <p className="text-[18px] leading-[normal] text-[#333]">·还有很多待续...</p>
       </>
     ),
-    media: [
-      { src: `${AI}/screen-07.webp` },
-      { src: `${AI}/ai-overview.webp` },
-    ],
   },
 ];
 
-const CUBES = Array.from({ length: 15 }, (_, i) => `${AI}/cube-${String(i + 1).padStart(2, "0")}.webp`);
+// Media visuals for the timeline — positioned to land beside each era's body.
+// Since we don't have the original granular assets (accountBars, darkCards,
+// jewelryFlow, etc.), we use the composite screen-04 for 2023+2024 and the
+// individual screenshots we do have for 2025 and 2026.
+const explorationVisuals = [
+  {
+    src: explorationAssets.mediaCollage,
+    style: { left: 960, top: 442, width: 480, height: 600 },
+    className: "rounded-[6px] border border-black/10",
+  },
+  {
+    src: explorationAssets.designSheet,
+    style: { left: 960, top: 1155, width: 260, height: 290 },
+    className: "rounded-[4px] border border-black/10",
+  },
+  {
+    src: explorationAssets.generatedPage,
+    style: { left: 1230, top: 1155, width: 260, height: 290 },
+    className: "rounded-[4px] border border-black/10",
+  },
+  {
+    src: explorationAssets.vibeCoding,
+    style: { left: 960, top: 1519, width: 483, height: 298 },
+    className: "rounded-[4px] border border-black/10",
+  },
+];
+
+const businessIconLayouts = [
+  { left: 808, top: 2849, width: 137, height: 145 },
+  { left: 997, top: 2849, width: 143, height: 145 },
+  { left: 1176, top: 2839, width: 164, height: 164 },
+  { left: 1370, top: 2844, width: 154, height: 154 },
+  { left: 802, top: 3012, width: 149, height: 149 },
+  { left: 991, top: 3010, width: 154, height: 154 },
+  { left: 1169, top: 2998, width: 177, height: 177 },
+  { left: 1371, top: 3009, width: 155, height: 155 },
+  { left: 793, top: 3184, width: 166, height: 166 },
+  { left: 991, top: 3190, width: 154, height: 154 },
+  { left: 1180, top: 3189, width: 155, height: 155 },
+  { left: 1362, top: 3185, width: 164, height: 164 },
+  { left: 1554, top: 3185, width: 164, height: 164 },
+  { left: 1563, top: 3009, width: 155, height: 155 },
+];
+
+function CanvasImage({
+  src,
+  style,
+  className = "",
+}: {
+  src: string;
+  style: CSSProperties;
+  className?: string;
+}) {
+  return (
+    <img
+      src={src}
+      alt=""
+      loading="lazy"
+      className={`absolute block object-cover ${className}`}
+      style={style}
+    />
+  );
+}
 
 export default function AiCasePage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
-  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 28, restDelta: 0.001 });
-
-  const accentStyle = useMemo<CSSProperties>(
-    () => ({ ["--case-accent" as keyof CSSProperties]: "var(--case-ai)" } as CSSProperties),
-    [],
-  );
-
   // Keyboard: Esc → home
-  const [scrollPercent, setScrollPercent] = useState(0);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") window.location.href = "/#works";
     };
-    const onScroll = () => {
-      const t = scrollYProgress.get();
-      setScrollPercent(Math.round(t * 100));
-    };
     window.addEventListener("keydown", onKey);
-    const unsub = scrollYProgress.on("change", onScroll);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      unsub();
-    };
-  }, [scrollYProgress]);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
-    <div ref={containerRef} className="relative bg-[var(--canvas)] text-[var(--ink-900)]" style={accentStyle}>
-      <motion.div
-        aria-hidden
-        className="viewer-progress fixed left-0 right-0 top-0 z-[80] h-[2px] origin-left"
-        style={{ scaleX }}
-      />
-
-      <header className="sticky top-0 z-[70] border-b border-[var(--line)] bg-[var(--surface)]/85 backdrop-blur-md">
-        <div className="case-canvas flex items-center justify-between py-3 text-[11.2px] uppercase tracking-[0.32em] text-[var(--ink-600)]">
-          <a href="/#works" className="transition-opacity hover:opacity-70">
-            ← Back to Works
-          </a>
-          <span className="font-[var(--font-mono)]">{scrollPercent}%</span>
-        </div>
-      </header>
-
-      {/* ============= PART 1 — 个人对 AI 的持续探索 ============= */}
-      <section className="case-canvas pb-8 pt-16 md:pt-24">
-        <h1
-          className="font-serif font-medium text-[var(--ink-900)]"
-          style={{
-            fontSize: "clamp(36px, 4.6vw, 50px)",
-            lineHeight: "1.2",
-            letterSpacing: "-0.025em",
-          }}
+    <div className="overflow-x-auto bg-white pb-16 pt-16 md:pt-20">
+      <div className="relative mx-auto h-[4679px] w-[1600px] max-w-none bg-white font-serif text-[#333]">
+        <a
+          href="/#works"
+          className="absolute left-[128px] top-[32px] text-[16px] tracking-[0.2em] text-[#333] transition-opacity hover:opacity-70"
         >
-          个人对于 AI 的持续探索
-        </h1>
-        <p className="mt-2 font-serif text-[12px] text-[var(--ink-300)]">
-          *此页为设计类 AI 的探索，不完全。
-        </p>
-      </section>
+          ← Back To Works
+        </a>
 
-      {/* Timeline — one row per era: [dot · dashed line] [body] [media + caption] */}
-      <section className="relative">
-        {/* Vertical dashed line (visible only on lg+, spans the whole timeline) */}
-        <div
+        <p className="absolute left-[74px] top-[180px] text-[50px] font-medium leading-[72px] text-[#333]">
+          个人对于AI的持续探索
+        </p>
+        <p className="absolute left-[1299px] top-[202px] text-[12px] text-[#333] opacity-50">
+          *此页为设计类AI的探索，不完全
+        </p>
+
+        <div className="absolute left-[351px] top-[354px] h-[1475px] border-l border-dashed border-[#bfbfbf]" />
+
+        {timelineCopy.map((item) => (
+          <div key={item.year}>
+            <div
+              className="absolute h-px w-[63px] border-t border-dashed border-[#bfbfbf]"
+              style={{ left: 356, top: item.connectorTop }}
+            />
+            <div
+              className="absolute h-[16px] w-[16px] rounded-full bg-[#333]"
+              style={{ left: 343, top: item.dotTop }}
+            />
+            <p
+              className="absolute text-[24px] font-medium leading-[34px] text-[#333]"
+              style={item.yearStyle}
+            >
+              {item.year}
+            </p>
+            <div
+              className="absolute w-[420px] text-[#666]"
+              style={{ left: 442, top: item.bodyTop }}
+            >
+              {item.body}
+            </div>
+          </div>
+        ))}
+
+        {explorationVisuals.map((visual) => (
+          <CanvasImage
+            key={`${visual.src}-${visual.style.left}-${visual.style.top}`}
+            src={visual.src}
+            style={visual.style}
+            className={visual.className}
+          />
+        ))}
+
+        <p className="absolute left-[960px] top-[394px] text-[10px] text-[#666]">用AI探索自媒体</p>
+        <p className="absolute left-[960px] top-[753px] text-[10px] text-[#666]">方案探索</p>
+        <p className="absolute left-[961px] top-[1115px] text-[10px] text-[#666]">
+          用生成的设计规范、变量让AI自己搭建页面
+        </p>
+        <p className="absolute left-[961px] top-[1477px] text-[10px] text-[#666]">
+          用Vibe Coding解决自己日常的需求的工具搭建ing...
+        </p>
+
+        <p className="absolute left-[74px] top-[2014px] text-[50px] font-medium leading-[72px] text-[#333]">
+          当前工作中
+        </p>
+        <p className="absolute left-[86px] top-[2207px] text-[60px] font-bold leading-[85px] tracking-[3px] text-black">
+          AI 赋能与设计工程化
+        </p>
+        <p className="absolute left-[778px] top-[2207px] text-[40px] font-bold leading-[56px] text-[#1e293b]">
+          对外：AIGC如何帮助我们业务？
+        </p>
+        <p className="absolute left-[778px] top-[2305px] text-[40px] font-bold leading-[56px] text-[#1e293b]">
+          对内：AI是怎么帮助团队内部协作提效的？
+        </p>
+
+        {[
+          { label: "探索精神", left: 86 },
+          { label: "团队协作", left: 238 },
+          { label: "赋能业务", left: 390 },
+          { label: "推动能力", left: 542 },
+        ].map((chip) => (
+          <div
+            key={chip.label}
+            className="absolute top-[2317px] flex h-[37px] w-[144px] items-center justify-center rounded-[4px] bg-[#1677ff] text-[20px] font-medium text-white"
+            style={{ left: chip.left }}
+          >
+            {chip.label}
+          </div>
+        ))}
+
+        <p className="absolute left-[74px] top-[2521px] w-[1316px] text-[22px] leading-[normal] text-black opacity-60">
+          "验证场景：蔬东坡 SaaS 智能分拣系统（当前在职实战）
+          <br />
+          在复杂业务中，我主导并跑通了这套 AI 资产标准化体系，现已成为团队日常交付的基础设施，始终保持对 AI 前沿技术的探索与实践..."
+        </p>
+
+        <p className="absolute left-[74px] top-[2706px] text-[40px] font-bold leading-[56px] text-[#1e293b]">
+          对外（业务侧）：AIGC如何帮助我们业务？
+        </p>
+        <p className="absolute left-[74px] top-[2836px] text-[32px] font-bold leading-[56px] text-[#1e293b]">
+          传统商品实拍图背景杂乱、光线不一
+        </p>
+        <p className="absolute left-[74px] top-[3168px] text-[32px] font-bold leading-[56px] text-[#1e293b]">
+          视觉资产交付
+        </p>
+
+        <p className="absolute left-[78px] top-[2901px] text-[14px] font-semibold text-[#f53f3f]">痛点：</p>
+        <p className="absolute left-[128px] top-[2901px] text-[14px] text-[#666]">
+          可读性较差，增加一线员工认知负荷，对于需要高效完成单次作业的场景不太友好
+        </p>
+
+        <div className="absolute left-[78px] top-[2939px] h-[199px] w-[546px] rounded-[8px] bg-[#1d2129]">
+          <div className="flex h-[41px] items-center gap-2 rounded-t-[8px] bg-[#2d3138] px-4">
+            <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+            <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+            <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+          </div>
+          <p className="absolute left-[32px] top-[54px] font-[var(--font-ui)] text-[16px] text-[#52c41a]">
+            /imagine prompt:
+          </p>
+          <p className="absolute left-[32px] top-[86px] w-[484px] font-[var(--font-ui)] text-[16px] leading-[normal] text-[#e5e6eb]">
+            A 3D icon, a square translucent frosted glass storage crate filled with fresh{" "}
+            <span className="text-[#1890ff]">[green round cabbages]</span>, clear leaf texture, C4D render,
+            Octane render, soft diffused lighting, isometric view, minimalism, rounded edges, fresh color palette,
+            white background, high quality, no noise.
+          </p>
+        </div>
+
+        {/* Arrow — drawn as inline SVG since the original used a Figma asset */}
+        <svg
+          className="absolute"
+          style={{ left: 689, top: 3056, width: 67, height: 52 }}
+          viewBox="0 0 67 52"
+          fill="none"
           aria-hidden
-          className="pointer-events-none absolute left-0 top-0 hidden h-full lg:block"
-          style={{
-            left: "calc((100vw - min(100vw, var(--viewer-max-w))) / 2 + var(--viewer-gutter) + 48px)",
-            borderLeft: "1px dashed var(--ink-300)",
-          }}
+        >
+          <path
+            d="M2 26 L60 26 M45 10 L60 26 L45 42"
+            stroke="#86909c"
+            strokeWidth="1.8"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+
+        {businessIconLayouts.map((layout, index) => (
+          <CanvasImage
+            key={`${layout.left}-${layout.top}`}
+            src={businessIcons[index % businessIcons.length]}
+            style={layout}
+            className="shadow-[0_4px_6px_rgba(0,0,0,0.08)]"
+          />
+        ))}
+
+        <p className="absolute left-[73px] top-[3233px] text-[14px] text-[#666]">
+          通过AI批量生成+自动化脚本命名，实现 1000+ SKU 零耗时接入
+        </p>
+        <p className="absolute left-[1144px] top-[3389px] text-[18px] tracking-[0.2px] text-[#4e5969] opacity-50">
+          建设标准化视觉资产库，容器化封装保证视觉整齐度
+        </p>
+
+        <div className="absolute left-[73px] top-[3273px] text-[14px] text-[#1d2129]">
+          <p className="font-medium">数据映射</p>
+          <div className="mt-2 flex gap-14">
+            <div className="rounded-[8px] border border-[#12203a] bg-[#12203a] px-3 py-2 text-[11px] text-white">
+              <p className="text-[12px] text-[#52c41a]">土豆</p>
+              <p>ID: sku_10086</p>
+              <p className="text-[#1890ff]">.webp</p>
+            </div>
+            <div className="rounded-[8px] border border-[#ffd8bf] bg-white px-3 py-2 text-center text-[11px]">
+              <p className="text-[#86909c]">PNG</p>
+              <p className="text-[#f53f3f]">800 KB</p>
+            </div>
+            <div className="rounded-[8px] border border-[#b7eb8f] bg-white px-3 py-2 text-center text-[11px]">
+              <p className="text-[#52c41a]">WebP</p>
+              <p className="text-[#52c41a]">45 KB</p>
+            </div>
+            <div className="rounded-[8px] border border-[#e5e6eb] bg-white px-4 py-2 text-[11px] text-[#86909c]">
+              <p>Top 200 → AI 专属 3D 图</p>
+              <p>长尾 SKU → 默认品类图兜底</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute left-[94px] top-[3585px] text-[#1e293b]">
+          <p className="text-[40px] font-bold leading-[56px]">对内（研发侧）：</p>
+          <p className="text-[40px] font-bold leading-[56px]">AI是怎么帮助团队内部协作提效的？</p>
+        </div>
+
+        <p className="absolute left-[99px] top-[3748px] text-[32px] font-bold leading-[56px] text-[#1e293b]">
+          Before
+        </p>
+        <p className="absolute left-[103px] top-[3814px] text-[14px] font-semibold text-[#f53f3f]">痛点：</p>
+        <p className="absolute left-[145px] top-[3814px] text-[14px] text-[#666]">
+          切图多、沟通杂，新页面联调耗时耗力等
+        </p>
+        <p className="absolute left-[99px] top-[3864px] text-[32px] font-bold leading-[56px] text-[#1e293b]">
+          Now
+        </p>
+
+        <div className="absolute left-[99px] top-[3938px] w-[340px] text-[#1d2129]">
+          <p className="text-[18px] font-medium">✅ 消除"像素级走查"误差</p>
+          <p className="mt-2 text-[14px] leading-[normal] text-[#666]">
+            Padding、圆角与色彩等通过 AI 直接转化为 HTML/CSS 样式，实现 100% 视觉还原
+          </p>
+          <p className="mt-6 text-[18px] font-medium">✅ 释放前端还原生产力</p>
+          <p className="mt-2 text-[14px] leading-[normal] text-[#666]">
+            为开发提供开箱即用，使其专注业务接口逻辑，联调时间缩短约 20%
+          </p>
+          <p className="mt-6 text-[18px] font-medium">✅ 重塑产研沟通语言</p>
+          <p className="mt-2 text-[14px] leading-[normal] text-[#666]">
+            从"抛设计图"升级为"交付可运行代码片段"，用开发者的语言进行无缝跨职能协作
+          </p>
+        </div>
+
+        {/* 3 tool icons row: Figma / Browser / GitHub */}
+        <CanvasImage
+          src={internalAssets.figmaIcon}
+          style={{ left: 599, top: 3871, width: 60, height: 60 }}
+          className="!object-contain"
+        />
+        <div
+          className="absolute overflow-hidden rounded-[16px] border border-[#e5e6eb] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
+          style={{ left: 857, top: 3793, width: 66, height: 66 }}
+        >
+          <div className="flex items-center gap-[3px] bg-[#f2f3f5] px-2 py-[6px]">
+            <span className="inline-block h-[6px] w-[6px] rounded-full bg-[#ff5f57]" />
+            <span className="inline-block h-[6px] w-[6px] rounded-full bg-[#febc2e]" />
+            <span className="inline-block h-[6px] w-[6px] rounded-full bg-[#28c840]" />
+          </div>
+          <div className="mx-2 mt-2 h-[2px] rounded bg-[#e5e6eb]" />
+          <div className="mx-2 mt-[6px] h-[2px] w-[36px] rounded bg-[#e5e6eb]" />
+          <div className="mx-2 mt-[6px] h-[2px] w-[28px] rounded bg-[#e5e6eb]" />
+        </div>
+        <CanvasImage
+          src={internalAssets.githubIcon}
+          style={{ left: 1122, top: 3718, width: 60, height: 60 }}
+          className="!object-contain"
         />
 
-        {ERAS.map((era, idx) => (
-          <motion.article
-            key={era.year}
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
-            className="case-canvas relative grid gap-8 py-12 md:py-16 lg:grid-cols-[28px_minmax(0,380px)_minmax(0,1fr)] lg:gap-x-12"
-          >
-            {/* Dot marker */}
-            <div className="hidden lg:block">
-              <span className="relative block">
-                <span className="absolute left-0 top-[18px] inline-block h-3 w-3 rounded-full bg-[var(--ink-900)]" />
-                <span className="absolute left-3 top-[24px] inline-block h-px w-[36px] border-t border-dashed border-[var(--ink-300)]" />
-              </span>
-            </div>
+        {/* DESIGN card (rendered screenshot) */}
+        <CanvasImage
+          src={internalAssets.designCard}
+          style={{ left: 599, top: 3955, width: 324.19, height: 237.74 }}
+          className="rounded-[13px] border border-[#e5e6eb]"
+        />
 
-            {/* Body column (left-middle) */}
-            <div>
-              <p className="font-serif text-[22px] font-semibold leading-[1.3] text-[var(--ink-900)] md:text-[24px]">
-                {era.year}　{era.theme}
-              </p>
-              <div className="mt-6 space-y-0">{era.body}</div>
-            </div>
-
-            {/* Media column (right) */}
-            <div>
-              <p className="mb-4 font-[var(--font-mono)] text-[10px] uppercase tracking-[0.28em] text-[var(--ink-400)]">
-                {era.caption}
-              </p>
-              <div className={`grid gap-3 ${era.media.length === 1 ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2"}`}>
-                {era.media.map((m) => (
-                  <div
-                    key={m.src}
-                    className="overflow-hidden rounded-[6px] border border-[var(--line)] bg-[var(--surface)] shadow-[0_4px_20px_-8px_rgba(16,17,20,0.08)]"
-                  >
-                    <img
-                      src={m.src}
-                      alt=""
-                      loading={idx < 2 ? "eager" : "lazy"}
-                      className="block h-auto w-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.article>
-        ))}
-      </section>
-
-      {/* ============= PART 2 — 当前工作中 · AI 赋能与设计工程化 ============= */}
-      <section className="border-t border-[var(--line)] bg-[var(--surface)]">
-        <div className="case-canvas pb-20 pt-16 md:pb-28 md:pt-24">
-          <p className="font-serif font-medium text-[var(--ink-900)] md:text-[40px]" style={{ fontSize: "clamp(30px, 4vw, 40px)", lineHeight: "1.2" }}>
-            当前工作中
-          </p>
-          <h2
-            className="display-italic mt-4"
-            style={{
-              fontSize: "clamp(36px, 5vw, 60px)",
-              lineHeight: "0.98",
-              letterSpacing: "-0.04em",
-            }}
-          >
-            AI 赋能与设计工程化
-          </h2>
-
-          {/* 4 chips */}
-          <div className="mt-8 flex flex-wrap gap-3">
-            {["探索精神", "团队协作", "赋能业务", "推动能力"].map((chip) => (
-              <span
-                key={chip}
-                className="inline-flex items-center rounded-[4px] bg-[#1677ff] px-5 py-2 text-[14px] font-medium tracking-[0.02em] text-white"
-              >
-                {chip}
-              </span>
-            ))}
+        {/* HTML/CSS card — original draws inline text; we keep that for clarity */}
+        <div className="absolute left-[864px] top-[3884px] h-[229.01px] w-[324.19px] rounded-[12px] bg-[#1d2129]">
+          <div className="absolute left-0 top-0 rounded-t-[12px] bg-[#808a97] px-4 py-2 text-[14.87px] text-white">
+            HTML/CSS
           </div>
-
-          {/* Quote */}
-          <blockquote className="mt-10 max-w-[1000px] font-serif text-[18px] italic leading-[1.7] text-[var(--ink-900)]/60 md:text-[22px]">
-            「验证场景：蔬东坡 SaaS 智能分拣系统（当前在职实战）
-            <br />
-            在复杂业务中，我主导并跑通了这套 AI 资产标准化体系，现已成为团队日常交付的基础设施，始终保持对 AI 前沿技术的探索与实践...」
-          </blockquote>
-
-          {/* ——— 对外（业务侧） ——— */}
-          <div className="mt-20">
-            <h3 className="font-serif text-[28px] font-bold leading-[1.2] tracking-[-0.02em] text-[#1e293b] md:text-[40px]">
-              对外（业务侧）：AIGC 如何帮助我们业务？
-            </h3>
-            <h4 className="mt-8 font-serif text-[22px] font-bold leading-[1.2] tracking-[-0.02em] text-[#1e293b] md:text-[32px]">
-              传统商品实拍图背景杂乱、光线不一
-            </h4>
-
-            <div className="mt-6">
-              <span className="font-[var(--font-ui)] text-[13px] font-semibold text-[#f53f3f]">痛点：</span>
-              <span className="ml-2 font-[var(--font-ui)] text-[13px] text-[var(--ink-600)] md:text-[14px]">
-                可读性较差，增加一线员工认知负荷，对于需要高效完成单次作业的场景不太友好。
-              </span>
-            </div>
-
-            {/* Prompt box → arrow → cube grid */}
-            <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,546px)_auto_minmax(0,1fr)] lg:items-center lg:gap-10">
-              {/* Prompt demo */}
-              <div className="overflow-hidden rounded-[8px] bg-[#1d2129] shadow-[0_16px_40px_-20px_rgba(16,17,20,0.25)]">
-                <div className="flex items-center gap-2 bg-[#2d3138] px-4 py-3">
-                  <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-                  <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
-                  <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-                </div>
-                <div className="px-6 py-5 font-[var(--font-ui)] text-[14px] leading-[1.65] md:text-[16px]">
-                  <p className="text-[#52c41a]">/imagine prompt:</p>
-                  <p className="mt-2 text-[#e5e6eb]">
-                    A 3D icon, a square translucent frosted glass storage crate filled with fresh{" "}
-                    <span className="text-[#1890ff]">[green round cabbages]</span>, clear leaf texture,
-                    C4D render, Octane render, soft diffused lighting, isometric view, minimalism,
-                    rounded edges, fresh color palette, white background, high quality, no noise.
-                  </p>
-                </div>
-              </div>
-
-              {/* Arrow */}
-              <div className="hidden items-center justify-center text-[var(--ink-400)] lg:flex">
-                <svg width="67" height="52" viewBox="0 0 67 52" fill="none">
-                  <path
-                    d="M2 26 L60 26 M45 10 L60 26 L45 42"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-
-              {/* Cube grid */}
-              <div>
-                <div className="grid grid-cols-5 gap-2 md:gap-3">
-                  {CUBES.map((src, i) => (
-                    <div
-                      key={src}
-                      className="aspect-square overflow-hidden rounded-[6px] bg-[var(--canvas)] shadow-[0_2px_6px_rgba(16,17,20,0.04)]"
-                    >
-                      <img src={src} alt={`3D icon ${i + 1}`} loading="lazy" className="block h-full w-full object-cover" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <p className="mt-6 font-[var(--font-ui)] text-[13px] text-[var(--ink-400)] md:text-[14px]">
-              通过 AI 批量生成 + 自动化脚本命名，实现 1000+ SKU 零耗时接入。
-            </p>
-
-            {/* 视觉资产交付 */}
-            <div className="mt-16">
-              <h4 className="font-serif text-[22px] font-bold leading-[1.2] tracking-[-0.02em] text-[#1e293b] md:text-[32px]">
-                视觉资产交付
-              </h4>
-              <p className="mt-3 font-[var(--font-ui)] text-[15px] leading-[1.5] text-[#4e5969]/60 md:text-[17px]">
-                建设标准化视觉资产库，容器化封装保证视觉整齐度。
-              </p>
-              <div className="mt-6">
-                <p className="font-[var(--font-ui)] text-[13px] font-medium text-[#1d2129] md:text-[14px]">数据映射</p>
-                <div className="mt-4 flex flex-wrap items-stretch gap-4 md:gap-8">
-                  <DataCard tone="dark">
-                    <p className="text-[12px] text-[#52c41a]">土豆</p>
-                    <p className="font-[var(--font-ui)] text-[11px]">ID: sku_10086</p>
-                    <p className="text-[11px] text-[#1890ff]">.webp</p>
-                  </DataCard>
-                  <DataCard tone="warn">
-                    <p className="text-[11px] text-[var(--ink-400)]">PNG</p>
-                    <p className="text-[11px] text-[#f53f3f]">800 KB</p>
-                  </DataCard>
-                  <DataCard tone="success">
-                    <p className="text-[11px] text-[#52c41a]">WebP</p>
-                    <p className="text-[11px] text-[#52c41a]">45 KB</p>
-                  </DataCard>
-                  <DataCard tone="neutral">
-                    <p className="text-[11px] text-[var(--ink-400)]">Top 200 → AI 专属 3D 图</p>
-                    <p className="text-[11px] text-[var(--ink-400)]">长尾 SKU → 默认品类图兜底</p>
-                  </DataCard>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ——— 对内（研发侧） ——— */}
-          <div className="mt-24">
-            <h3 className="font-serif text-[28px] font-bold leading-[1.2] tracking-[-0.02em] text-[#1e293b] md:text-[40px]">
-              对内（研发侧）：
-              <br className="md:hidden" />
-              AI 是怎么帮助团队内部协作提效的？
-            </h3>
-
-            <div className="mt-12 grid gap-10 md:grid-cols-2">
-              <div>
-                <p className="font-serif text-[22px] font-bold tracking-[-0.02em] text-[#1e293b] md:text-[32px]">
-                  Before
-                </p>
-                <div className="mt-4">
-                  <span className="font-[var(--font-ui)] text-[13px] font-semibold text-[#f53f3f]">痛点：</span>
-                  <span className="ml-2 font-[var(--font-ui)] text-[13px] text-[var(--ink-600)] md:text-[14px]">
-                    切图多、沟通杂，新页面联调耗时耗力等。
-                  </span>
-                </div>
-              </div>
-
-              <div>
-                <p className="font-serif text-[22px] font-bold tracking-[-0.02em] text-[#1e293b] md:text-[32px]">
-                  Now
-                </p>
-                <ul className="mt-4 space-y-5">
-                  <CheckItem title="消除「像素级走查」误差">
-                    Padding、圆角与色彩等通过 AI 直接转化为 HTML/CSS 样式，实现 100% 视觉还原。
-                  </CheckItem>
-                  <CheckItem title="释放前端还原生产力">
-                    为开发提供开箱即用，使其专注业务接口逻辑，联调时间缩短约 20%。
-                  </CheckItem>
-                  <CheckItem title="重塑产研沟通语言">
-                    从「抛设计图」升级为「交付可运行代码片段」，用开发者的语言进行无缝跨职能协作。
-                  </CheckItem>
-                </ul>
-              </div>
-            </div>
-
-            {/* 3 tool icons row */}
-            <div className="mt-16 grid gap-8 md:grid-cols-3">
-              <div className="flex items-center justify-center">
-                <img src={`${AI}/logo-figma.webp`} alt="Figma" className="h-[60px] w-[60px] object-contain" />
-              </div>
-              <div className="flex items-center justify-center">
-                <BrowserGlyph />
-              </div>
-              <div className="flex items-center justify-center">
-                <img src={`${AI}/logo-github.webp`} alt="GitHub" className="h-[60px] w-[60px] object-contain" />
-              </div>
-            </div>
-
-            {/* 3 cards row */}
-            <div className="mt-6 grid gap-4 md:grid-cols-3">
-              {/* DESIGN card */}
-              <div className="overflow-hidden rounded-[13px] border border-[var(--line)] bg-[var(--surface)] shadow-[0_8px_24px_-12px_rgba(16,17,20,0.08)]">
-                <div className="flex items-center justify-between bg-[#9aa3ad] px-5 py-2">
-                  <span className="font-[var(--font-mono)] text-[14.9px] font-semibold uppercase tracking-[0.12em] text-white">
-                    DESIGN
-                  </span>
-                </div>
-                <div className="aspect-[324/178] bg-[var(--canvas)]">
-                  <img src={`${AI}/logo-figma.webp`} alt="" className="h-full w-full object-contain p-12" loading="lazy" />
-                </div>
-                <div className="border-t border-[var(--line)] bg-[var(--canvas)] px-5 py-3">
-                  <p className="font-[var(--font-mono)] text-[10px] uppercase tracking-[0.28em] text-[var(--ink-400)]">
-                    Figma export
-                  </p>
-                </div>
-              </div>
-
-              {/* HTML/CSS code card */}
-              <div className="overflow-hidden rounded-[12px] bg-[#1d2129] shadow-[0_8px_24px_-12px_rgba(16,17,20,0.2)]">
-                <div className="bg-[#808a97] px-4 py-2">
-                  <span className="font-[var(--font-mono)] text-[14.87px] font-semibold uppercase tracking-[0.12em] text-white">
-                    HTML/CSS
-                  </span>
-                </div>
-                <pre className="whitespace-pre-wrap px-5 py-4 font-[var(--font-ui)] text-[14px] leading-[1.6] text-[#fa8c16]">
-                  {`/* 首页 */
-
-position: relative;
-width: 1920px;
-height: 1080px;
-
-...................`}
-                </pre>
-              </div>
-
-              {/* GitHub git-deploy card */}
-              <div className="relative overflow-hidden rounded-[12px] border border-[var(--line)] bg-black shadow-[0_8px_24px_-12px_rgba(16,17,20,0.25)]">
-                <div className="flex aspect-[324/178] items-center justify-center bg-gradient-to-br from-[#0d1117] via-[#161b22] to-[#24292f]">
-                  <img
-                    src={`${AI}/logo-github.webp`}
-                    alt=""
-                    className="h-[60px] w-[60px] object-contain opacity-80"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="border-t border-white/10 bg-black px-5 py-4 text-center text-white">
-                  <p className="font-[var(--font-ui)] text-[16px] leading-[1.35]">
-                    日常设计维护 &amp; 开发产品自拿
-                  </p>
-                  <p className="mt-2 font-[var(--font-mono)] text-[14px]">git 部署</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-10 font-[var(--font-ui)] text-[16px] text-[var(--ink-900)] md:text-[18px]">
-              Demo 展示：
-              <a
-                href={PERSONAL_INFO.demoHref}
-                target="_blank"
-                rel="noreferrer"
-                className="ml-2 underline decoration-current underline-offset-4 transition-opacity hover:opacity-70"
-              >
-                {PERSONAL_INFO.demoHref.replace(/^https?:\/\//, "")}
-              </a>
-            </div>
-          </div>
+          <pre className="absolute left-[20px] top-[50px] whitespace-pre-wrap font-[var(--font-ui)] text-[17.85px] leading-[normal] text-[#fa8c16]">
+            {`/* 首页 */\n\nposition: relative;\nwidth: 1920px;\nheight: 1080px;\n\n...................`}
+          </pre>
         </div>
-      </section>
 
-      {/* ============= Footer ============= */}
-      <footer className="border-t border-[var(--line)]">
-        <div className="case-canvas flex flex-col gap-4 py-10 md:flex-row md:items-center md:justify-between">
-          <div className="brand-word text-[24px] font-bold tracking-[-0.04em] text-[#59675d] md:text-[32px]">
-            ABBIE.
-          </div>
-          <div className="mono-detail text-[var(--ink-300)]">
-            <kbd className="mr-2 rounded border border-[var(--line)] px-1.5 py-0.5 text-[10px] tracking-[0.28em]">ESC</kbd>
-            back
-          </div>
+        {/* GitHub git部署 poster */}
+        <CanvasImage
+          src={internalAssets.githubPoster}
+          style={{ left: 1122, top: 3802, width: 324.19, height: 229.01 }}
+          className="rounded-[12px] border border-[#e6e6e6]"
+        />
+
+        <div className="absolute left-[951px] top-[4137px] text-[18px] text-black">
+          <p>Demo 展示：</p>
           <a
-            href="/#works"
-            className="group inline-flex items-center gap-3 font-[var(--font-mono)] text-[16px] tracking-[0.34em] text-[#7a6947] transition-opacity hover:opacity-70 md:text-[19px]"
+            href="https://figma-cursor-collab.vercel.app/"
+            target="_blank"
+            rel="noreferrer"
+            className="underline"
           >
-            <span>BACK TO WORKS</span>
-            <span aria-hidden className="transition-transform group-hover:translate-x-1">👉</span>
+            https://figma-cursor-collab.vercel.app
           </a>
         </div>
-      </footer>
-    </div>
-  );
-}
 
-function DataCard({ children, tone }: { children: ReactNode; tone: "dark" | "warn" | "success" | "neutral" }) {
-  const tones: Record<string, string> = {
-    dark: "bg-[#12203a] border-[#12203a] text-white",
-    warn: "bg-white border-[#ffd8bf] text-[var(--ink-900)]",
-    success: "bg-white border-[#b7eb8f] text-[var(--ink-900)]",
-    neutral: "bg-white border-[var(--line)] text-[var(--ink-900)]",
-  };
-  return (
-    <div className={`flex min-w-[90px] flex-col gap-1 rounded-[8px] border px-3 py-2 text-center ${tones[tone]}`}>
-      {children}
-    </div>
-  );
-}
-
-function CheckItem({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <li>
-      <p className="font-[var(--font-ui)] text-[18px] font-medium text-[var(--ink-900)]">
-        <span className="mr-2 text-[#52c41a]">✅</span>
-        {title}
-      </p>
-      <p className="mt-2 pl-6 font-[var(--font-ui)] text-[14px] leading-[1.6] text-[var(--ink-600)]">
-        {children}
-      </p>
-    </li>
-  );
-}
-
-function BrowserGlyph() {
-  return (
-    <div className="relative h-[66px] w-[66px] overflow-hidden rounded-[14px] border border-[var(--line)] bg-[var(--surface)] shadow-[0_4px_12px_rgba(16,17,20,0.06)]">
-      <div className="absolute inset-x-0 top-0 flex items-center gap-1 bg-[var(--canvas)] px-2 py-1.5">
-        <span className="inline-block h-[6px] w-[6px] rounded-full bg-[#ff5f57]" />
-        <span className="inline-block h-[6px] w-[6px] rounded-full bg-[#febc2e]" />
-        <span className="inline-block h-[6px] w-[6px] rounded-full bg-[#28c840]" />
+        <div className="absolute left-[320px] top-[4552px] h-px w-[960px] bg-[#e5e5e5]" />
+        <p className="absolute left-[320px] top-[4580px] font-[var(--font-brand)] text-[32px] font-bold tracking-[-0.07em] text-[#59675d]">
+          ABBIE.
+        </p>
+        <a
+          href="/#works"
+          className="absolute left-[1124px] top-[4586px] text-[19px] tracking-[0.34em] text-[#7a6947]"
+        >
+          BACK TO WORKS 👉
+        </a>
       </div>
-      <div className="absolute left-3 right-3 top-[22px] h-[2px] rounded bg-[var(--line)]" />
-      <div className="absolute left-3 right-6 top-[30px] h-[2px] rounded bg-[var(--line)]" />
-      <div className="absolute left-3 right-10 top-[38px] h-[2px] rounded bg-[var(--line)]" />
     </div>
   );
 }
