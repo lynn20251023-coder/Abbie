@@ -35,8 +35,8 @@ const logos = {
 // 3D vegetable crate renders for the business section (3×3)
 const vegCrates = Array.from({ length: 9 }, (_, i) => `${MAT}/veg-${String(i + 1).padStart(2, "0")}.png`);
 
-// Phone screenshots for 2026 timeline entry
-const phoneShots = [`${MAT}/phone-01.png`, `${MAT}/phone-02.png`, `${MAT}/phone-03.png`];
+// 示意图 per-year screenshots for the timeline (one image per row).
+const phoneShots = Array.from({ length: 4 }, (_, i) => `${MAT}/phone-${String(i + 1).padStart(2, "0")}.png`);
 
 const explorationAssets = {
   accountBars: [
@@ -127,7 +127,6 @@ const timelineCopy: TimelineEntry[] = [
     logos: [
       { src: logos.openai, w: 32, h: 32 },
       { src: logos.figma, w: 32, h: 32 },
-      { src: logos.blackForest, w: 110, h: 32 },
     ],
   },
   {
@@ -170,18 +169,12 @@ const timelineCopy: TimelineEntry[] = [
   },
 ];
 
+// One 示意图 per timeline year; 540×680 source, rendered at 280×352 (same aspect).
 const explorationVisuals = [
-  { src: explorationAssets.accountBars[0], style: { left: 960, top: 442.48, width: 217.3, height: 56.58 }, className: "rounded-[2.9px]" },
-  { src: explorationAssets.accountBars[1], style: { left: 960, top: 501.8, width: 217.3, height: 40.9 }, className: "rounded-[2.9px]" },
-  { src: explorationAssets.accountBars[2], style: { left: 960, top: 545.44, width: 217.3, height: 39.28 }, className: "rounded-[2.9px]" },
-  { src: explorationAssets.accountBars[3], style: { left: 960, top: 587.46, width: 217.3, height: 39.46 }, className: "rounded-[2.9px]" },
-  { src: explorationAssets.media.darkCards, style: { left: 1085, top: 447, width: 214.26, height: 167.96 }, className: "rounded-[9px] shadow-[10px_10px_30px_rgba(0,0,0,0.08)]" },
-  { src: explorationAssets.media.accountPanel, style: { left: 1262, top: 351, width: 170.03, height: 369.66 }, className: "rounded-[6px] border border-black/5" },
-  { src: explorationAssets.media.jewelryFlow, style: { left: 1085, top: 764, width: 297, height: 239 }, className: "rounded-[4px] border border-black/5" },
-  { src: explorationAssets.media.paymentDialog, style: { left: 961, top: 823, width: 268, height: 231 }, className: "rounded-[4px] border border-black/5" },
-  { src: explorationAssets.media.designSheet, style: { left: 961, top: 1156, width: 291, height: 271 }, className: "rounded-[4px] border border-black/5" },
-  { src: explorationAssets.media.generatedPage, style: { left: 1061, top: 1211, width: 383, height: 215 }, className: "rounded-[4px] border border-black/5" },
-  { src: explorationAssets.media.vibeCoding, style: { left: 961, top: 1519, width: 483, height: 298 }, className: "rounded-[4px] border border-black/5" },
+  { src: phoneShots[0], style: { left: 1060, top: 378, width: 280, height: 352 }, className: "" },
+  { src: phoneShots[1], style: { left: 1060, top: 718, width: 280, height: 352 }, className: "" },
+  { src: phoneShots[2], style: { left: 1060, top: 1080, width: 280, height: 352 }, className: "" },
+  { src: phoneShots[3], style: { left: 1060, top: 1492, width: 280, height: 352 }, className: "" },
 ];
 
 // 3×3 grid of vegetable crate renders
@@ -480,11 +473,14 @@ export default function AiCasePage() {
         />
 
         {businessIconLayouts.map((layout, index) => (
-          <CanvasImage
+          <img
             key={`${layout.left}-${layout.top}`}
             src={businessAssets.icons[index]}
-            style={layout}
-            className="shadow-[0_4px_12px_rgba(16,17,20,0.06)]"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="absolute block"
+            style={{ ...layout, objectFit: "contain" }}
           />
         ))}
 
