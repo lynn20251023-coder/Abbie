@@ -23,12 +23,12 @@ const logos = {
   stability: `${MAT}/stability.png`,
   openai: `${MAT}/openai.png`,
   figma: `${MAT}/figma.png`,
-  blackForest: `${MAT}/blackforest.png`,
+  blackForest: `${MAT}/blackforest.png`, // Black Forest Labs wordmark (images 1.png)
+  bolt: `${MAT}/bolt.png`, // 159165768 1.png — purple bolt app icon
   v0: `${MAT}/v0.png`,
   gemini: `${MAT}/gemini.png`,
-  lovart: `${MAT}/lovart.png`,
-  figmaMake: `${MAT}/figma-make.png`,
-  cursor: `${MAT}/cursor.png`,
+  procreate: `${MAT}/cursor.png`, // purple AppIcon (image-thumb-Purple211…)
+  codex: `${MAT}/codex.png`, // OpenAI Codex color mark
   claude: `${MAT}/claude.png`,
 };
 
@@ -127,6 +127,7 @@ const timelineCopy: TimelineEntry[] = [
     logos: [
       { src: logos.openai, w: 32, h: 32 },
       { src: logos.figma, w: 32, h: 32 },
+      { src: logos.blackForest, w: 110, h: 28 },
     ],
   },
   {
@@ -143,10 +144,10 @@ const timelineCopy: TimelineEntry[] = [
       "Figma Make 本地 Agent 设计规范与变量管理",
     ],
     logos: [
-      { src: logos.lovart, w: 44, h: 32 },
+      { src: logos.bolt, w: 32, h: 32 },
       { src: logos.v0, w: 32, h: 32 },
       { src: logos.gemini, w: 32, h: 32 },
-      { src: logos.figmaMake, w: 44, h: 32 },
+      { src: logos.procreate, w: 32, h: 32 },
     ],
   },
   {
@@ -163,7 +164,7 @@ const timelineCopy: TimelineEntry[] = [
       "个人 Vibe Coding 为自己所用",
     ],
     logos: [
-      { src: logos.cursor, w: 32, h: 32 },
+      { src: logos.codex, w: 32, h: 32 },
       { src: logos.claude, w: 110, h: 32 },
     ],
   },
