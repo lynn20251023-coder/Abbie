@@ -359,16 +359,17 @@ export default function AiCasePage() {
           />
         ))}
 
-        <p className="absolute left-[960px] top-[394px] text-[12px]" style={{ color: INK_600 }}>
+        {/* Captions sit above each 示意图 (phone image), aligned to its left edge. */}
+        <p className="absolute left-[1060px] top-[354px] text-[12px]" style={{ color: INK_600 }}>
           用AI探索自媒体
         </p>
-        <p className="absolute left-[960px] top-[753px] text-[12px]" style={{ color: INK_600 }}>
+        <p className="absolute left-[1060px] top-[694px] text-[12px]" style={{ color: INK_600 }}>
           方案探索
         </p>
-        <p className="absolute left-[961px] top-[1115px] text-[12px]" style={{ color: INK_600 }}>
+        <p className="absolute left-[1060px] top-[1056px] text-[12px]" style={{ color: INK_600 }}>
           用生成的设计规范、变量让AI自己搭建页面
         </p>
-        <p className="absolute left-[961px] top-[1477px] text-[12px]" style={{ color: INK_600 }}>
+        <p className="absolute left-[1060px] top-[1468px] text-[12px]" style={{ color: INK_600 }}>
           用Vibe Coding解决自己日常的需求的工具搭建ing...
         </p>
 
