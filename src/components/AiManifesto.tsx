@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import SectionMarker from "./SectionMarker";
 
 /**
  * AiManifesto — between Hero and Works.
@@ -32,37 +33,13 @@ const eras = [
 
 export default function AiManifesto() {
   return (
-    <section id="ai-manifesto" className="py-24 text-[var(--ink-900)] md:py-[128px]">
+    <section id="ai-manifesto" className="py-20 text-[var(--ink-900)] md:py-28">
       <div className="container-editorial">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.72, ease: [0.19, 1, 0.22, 1] }}
-        >
-          <h2
-            className="display-italic"
-            style={{
-              fontSize: "clamp(72px, 11vw, 128px)",
-              lineHeight: "0.82",
-              letterSpacing: "-0.08em",
-            }}
-          >
-            AI PRACTICE
-          </h2>
-          <p
-            className="mt-3 font-serif text-[var(--ink-200)]"
-            style={{
-              fontSize: "clamp(28px, 4vw, 48px)",
-              lineHeight: "0.95",
-              letterSpacing: "-0.03em",
-            }}
-          >
-            设计工作流里的 AI
-          </p>
-        </motion.div>
+        <SectionMarker label="AI PRACTICE" labelCn="AI 实践" trail="2023 — now">
+          AI 是我日常设计流程的一部分，这是过去四年的记录。
+        </SectionMarker>
 
-        <ol className="mt-14 grid gap-px bg-[var(--line)] md:mt-20 md:grid-cols-4">
+        <ol className="mt-12 grid gap-px bg-[var(--line)] md:mt-16 md:grid-cols-4">
           {eras.map((era, index) => (
             <motion.li
               key={era.year}

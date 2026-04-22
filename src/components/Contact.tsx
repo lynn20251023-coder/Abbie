@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { PERSONAL_INFO } from "@/src/constants";
+import SectionMarker from "./SectionMarker";
 
 const contactRows = [
   { icon: "📮", label: "邮箱", value: PERSONAL_INFO.email, href: `mailto:${PERSONAL_INFO.email}` },
@@ -42,37 +43,18 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="scroll-mt-24 py-24 text-[var(--ink-900)] md:py-[128px]"
+      className="scroll-mt-24 py-20 text-[var(--ink-900)] md:py-28"
     >
       <div className="container-editorial">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-16">
-          <div>
-            <h2
-              className="display-italic text-[var(--ink-900)]"
-              style={{
-                fontSize: "clamp(72px, 11vw, 128px)",
-                lineHeight: "0.82",
-                letterSpacing: "-0.08em",
-              }}
-            >
-              TALK
-            </h2>
-            <p
-              className="mt-3 font-serif text-[var(--ink-200)]"
-              style={{
-                fontSize: "clamp(28px, 4vw, 48px)",
-                lineHeight: "0.95",
-                letterSpacing: "-0.03em",
-              }}
-            >
-              期待合作
-            </p>
+        <SectionMarker label="TALK" labelCn="期待合作">
+          想聊聊？如果你对 AI 赋能设计、或者复杂系统体验升级感兴趣——
+        </SectionMarker>
 
-            <div className="mt-14 space-y-8">
-              {contactRows.map((row) => (
-                <ContactRow key={row.label} {...row} />
-              ))}
-            </div>
+        <div className="mt-12 grid gap-12 md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-16">
+          <div className="space-y-8">
+            {contactRows.map((row) => (
+              <ContactRow key={row.label} {...row} />
+            ))}
           </div>
 
           <motion.div
@@ -80,13 +62,13 @@ export default function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.64, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-5 lg:pt-[180px]"
+            className="space-y-5"
           >
             <p className="font-serif text-[17px] leading-[1.75] text-[var(--ink-600)] md:text-[18px]">
-              &ldquo;我热衷于探索 AI 技术如何重塑 UI/UX 设计，致力于将前沿技术转化为直观、高效的用户体验。&rdquo;
+              &ldquo;我热衷于探索 AI 技术如何重塑 UI/UX 设计，想把前沿技术转化为直观、高效的用户体验。&rdquo;
             </p>
             <p className="font-serif text-[17px] leading-[1.75] text-[var(--ink-600)] md:text-[18px]">
-              目前正在寻求新的机会和有趣的合作。如果您对 AI 赋能设计或复杂系统体验升级感兴趣，随时欢迎与我联系！
+              我目前在寻找新的机会和有趣的合作——随时欢迎联系。
             </p>
           </motion.div>
         </div>
