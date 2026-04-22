@@ -100,14 +100,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </a>
         </div>
 
-        {/* Media column — responsive, aspect-ratio-driven, no absolute positioning */}
-        <div className="relative overflow-hidden rounded-[2px] bg-[var(--canvas)] aspect-[4/3] md:aspect-[16/10]">
+        {/* Media column — aspect matches the source cover art (1560×1442 ≈ 13/12). */}
+        <div className="relative overflow-hidden rounded-[2px] bg-[var(--canvas)] aspect-[13/12]">
           <img
             src={project.images[0]}
             alt={project.title}
             loading="lazy"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-[var(--dur-slow)] ease-[var(--ease-editorial)] group-hover:scale-[1.02]"
+            className="absolute inset-0 h-full w-full object-contain object-center transition-transform duration-[var(--dur-slow)] ease-[var(--ease-editorial)] group-hover:scale-[1.02]"
           />
         </div>
       </div>
